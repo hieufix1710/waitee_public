@@ -1,6 +1,8 @@
 import { Shop } from "@/api/shop/shop";
 import Image from "next/image";
-async function Page({ params }: { params: { shopId: string, tenant: string } }) {
+type Params = Promise<{ shopId: string, tenant: string }>
+
+async function Page({ params }: { params: Params }) {
   // asynchronous access of `params.id`.
   const { shopId, tenant } = await params
   const shopRes = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/store/${shopId}`, {
