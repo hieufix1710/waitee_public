@@ -6,7 +6,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'waitee.top',
         port: '',
-        pathname: '/files/**',
+        pathname: '/cashier/files/**',
         search: '',
       },
     ],
