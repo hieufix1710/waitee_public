@@ -1,5 +1,7 @@
 const nextConfig = {
   /* config options here */
+  basePath: '/',
+  assetPrefix: '/',
   images: {
     remotePatterns: [
       {
