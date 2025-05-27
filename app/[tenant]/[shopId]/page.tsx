@@ -4,26 +4,60 @@ import Image from "next/image";
 type Params = Promise<{ shopId: string; tenant: string }>;
 
 export async function generateMetadata({ params }: { params: Params }) {
-  const { shopId, tenant } = await params;
-  const shopRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/store/${shopId}`,
-    {
-      headers: {
-        Tenant: tenant,
-      },
-      cache: "no-store", // Ensure fresh data
-    },
-  );
-  const result = await shopRes.json();
+    const { shopId, tenant } = await params;
+    const shopRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_HOST}/api/store/${shopId}`,
+        {
+            headers: {
+                Tenant: tenant,
+            },
+            cache: "no-store", // Ensure fresh data
+        },
+    );
+    const result = await shopRes.json();
 
-  if (!result.id) {
-    return { title: "Store Not Found", description: "No details available." };
-  }
+    if (!result.id) {
+        return {
+            title: "Store Not Found",
+            description: "No details available.",
+            robots: "noindex, nofollow",
+            openGraph: {
+                title: "Store Not Found",
+                description: "No details available.",
+                url: `https://client.waitee.top/${tenant}/${shopId}`,
+                type: "website",
+            },
+        };
+    }
 
-  return {
-    title: `${result.name} - Best Deals`,
-    description: result.description,
-  };
+    return {
+        title: result.name,
+        description: result.description,
+        keywords: result.keywords || [result.name, "cửa hàng", "waitee"],
+        robots: "index, follow",
+        openGraph: {
+            title: result.name,
+            description: result.description,
+            url: `https://client.waitee.top/${tenant}/${shopId}`,
+            type: "website",
+            images: result.logo?.url
+                ? [
+                        {
+                            url: result.logo.url,
+                            width: 800,
+                            height: 800,
+                            alt: result.name,
+                        },
+                    ]
+                : [],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: result.name,
+            description: result.description,
+            images: result.logo?.url ? [result.logo.url] : [],
+        },
+    };
 }
 
 async function Page({ params }: { params: Params }) {
@@ -65,7 +99,6 @@ async function Page({ params }: { params: Params }) {
               width={160}
               height={160}
               className="w-40 h-40 object-cover rounded-full shadow-lg border-4 border-blue-200 bg-white"
-              priority
             />
           </div>
         )}
