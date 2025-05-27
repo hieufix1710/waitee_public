@@ -35,7 +35,6 @@ export default async function Image({ params }: { params: Params }) {
       // ImageResponse JSX element
       <div
         style={{
-          fontSize: 128,
           background: 'white',
           width: '100%',
           height: '100%',
@@ -45,8 +44,9 @@ export default async function Image({ params }: { params: Params }) {
           backgroundImage: `url(${shop.logo?.url})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
         }}
-      > {shop.name}
+      > {shop.name} -
         {shop.description}
       </div>
     ),
