@@ -25,12 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-      suppressHydrationWarning
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="max-w-2xl mx-auto">
-          {children}
-        </div>
+        <div className="max-w-2xl mx-auto h-screen min-h-svh">{children}</div>
       </body>
     </html>
   );

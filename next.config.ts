@@ -1,15 +1,22 @@
 const nextConfig = {
   /* config options here */
-  basePath: '/',
-  assetPrefix: '/',
+  basePath: "",
+  assetPrefix: "",
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'waitee.top',
-        port: '',
-        pathname: '**',
-        search: '',
+        protocol: "https",
+        hostname: "waitee.top",
+        port: "",
+        pathname: "**",
+        search: "",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000",
+        pathname: "**",
+        search: "",
       },
     ],
   },

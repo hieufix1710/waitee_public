@@ -3,7 +3,6 @@ import { api } from "../api";
 import { ENDPOINTS } from "../endpoints";
 import { urlForAttachment } from "@/utils/text";
 
-
 interface AttachmentResponse {
   id: string;
   url: string;
@@ -108,7 +107,7 @@ export class Shop {
 }
 
 export async function getShop(
-  id: string
+  id: string,
 ): Promise<AxiosResponse<ShopResponse>> {
   return await api.get(ENDPOINTS.STORE.detail(id));
 }

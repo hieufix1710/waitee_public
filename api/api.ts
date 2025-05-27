@@ -2,7 +2,7 @@ import tenantSettings from "../libs/tenant"; // Adjust path as needed for server
 import axios, { AxiosRequestConfig, InternalAxiosRequestConfig } from "axios";
 
 const axiosSetting: AxiosRequestConfig = {
-  baseURL: 'http://localhost:3001/api', // Use env or absolute URL
+  baseURL: "http://localhost:3001/api", // Use env or absolute URL
   headers: {
     "Content-Type": "application/json",
   },
