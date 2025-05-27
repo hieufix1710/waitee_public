@@ -5,14 +5,14 @@ type Params = Promise<{ shopId: string, tenant: string }>
 async function Page({ params }: { params: Params }) {
   // asynchronous access of `params.id`.
   const { shopId, tenant } = await params
-  const shopRes = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/store/${shopId}`, {
+  const shopRes = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/api/store/${shopId}`, {
     headers: {
       'Tenant': tenant,
     },
     cache: 'no-store', // Ensure fresh data
   });
-
-    if (!shopRes.ok) {
+   const result = await shopRes.json();
+    if (!result.id) {
         return (
             <div className="max-w-xl mx-auto my-20 p-10 rounded-3xl bg-white shadow-2xl border border-blue-100 text-center">
                 <h1 className="text-4xl font-bold text-blue-900 mb-4">Không tìm thấy cửa hàng</h1>
@@ -23,7 +23,7 @@ async function Page({ params }: { params: Params }) {
         );
     }
 
-    const shopData = new Shop(await shopRes.json());
+    const shopData = new Shop(result);
 
     return (
         <div className="my-12 p-10 rounded-3xl bg-gradient-to-br from-white via-blue-50 to-blue-100 shadow-2xl border border-blue-100">
