@@ -72,42 +72,42 @@ async function Page({ params }: { params: Params }) {
   const shopData = new Shop(result);
 
   return (
-    <div className="p-10 bg-gradient-to-br from-white via-blue-50 to-blue-100 border-blue-100 h-svh">
+    <div className="p-10 bg-gradient-to-br from-white via-[#ffeaea] to-[#fc6464]/20 border-[#fc6464]/20 h-svh">
       <div className="flex flex-col items-center">
-        {shopData.logo && (
-          <div className="mb-6">
-            <Image
-              src={shopData.logo.url}
-              alt={shopData.name}
-              width={160}
-              height={160}
-              className="w-40 h-40 object-cover rounded-full shadow-lg border-4 border-blue-200 bg-white"
-            />
-          </div>
-        )}
-        <h1 className="text-5xl font-extrabold mb-2 text-blue-900 drop-shadow-sm text-center">
-          {shopData.name}
-        </h1>
-        <p className="text-gray-500 mb-4 text-center">
-          <span className="font-medium">Mã cửa hàng:</span> {shopId} &nbsp;
-        </p>
+      {shopData.logo && (
+        <div className="mb-6">
+        <Image
+          src={shopData.logo.url}
+          alt={shopData.name}
+          width={160}
+          height={160}
+          className="w-40 h-40 object-cover rounded-full shadow-lg border-4 border-[#fc6464]/40 bg-white"
+        />
+        </div>
+      )}
+      <h1 className="text-5xl font-extrabold mb-2 text-[#fc6464] drop-shadow-sm text-center">
+        {shopData.name}
+      </h1>
+      <p className="text-gray-500 mb-4 text-center">
+        {shopData.description}
+      </p>
       </div>
-      <hr className="my-8 border-blue-200" />
+      <hr className="my-8 border-[#fc6464]/30" />
       <section className="text-center">
-        <h2 className="text-2xl font-semibold text-blue-700 mb-3">
-          Chào mừng đến với{" "}
-          <span className="text-blue-800">{shopData.name}</span>!
-        </h2>
-        <p className="text-lg text-gray-700 mb-6">
-          {shopData.description ||
-            "Khám phá cửa hàng của chúng tôi và tận hưởng trải nghiệm độc đáo. Chúng tôi cung cấp những sản phẩm và dịch vụ tốt nhất dành riêng cho bạn!"}
-        </p>
-        <a
-          href={`https://client.waitee.top/${tenant}/${shopId}`}
-          className="inline-block px-8 py-3 bg-blue-600 text-white font-semibold rounded-full shadow hover:bg-blue-700 transition"
-        >
-          Khám phá sản phẩm
-        </a>
+      <h2 className="text-2xl font-semibold text-[#fc6464] mb-3">
+        Chào mừng đến với{" "}
+        <span className="text-[#fc6464]">{shopData.name}</span>!
+      </h2>
+      <p className="text-lg text-gray-700 mb-6">
+        {
+        "Khám phá cửa hàng của chúng tôi và tận hưởng trải nghiệm độc đáo. Chúng tôi cung cấp những sản phẩm và dịch vụ tốt nhất dành riêng cho bạn!"}
+      </p>
+      <a
+        href={`https://client.waitee.top/${tenant}/${shopId}`}
+        className="inline-block px-8 py-3 bg-[#fc6464] text-white font-semibold rounded-full shadow hover:bg-[#e05555] transition"
+      >
+        Truy cập vào cửa hàng
+      </a>
       </section>
     </div>
   );
