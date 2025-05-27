@@ -26,6 +26,10 @@ export default async function Image({ params }: { params: Params }) {
     const result = await shopRes.json();
     const shop = new Shop(result);
 
+    if (!shop.id) {
+        return null
+    }
+
   return new ImageResponse(
     (
       // ImageResponse JSX element
@@ -38,14 +42,18 @@ export default async function Image({ params }: { params: Params }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          backgroundImage: `url(${shop.logo?.url})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
         }}
-      >
+      > {shop.name}
         {shop.description}
       </div>
     ),
     // ImageResponse optionss
     {
       ...size,
+      
     }
   )
 }
