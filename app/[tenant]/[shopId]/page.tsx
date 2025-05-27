@@ -15,6 +15,11 @@ export async function generateMetadata({ params }: { params: Params }) {
         },
     );
     const result = await shopRes.json();
+    const shop = new Shop(result);
+    if (!shop.id) {
+        return {
+        };
+    }
 
     if (!result.id) {
         return {
@@ -33,30 +38,8 @@ export async function generateMetadata({ params }: { params: Params }) {
     return {
         title: result.name,
         description: result.description,
-        keywords: result.keywords || [result.name, "cửa hàng", "waitee"],
-        robots: "index, follow",
-        openGraph: {
-            title: result.name,
-            description: result.description,
-            url: `https://client.waitee.top/${tenant}/${shopId}`,
-            type: "website",
-            images: result.logo?.url
-                ? [
-                        {
-                            url: result.logo.url,
-                            width: 800,
-                            height: 800,
-                            alt: result.name,
-                        },
-                    ]
-                : [],
-        },
-        twitter: {
-            card: "summary_large_image",
-            title: result.name,
-            description: result.description,
-            images: result.logo?.url ? [result.logo.url] : [],
-        },
+        keywords: result.keywords || ["cửa hàng", "waitee", ...shop.name.split(" ")],
+        robots: "index, follow"
     };
 }
 
