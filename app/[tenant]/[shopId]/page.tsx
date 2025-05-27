@@ -4,43 +4,46 @@ import Image from "next/image";
 type Params = Promise<{ shopId: string; tenant: string }>;
 
 export async function generateMetadata({ params }: { params: Params }) {
-    const { shopId, tenant } = await params;
-    const shopRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_HOST}/api/store/${shopId}`,
-        {
-            headers: {
-                Tenant: tenant,
-            },
-            cache: "no-store", // Ensure fresh data
-        },
-    );
-    const result = await shopRes.json();
-    const shop = new Shop(result);
-    if (!shop.id) {
-        return {
-        };
-    }
+  const { shopId, tenant } = await params;
+  const shopRes = await fetch(
+    `${process.env.NEXT_PUBLIC_API_HOST}/api/store/${shopId}`,
+    {
+      headers: {
+        Tenant: tenant,
+      },
+      cache: "no-store", // Ensure fresh data
+    },
+  );
+  const result = await shopRes.json();
+  const shop = new Shop(result);
+  if (!shop.id) {
+    return {};
+  }
 
-    if (!result.id) {
-        return {
-            title: "Store Not Found",
-            description: "No details available.",
-            robots: "noindex, nofollow",
-            openGraph: {
-                title: "Store Not Found",
-                description: "No details available.",
-                url: `https://client.waitee.top/${tenant}/${shopId}`,
-                type: "website",
-            },
-        };
-    }
-
+  if (!result.id) {
     return {
-        title: result.name,
-        description: result.description,
-        keywords: result.keywords || ["cửa hàng", "waitee", ...shop.name.split(" ")],
-        robots: "index, follow"
+      title: "Store Not Found",
+      description: "No details available.",
+      robots: "noindex, nofollow",
+      openGraph: {
+        title: "Store Not Found",
+        description: "No details available.",
+        url: `https://client.waitee.top/${tenant}/${shopId}`,
+        type: "website",
+      },
     };
+  }
+
+  return {
+    title: result.name,
+    description: result.description,
+    keywords: result.keywords || [
+      "cửa hàng",
+      "waitee",
+      ...shop.name.split(" "),
+    ],
+    robots: "index, follow",
+  };
 }
 
 async function Page({ params }: { params: Params }) {
@@ -74,40 +77,39 @@ async function Page({ params }: { params: Params }) {
   return (
     <div className="p-10 bg-gradient-to-br from-white via-[#ffeaea] to-[#fc6464]/20 border-[#fc6464]/20 h-svh">
       <div className="flex flex-col items-center">
-      {shopData.logo && (
-        <div className="mb-6">
-        <Image
-          src={shopData.logo.url}
-          alt={shopData.name}
-          width={160}
-          height={160}
-          className="w-40 h-40 object-cover rounded-full shadow-lg border-4 border-[#fc6464]/40 bg-white"
-        />
-        </div>
-      )}
-      <h1 className="text-5xl font-extrabold mb-2 text-[#fc6464] drop-shadow-sm text-center">
-        {shopData.name}
-      </h1>
-      <p className="text-gray-500 mb-4 text-center">
-        {shopData.description}
-      </p>
+        {shopData.logo && (
+          <div className="mb-6">
+            <Image
+              src={shopData.logo.url}
+              alt={shopData.name}
+              width={160}
+              height={160}
+              className="w-40 h-40 object-cover rounded-full shadow-lg border-4 border-[#fc6464]/40 bg-white"
+            />
+          </div>
+        )}
+        <h1 className="text-5xl font-extrabold mb-2 text-[#fc6464] drop-shadow-sm text-center">
+          {shopData.name}
+        </h1>
+        <p className="text-gray-500 mb-4 text-center">{shopData.description}</p>
       </div>
       <hr className="my-8 border-[#fc6464]/30" />
       <section className="text-center">
-      <h2 className="text-2xl font-semibold text-[#fc6464] mb-3">
-        Chào mừng đến với{" "}
-        <span className="text-[#fc6464]">{shopData.name}</span>!
-      </h2>
-      <p className="text-lg text-gray-700 mb-6">
-        {
-        "Khám phá cửa hàng của chúng tôi và tận hưởng trải nghiệm độc đáo. Chúng tôi cung cấp những sản phẩm và dịch vụ tốt nhất dành riêng cho bạn!"}
-      </p>
-      <a
-        href={`https://client.waitee.top/${tenant}/${shopId}`}
-        className="inline-block px-8 py-3 bg-[#fc6464] text-white font-semibold rounded-full shadow hover:bg-[#e05555] transition"
-      >
-        Truy cập vào cửa hàng
-      </a>
+        <h2 className="text-2xl font-semibold text-[#fc6464] mb-3">
+          Chào mừng đến với{" "}
+          <span className="text-[#fc6464]">{shopData.name}</span>!
+        </h2>
+        <p className="text-lg text-gray-700 mb-6">
+          {
+            "Khám phá cửa hàng của chúng tôi và tận hưởng trải nghiệm độc đáo. Chúng tôi cung cấp những sản phẩm và dịch vụ tốt nhất dành riêng cho bạn!"
+          }
+        </p>
+        <a
+          href={`https://client.waitee.top/${tenant}/${shopId}`}
+          className="inline-block px-8 py-3 bg-[#fc6464] text-white font-semibold rounded-full shadow hover:bg-[#e05555] transition"
+        >
+          Truy cập vào cửa hàng
+        </a>
       </section>
     </div>
   );
