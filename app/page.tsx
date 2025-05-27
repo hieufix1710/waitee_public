@@ -1,6 +1,6 @@
 export default function Home() {
   return (
-    <>
+    <div className="h-svh">
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-blue-50 to-white px-4 py-8">
         <header className="mb-8 text-center">
           <h1 className="text-4xl font-bold text-blue-700 mb-4">
@@ -84,15 +84,15 @@ export default function Home() {
           </ul>
         </section>
         <a
-          href="#"
+          href="https://m.me/553491717858025"
           className="w-full max-w-md bg-blue-600 text-white text-center py-3 rounded-lg font-semibold shadow hover:bg-blue-700 transition"
         >
-          Bắt đầu miễn phí
+          Liên hệ với chúng tôi
         </a>
         <footer className="mt-8 text-gray-400 text-xs text-center">
           &copy; {new Date().getFullYear()} Waitee. Đã đăng ký bản quyền.
         </footer>
       </div>
-    </>
+    </div>
   );
 }

@@ -72,7 +72,7 @@ async function Page({ params }: { params: Params }) {
   const shopData = new Shop(result);
 
   return (
-    <div className="p-10 bg-gradient-to-br from-white via-blue-50 to-blue-100 border-blue-100">
+    <div className="p-10 bg-gradient-to-br from-white via-blue-50 to-blue-100 border-blue-100 h-svh">
       <div className="flex flex-col items-center">
         {shopData.logo && (
           <div className="mb-6">
