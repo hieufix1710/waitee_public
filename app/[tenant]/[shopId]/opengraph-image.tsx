@@ -44,7 +44,7 @@ export default async function Image({ params }: { params: Params }) {
           backgroundImage: `url(${shop.logo?.url})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
+          fontSize: 100,
         }}
       > {shop.name} -
         {shop.description}
@@ -53,7 +53,6 @@ export default async function Image({ params }: { params: Params }) {
     // ImageResponse optionss
     {
       ...size,
-      
     }
   )
 }
