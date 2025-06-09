@@ -1,4 +1,4 @@
-import { Shop } from "@/api/shop/shop";
+import { Shop } from "@/entities/shop";
 import { ImageResponse } from "next/og";
 
 type Params = Promise<{ shopId: string; tenant: string }>;
@@ -15,7 +15,7 @@ export const contentType = "image/png";
 export default async function Image({ params }: { params: Params }) {
   const { shopId, tenant } = await params;
   const shopRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/store/${shopId}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/store/${shopId}`,
     {
       headers: {
         Tenant: tenant,

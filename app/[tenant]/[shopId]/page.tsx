@@ -1,4 +1,4 @@
-import { Shop } from "@/api/shop/shop";
+import { Shop } from "@/entities/shop";
 import Image from "next/image";
 
 type Params = Promise<{ shopId: string; tenant: string }>;
@@ -6,7 +6,7 @@ type Params = Promise<{ shopId: string; tenant: string }>;
 export async function generateMetadata({ params }: { params: Params }) {
   const { shopId, tenant } = await params;
   const shopRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/store/${shopId}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/store/${shopId}`,
     {
       headers: {
         Tenant: tenant,
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: { params: Params }) {
 
   if (!result.id) {
     return {
-      title: "Store Not Found",
+      title: "Không tìm thấy cửa hàng",
       description: "No details available.",
       robots: "noindex, nofollow",
       openGraph: {
@@ -50,7 +50,7 @@ async function Page({ params }: { params: Params }) {
   // asynchronous access of `params.id`.
   const { shopId, tenant } = await params;
   const shopRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/api/store/${shopId}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/store/${shopId}`,
     {
       headers: {
         Tenant: tenant,

@@ -1,7 +1,3 @@
-import { AxiosResponse } from "axios";
-import { api } from "../api";
-import { ENDPOINTS } from "../endpoints";
-import { urlForAttachment } from "@/utils/text";
 
 interface AttachmentResponse {
   id: string;
@@ -104,10 +100,4 @@ export class Shop {
     this.zaloAppSecretKey = zalo_app_secret_key;
     this.logo = logo ? new WAttachment(logo) : null;
   }
-}
-
-export async function getShop(
-  id: string,
-): Promise<AxiosResponse<ShopResponse>> {
-  return await api.get(ENDPOINTS.STORE.detail(id));
 }
