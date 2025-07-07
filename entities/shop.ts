@@ -1,5 +1,6 @@
+import { urlForAttachment } from "@/utils/text";
 
-interface AttachmentResponse {
+export interface AttachmentResponse {
   id: string;
   url: string;
 }
@@ -36,7 +37,7 @@ export interface ShopResponse {
   current_member_id: string;
   zalo_app_id: string | null;
   zalo_app_secret_key: string | null;
-  logo: WAttachment | null;
+  logo: AttachmentResponse | null;
 }
 export class Shop {
   id: string;
