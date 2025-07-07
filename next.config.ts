@@ -5,7 +5,10 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: 'waitee.top'
+        protocol: 'https',
+        hostname: 'waitee.top',
+        port: '',
+        pathname: '/cashier/**',
       },
     ],
   },
