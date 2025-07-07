@@ -3,7 +3,15 @@ const nextConfig = {
   basePath: "",
   assetPrefix: "",
   images: {
-    domains:  ['waitee.top', 'localhost']
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'waitee.top',
+        port: '',
+        pathname: '/**',
+        search: '',
+      },
+    ],
   },
   devIndicators: {
     autoPrerender: false,
