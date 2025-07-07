@@ -48,7 +48,6 @@ export default async function Image({ params }: { params: Params }) {
         }}
       >
         {" "}
-        {shop.name} -{shop.description}
       </div>
     ),
     // ImageResponse optionss
