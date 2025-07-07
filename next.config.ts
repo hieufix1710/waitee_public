@@ -12,6 +12,7 @@ const nextConfig = {
         pathname: '/cashier/**',
       },
     ],
+    unoptimized: true, // Disable image optimization for remote images
   },
   devIndicators: {
     autoPrerender: false,
