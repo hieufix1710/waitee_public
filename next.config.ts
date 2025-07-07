@@ -3,6 +3,7 @@ const nextConfig = {
   basePath: "",
   assetPrefix: "",
   images: {
+    domains: ['waitee.top'],
     remotePatterns: [
       {
         protocol: 'https',
