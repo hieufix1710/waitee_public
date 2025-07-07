@@ -6,10 +6,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'waitee.top',
-        port: '',
-        pathname: '/**',
-        search: '',
+        hostname: 'waitee.top'
       },
     ],
   },
