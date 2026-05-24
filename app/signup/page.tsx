@@ -544,11 +544,11 @@ export default function SignupPage() {
           />
           <label htmlFor="terms" className="text-sm text-zinc-600">
             {t.signup.step3.terms.split(' ')[0]}{' '}
-            <Link href="#" className="font-semibold text-blue-600 hover:text-blue-500">
+            <Link href="/terms" className="font-semibold text-blue-600 hover:text-blue-500">
               {t.signup.step3.termsLink1}
             </Link>{' '}
             {t.common.and}{' '}
-            <Link href="#" className="font-semibold text-blue-600 hover:text-blue-500">
+            <Link href="/privacy" className="font-semibold text-blue-600 hover:text-blue-500">
               {t.signup.step3.termsLink2}
             </Link>
           </label>

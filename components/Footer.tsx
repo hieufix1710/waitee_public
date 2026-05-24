@@ -42,6 +42,15 @@ export default function Footer() {
     },
   ];
 
+  const socials = [{
+    Icon: Github,
+    href: 'https://github.com/Waitee-Group',
+    
+  }, {
+    Icon: Facebook,
+    href: 'https://www.facebook.com/profile.php?id=61575017526469',
+  }]
+
   return (
     <footer className="bg-[#0a0f1a] text-white pt-24 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -59,9 +68,9 @@ export default function Footer() {
               {t.footer.description}
             </p>
             <div className="flex gap-4">
-              {[Twitter, Facebook, Linkedin, Github].map((Icon, i) => (
-                <Link key={i} href="#" className="w-11 h-11 rounded-xl border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 hover:border-white/20 transition-all">
-                  <Icon className="w-5 h-5" />
+              {socials.map((social, i) => (
+                <Link key={i} href={social.href} className="w-11 h-11 rounded-xl border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:bg-white/5 hover:border-white/20 transition-all">
+                  <social.Icon className="w-5 h-5" />
                 </Link>
               ))}
             </div>

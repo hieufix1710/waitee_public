@@ -436,5 +436,37 @@ export const en = {
       title: 'Contact Information',
       content: 'If you have questions about these Terms, please contact us at syn9.vbs@gmail.com or through our support channels.'
     }
+  },
+  securityPage: {
+    title: 'Security',
+    lastUpdated: 'Last updated: {{date}}',
+    introduction: {
+      title: 'Our Commitment to Security',
+      content: 'At WaiteeRetail, security is foundational to everything we build. We employ industry-leading practices to protect your data, ensure service availability, and maintain your trust.'
+    },
+    dataEncryption: {
+      title: 'Data Encryption',
+      content: 'All data transmitted between your devices and our servers is encrypted using TLS 1.3 protocol. Data at rest is encrypted using AES-256 encryption standards. We also encrypt sensitive customer information and payment data to ensure complete protection.'
+    },
+    infrastructure: {
+      title: 'Infrastructure Security',
+      content: 'Our infrastructure is hosted on trusted cloud providers with SOC 2 compliance. We implement network firewalls, intrusion detection systems, and regular vulnerability assessments. All servers are regularly patched and monitored 24/7.'
+    },
+    accessControl: {
+      title: 'Access Control',
+      content: 'Access to systems and customer data is restricted based on the principle of least privilege. Multi-factor authentication is required for all administrative access. We conduct regular access reviews and maintain detailed audit logs of all system activities.'
+    },
+    compliance: {
+      title: 'Compliance & Certifications',
+      content: 'WaiteeRetail complies with applicable data protection regulations including GDPR and Vietnam\'s cybersecurity laws. We undergo regular third-party security audits and maintain compliance with industry standards for payment data security.'
+    },
+    incidentResponse: {
+      title: 'Incident Response',
+      content: 'We maintain a dedicated security incident response team ready to address any potential threats. Our incident response plan includes immediate containment, thorough investigation, timely notification, and preventive measures to avoid recurrence.'
+    },
+    contact: {
+      title: 'Report a Security Issue',
+      content: 'If you discover a security vulnerability or have concerns about the security of our platform, please contact our security team immediately at syn9.vbs@gmail.com. We take all reports seriously and will respond promptly.'
+    }
   }
 };

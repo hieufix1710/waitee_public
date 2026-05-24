@@ -436,5 +436,37 @@ export const vi = {
       title: 'Thông tin Liên hệ',
       content: 'Nếu bạn có câu hỏi về các Điều khoản này, vui lòng liên hệ với chúng tôi tại syn9.vbs@gmail.com hoặc thông qua các kênh hỗ trợ của chúng tôi.'
     }
+  },
+  securityPage: {
+    title: 'Bảo mật',
+    lastUpdated: 'Cập nhật lần cuối: {{date}}',
+    introduction: {
+      title: 'Cam kết Bảo mật của Chúng tôi',
+      content: 'Tại WaiteeRetail, bảo mật là nền tảng cho mọi thứ chúng tôi xây dựng. Chúng tôi áp dụng các biện pháp hàng đầu trong ngành để bảo vệ dữ liệu của bạn, đảm bảo tính khả dụng của dịch vụ và duy trì sự tin tưởng của bạn.'
+    },
+    dataEncryption: {
+      title: 'Mã hóa Dữ liệu',
+      content: 'Tất cả dữ liệu truyền giữa thiết bị của bạn và máy chủ của chúng tôi được mã hóa bằng giao thức TLS 1.3. Dữ liệu lưu trữ được mã hóa theo tiêu chuẩn AES-256. Chúng tôi cũng mã hóa thông tin khách hàng nhạy cảm và dữ liệu thanh toán để đảm bảo bảo vệ toàn diện.'
+    },
+    infrastructure: {
+      title: 'Bảo mật Cơ sở hạ tầng',
+      content: 'Cơ sở hạ tầng của chúng tôi được lưu trữ trên các nhà cung cấp đám mây đáng tin cậy với chứng chỉ SOC 2. Chúng tôi triển khai tường lửa mạng, hệ thống phát hiện xâm nhập và đánh giá lỗ hổng định kỳ. Tất cả máy chủ được vá lỗi thường xuyên và giám sát 24/7.'
+    },
+    accessControl: {
+      title: 'Kiểm soát Truy cập',
+      content: 'Quyền truy cập vào hệ thống và dữ liệu khách hàng được giới hạn dựa trên nguyên tắc đặc quyền tối thiểu. Xác thực đa yếu tố được yêu cầu cho mọi truy cập quản trị. Chúng tôi thực hiện đánh giá truy cập định kỳ và duy trì nhật ký kiểm toán chi tiết của mọi hoạt động hệ thống.'
+    },
+    compliance: {
+      title: 'Tuân thủ & Chứng chỉ',
+      content: 'WaiteeRetail tuân thủ các quy định bảo vệ dữ liệu hiện hành bao gồm GDPR và luật an ninh mạng của Việt Nam. Chúng tôi thực hiện kiểm toán bảo mật bên thứ ba định kỳ và duy trì tuân thủ các tiêu chuẩn ngành về bảo mật dữ liệu thanh toán.'
+    },
+    incidentResponse: {
+      title: 'Xử lý Sự cố',
+      content: 'Chúng tôi duy trì đội ngũ ứng phó sự cố bảo mật chuyên trách sẵn sàng xử lý mọi mối đe dọa tiềm ẩn. Kế hoạch ứng phó sự cố của chúng tôi bao gồm kiểm soát ngay lập tức, điều tra kỹ lưỡng, thông báo kịp thời và các biện pháp phòng ngừa để tránh tái diễn.'
+    },
+    contact: {
+      title: 'Báo cáo Vấn đề Bảo mật',
+      content: 'Nếu bạn phát hiện lỗ hổng bảo mật hoặc có lo ngại về bảo mật của nền tảng, vui lòng liên hệ ngay với đội ngũ bảo mật của chúng tôi tại syn9.vbs@gmail.com. Chúng tôi xem xét tất cả báo cáo một cách nghiêm túc và sẽ phản hồi kịp thời.'
+    }
   }
 };

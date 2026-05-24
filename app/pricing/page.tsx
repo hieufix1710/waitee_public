@@ -17,6 +17,7 @@ import {
 import Link from 'next/link';
 import { CYCLE_LABEL, PRICING_COMPARISON_ROWS, type BillingCycle } from '@/lib/pricing/plans';
 import { usePricingPlans } from '@/hooks/usePricingPlans';
+import { useRouter } from 'next/router';
 
 const faqs = [
   {
@@ -140,9 +141,9 @@ export default function PricingPage() {
                   <p className="mt-2 text-xs text-zinc-500 uppercase tracking-wider">Thanh toán theo {CYCLE_LABEL[plan.billingCycle]}</p>
                 </div>
 
-                <button className={`w-full py-4 rounded-2xl font-bold text-sm mb-10 transition-all ${plan.popular ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-200' : plan.name === 'Free' ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xl shadow-emerald-200' : 'bg-zinc-900 text-white hover:bg-zinc-800'}`}>
+                <a href='/signup' className={`w-full px-3 py-4 text-center rounded-2xl font-bold text-sm mb-10 transition-all ${plan.popular ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-200' : plan.name === 'Free' ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xl shadow-emerald-200' : 'bg-zinc-900 text-white hover:bg-zinc-800'}`}>
                   {plan.cta}
-                </button>
+                </a>
 
                 <div className="space-y-5 mt-auto">
                   <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2">Tính năng bao gồm:</p>
@@ -200,12 +201,12 @@ export default function PricingPage() {
               Tất cả các gói trả phí đều có 14 ngày dùng thử miễn phí với đầy đủ tính năng. Hoặc bắt đầu với gói Miễn phí — không giới hạn thời gian, nâng cấp khi bạn sẵn sàng.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <button className="px-8 py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-all w-full sm:w-auto">
+              <a className="px-8 py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-all w-full sm:w-auto" href="/pricing">
                 Dùng miễn phí ngay
-              </button>
-              <button className="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-all w-full sm:w-auto">
+              </a>
+              <a className="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-all w-full sm:w-auto" href="/pricing">
                 Dùng thử 14 ngày gói cơ bản
-              </button>
+              </a>
             </div>
           </div>
         </div>

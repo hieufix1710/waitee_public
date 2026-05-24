@@ -46,9 +46,8 @@ export async function POST(request: Request) {
         body: JSON.stringify({
             shop: {
                 name: shop_name,
-                address,
-                store_category_id: category_id,
-                custom_category: customCategory,
+                full_address: address,
+                category_id: category_id,
             },
             user: {
                 email,
