@@ -1,23 +1,22 @@
 'use client';
 
-import { useState } from 'react';
-import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Check, 
-  Minus, 
-  ChevronDown, 
+import Navbar from '@/components/Navbar';
+import { usePricingPlans } from '@/hooks/usePricingPlans';
+import { CYCLE_LABEL, buildComparisonRows, type BillingCycle } from '@/lib/pricing/plans';
+import {
+  Check,
+  ChevronDown,
   Mail,
-  Zap,
+  Minus,
   Shield,
   Star,
-  Users
+  Users,
+  Zap
 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
 import Link from 'next/link';
-import { CYCLE_LABEL, PRICING_COMPARISON_ROWS, type BillingCycle } from '@/lib/pricing/plans';
-import { usePricingPlans } from '@/hooks/usePricingPlans';
-import { useRouter } from 'next/router';
+import { useState } from 'react';
 
 const faqs = [
   {
@@ -45,8 +44,9 @@ const faqs = [
 export default function PricingPage() {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const { plansByCycle } = usePricingPlans();
-  const plans = plansByCycle[billingCycle];
+  const { plans, plansByCycle, loading } = usePricingPlans();
+  const currentPlans = plansByCycle[billingCycle];
+  const comparisonRows = buildComparisonRows(plans);
 
   return (
     <main className="min-h-screen bg-white">
@@ -108,8 +108,17 @@ export default function PricingPage() {
             </div>
           </div>
 
+          {loading ? (
+            <div className="flex justify-center py-32">
+              <div className="w-8 h-8 border-4 border-zinc-200 border-t-blue-600 rounded-full animate-spin" />
+            </div>
+          ) : currentPlans.length === 0 ? (
+            <p className="text-center text-zinc-400 py-32">Không có gói dịch vụ nào.</p>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {plans.map((plan, i) => (
+            {currentPlans.map((plan, i) => {
+              const isFree = plan.price === 0;
+              return (
               <motion.div 
                 key={plan.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -118,7 +127,7 @@ export default function PricingPage() {
                 className={`relative flex flex-col p-10 rounded-[32px] border ${plan.popular ? 'border-blue-600 ring-8 ring-blue-50 shadow-2xl shadow-blue-900/10' : 'border-zinc-100 shadow-sm'} bg-white hover:border-zinc-200 transition-all duration-300`}
               >
                 {plan.tag && (
-                  <div className={`absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase ${plan.name === 'Free' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-600 text-white shadow-lg shadow-blue-200'}`}>
+                  <div className={`absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase ${isFree ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-600 text-white shadow-lg shadow-blue-200'}`}>
                     {plan.tag}
                   </div>
                 )}
@@ -141,7 +150,7 @@ export default function PricingPage() {
                   <p className="mt-2 text-xs text-zinc-500 uppercase tracking-wider">Thanh toán theo {CYCLE_LABEL[plan.billingCycle]}</p>
                 </div>
 
-                <a href='/signup' className={`w-full px-3 py-4 text-center rounded-2xl font-bold text-sm mb-10 transition-all ${plan.popular ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-200' : plan.name === 'Free' ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xl shadow-emerald-200' : 'bg-zinc-900 text-white hover:bg-zinc-800'}`}>
+                <a href='/signup' className={`w-full px-3 py-4 text-center rounded-2xl font-bold text-sm mb-10 transition-all ${plan.popular ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-200' : isFree ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xl shadow-emerald-200' : 'bg-zinc-900 text-white hover:bg-zinc-800'}`}>
                   {plan.cta}
                 </a>
 
@@ -149,7 +158,7 @@ export default function PricingPage() {
                   <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2">Tính năng bao gồm:</p>
                   {plan.features.map((feature, idx) => (
                     <div key={idx} className="flex items-center gap-3">
-                      <div className={`w-5 h-5 rounded-full flex items-center justify-center ${plan.name === 'Free' ? 'bg-emerald-50 text-emerald-600' : 'bg-blue-50 text-blue-600'}`}>
+                      <div className={`w-5 h-5 rounded-full flex items-center justify-center ${isFree ? 'bg-emerald-50 text-emerald-600' : 'bg-blue-50 text-blue-600'}`}>
                         <Check className="w-3 h-3" />
                       </div>
                       <span className="text-sm text-zinc-600 font-bold">{feature}</span>
@@ -157,8 +166,10 @@ export default function PricingPage() {
                   ))}
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
+          )}
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="flex items-start gap-4 p-6 rounded-2xl bg-zinc-50 border border-zinc-100">
@@ -225,20 +236,30 @@ export default function PricingPage() {
               <thead>
                 <tr className="border-b border-zinc-100">
                   <th className="py-8 px-4 text-left font-bold text-zinc-400 text-xs uppercase tracking-widest">Tính năng</th>
-                  <th className="py-8 px-4 text-center font-bold text-emerald-600 text-xs uppercase tracking-widest">Free</th>
-                  <th className="py-8 px-4 text-center font-bold text-blue-600 text-xs uppercase tracking-widest">Gói cơ bản</th>
+                  {comparisonRows.length > 0 && Object.keys(comparisonRows[0].values).map((name) => (
+                    <th key={name} className="py-8 px-4 text-center font-bold text-xs uppercase tracking-widest text-blue-600">
+                      {name}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {PRICING_COMPARISON_ROWS.map((row, i) => (
+                {comparisonRows.map((row, i) => (
                   <tr key={i} className="border-b border-zinc-50 hover:bg-zinc-50/50 transition-colors">
                     <td className="py-6 px-4 text-zinc-700 font-bold text-sm">{row.feature}</td>
-                    <td className="py-6 px-4 text-center text-zinc-600 text-sm">
-                      {typeof row.free === 'boolean' ? (row.free ? <Check className="w-5 h-5 text-emerald-500 mx-auto" /> : <Minus className="w-5 h-5 text-zinc-200 mx-auto" />) : row.free}
-                    </td>
-                    <td className="py-6 px-4 text-center text-zinc-600 text-sm">
-                      {typeof row.basic === 'boolean' ? (row.basic ? <Check className="w-5 h-5 text-blue-500 mx-auto" /> : <Minus className="w-5 h-5 text-zinc-200 mx-auto" />) : row.basic}
-                    </td>
+                    {Object.entries(row.values).map(([name, value], ci) => (
+                      <td key={ci} className="py-6 px-4 text-center text-zinc-600 text-sm">
+                        {typeof value === 'boolean' ? (
+                          value ? (
+                            <Check className="w-5 h-5 mx-auto text-blue-500" />
+                          ) : (
+                            <Minus className="w-5 h-5 text-zinc-200 mx-auto" />
+                          )
+                        ) : (
+                          value
+                        )}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>

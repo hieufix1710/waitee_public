@@ -1,32 +1,40 @@
-import { useEffect, useMemo, useState } from 'react';
-import { LANDING_PLANS, type BillingCycle, type LandingPlan } from '@/lib/pricing/plans';
+'use client';
 
-interface PricingPlansApiResponse {
-  source?: 'remote' | 'fallback';
-  plans?: LandingPlan[];
-}
+import { useEffect, useMemo, useState } from 'react';
+import { type BillingCycle, type LandingPlan, mapRemotePlansToLanding } from '@/lib/pricing/plans';
 
 export function usePricingPlans() {
-  const [plans, setPlans] = useState<LandingPlan[]>(LANDING_PLANS);
+  const [plans, setPlans] = useState<LandingPlan[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
 
     async function fetchPlans() {
       try {
-        const response = await fetch('/api/pricing-plans', {
+        setLoading(true);
+        setError(null);
+
+        const response = await fetch('/backend-api/api/man/plans', {
           method: 'GET',
           cache: 'no-store',
         });
 
-        if (!response.ok) return;
+        if (!response.ok) {
+          throw new Error(`Failed to fetch plans: ${response.status}`);
+        }
 
-        const payload = (await response.json()) as PricingPlansApiResponse;
-        if (!isMounted || !Array.isArray(payload.plans) || payload.plans.length === 0) return;
+        const payload = (await response.json()) as any[];
+        if (!isMounted || !Array.isArray(payload) || payload.length === 0) return;
 
-        setPlans(payload.plans);
-      } catch {
-        return;
+        setPlans(mapRemotePlansToLanding(payload));
+      } catch (err) {
+        if (isMounted) {
+          setError(err instanceof Error ? err.message : 'Failed to load plans');
+        }
+      } finally {
+        if (isMounted) setLoading(false);
       }
     }
 
@@ -50,5 +58,7 @@ export function usePricingPlans() {
   return {
     plans,
     plansByCycle,
+    loading,
+    error,
   };
 }

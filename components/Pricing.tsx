@@ -7,8 +7,10 @@ import { CYCLE_LABEL } from '@/lib/pricing/plans';
 import { usePricingPlans } from '@/hooks/usePricingPlans';
 
 export default function Pricing() {
-  const { plansByCycle } = usePricingPlans();
+  const { plansByCycle, loading } = usePricingPlans();
   const plans = plansByCycle.monthly;
+
+  if (loading || plans.length === 0) return null;
 
   return (
     <section id="pricing" className="py-24 bg-zinc-50">
@@ -26,7 +28,9 @@ export default function Pricing() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {plans.map((plan, index) => (
+            {plans.map((plan, index) => {
+              const isFree = plan.price === 0;
+              return (
             <motion.div
               key={plan.id}
               initial={{ opacity: 0, y: 20 }}
@@ -58,7 +62,7 @@ export default function Pricing() {
               <ul className="space-y-4 mb-8">
                 {plan.features.map((feature) => (
                   <li key={feature} className="flex items-center gap-3 text-sm text-zinc-600">
-                    <Check className={`w-5 h-5 ${plan.name === 'Free' ? 'text-emerald-500' : 'text-blue-600'} flex-shrink-0`} />
+                    <Check className={`w-5 h-5 ${isFree ? 'text-emerald-500' : 'text-blue-600'} flex-shrink-0`} />
                     {feature}
                   </li>
                 ))}
@@ -67,13 +71,14 @@ export default function Pricing() {
                 className={`w-full py-4 rounded-xl font-bold transition-all ${
                   plan.popular
                     ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-lg shadow-blue-200'
-                    : plan.name === 'Free' ? 'bg-emerald-600 text-white hover:bg-emerald-700' : 'bg-zinc-100 text-zinc-900 hover:bg-zinc-200'
+                    : isFree ? 'bg-emerald-600 text-white hover:bg-emerald-700' : 'bg-zinc-100 text-zinc-900 hover:bg-zinc-200'
                 }`}
               >
                 {plan.cta}
               </button>
             </motion.div>
-          ))}
+              );
+            })}
         </div>
       </div>
     </section>
