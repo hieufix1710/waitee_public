@@ -5,6 +5,7 @@ import './globals.css';
 
 import ChatButton from '@/components/ChatButton';
 import { LanguageProvider } from '@/lib/i18n/LanguageContext';
+import { AuthProvider } from '@/lib/auth/AuthContext';
 import Providers from './providers';
 
 const inter = Inter({
@@ -43,10 +44,12 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <html lang="vi" className={`${inter.variable} ${manrope.variable}`}>
       <body suppressHydrationWarning className="font-manrope antialiased text-zinc-900 bg-white">
         <LanguageProvider>
+          <AuthProvider>
           <Providers>
             {children}
             <ChatButton />
           </Providers>
+          </AuthProvider>
         </LanguageProvider>
       </body>
     </html>

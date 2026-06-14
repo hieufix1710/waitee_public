@@ -193,6 +193,12 @@ export const en = {
       success: 'Sign up successful! The WaiteeRetail team will contact you soon.',
       usingTestKey: 'Using Turnstile test key for local development.'
     },
+    step4: {
+      title: 'Verify Email',
+      description: 'Enter the 6-digit OTP code sent to your email',
+      verify: 'Verify',
+      resend: 'Resend Code'
+    },
     stepIndicator: 'Step',
     of: 'of',
     continue: 'Continue',
@@ -275,7 +281,13 @@ export const en = {
     error: 'An error occurred',
     success: 'Success',
     close: 'Close',
-    other: 'Other'
+    other: 'Other',
+    logout: 'Logout'
+  },
+  dashboard: {
+    storeInfo: 'My Stores',
+    openPos: 'Open POS',
+    noStores: 'No stores yet'
   },
   aboutPage: {
     hero: {

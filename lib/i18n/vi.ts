@@ -193,6 +193,12 @@ export const vi = {
       success: 'Đăng ký thành công!',
       usingTestKey: 'Đang dùng Turnstile test key miễn phí cho môi trường local.'
     },
+    step4: {
+      title: 'Xác thực email',
+      description: 'Nhập mã OTP gồm 6 chữ số đã gửi đến email của bạn',
+      verify: 'Xác thực',
+      resend: 'Gửi lại mã'
+    },
     stepIndicator: 'Step',
     of: 'of',
     continue: 'Tiếp tục',
@@ -275,7 +281,13 @@ export const vi = {
     error: 'Đã xảy ra lỗi',
     success: 'Thành công',
     close: 'Đóng',
-    other: 'Khác'
+    other: 'Khác',
+    logout: 'Đăng xuất'
+  },
+  dashboard: {
+    storeInfo: 'Cửa hàng của tôi',
+    openPos: 'Mở POS',
+    noStores: 'Chưa có cửa hàng nào'
   },
   aboutPage: {
     hero: {

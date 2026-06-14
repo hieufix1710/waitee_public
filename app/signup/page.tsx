@@ -1,6 +1,7 @@
 'use client';
 
 import BrandLogo from '@/components/BrandLogo';
+import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useQuery } from '@tanstack/react-query';
@@ -19,12 +20,12 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import Link from 'next/link';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Toaster, toast } from 'sonner';
 import { z } from 'zod';
 
-type SignupStep = 1 | 2 | 3;
+type SignupStep = 1 | 2 | 3 | 4;
 
 interface ShopCategory {
   id: number | string;
@@ -96,16 +97,19 @@ const STEP_FIELDS: Record<SignupStep, (keyof SignupFormValues)[]> = {
   1: ['categoryId', 'customCategory'],
   2: ['shopName', 'address'],
   3: ['firstName', 'lastName', 'email', 'phone', 'password', 'confirmPassword', 'terms'],
+  4: [],
 };
+
+const OTP_LENGTH = 6;
 
 export default function SignupPage() {
   const { t } = useLanguage();
+  const { login } = useAuth();
 
   const otherLabel: string = t.common.other ?? 'Other';
 
   const schema = useMemo(
     () => createSignupSchema(t, otherLabel),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [otherLabel]
   );
 
@@ -115,7 +119,6 @@ export default function SignupPage() {
     handleSubmit,
     trigger,
     watch,
-    reset,
     formState: { errors, isSubmitting },
   } = useForm<SignupFormValues>({
     resolver: zodResolver(schema),
@@ -140,6 +143,28 @@ export default function SignupPage() {
   const [mathQuestion, setMathQuestion] = useState('');
   const [mathAnswer, setMathAnswer] = useState('');
   const [mathExpected, setMathExpected] = useState<number | null>(null);
+  const [signupEmail, setSignupEmail] = useState('');
+   const [otp, setOtp] = useState<string[]>(
+    Array(OTP_LENGTH).fill('')
+  );
+
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [verifying, setVerifying] = useState(false);
+  const [otpSending, setOtpSending] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval>>(undefined);
+
+  useEffect(() => {
+    if (cooldown > 0) {
+      timerRef.current = setInterval(() => {
+        setCooldown((prev) => {
+          if (prev <= 1) { clearInterval(timerRef.current); return 0; }
+          return prev - 1;
+        });
+      }, 1000);
+    }
+    return () => clearInterval(timerRef.current);
+  }, [cooldown]);
 
   const watchedCategory = watch('categoryId');
 
@@ -170,7 +195,7 @@ export default function SignupPage() {
   const nextStep = async () => {
     const valid = await trigger(STEP_FIELDS[currentStep]);
     if (!valid) return;
-    if (currentStep < 3) setCurrentStep(s => (s + 1) as SignupStep);
+    if (currentStep < 4) setCurrentStep(s => (s + 1) as SignupStep);
   };
 
   const previousStep = () => {
@@ -216,17 +241,147 @@ export default function SignupPage() {
       }
 
       toast.dismiss(loadingToastId);
-      toast.success(t.signup.step3.success || 'Đăng ký thành công!', {
-        description: 'Cảm ơn bạn đã đăng ký. Hãy kiểm tra email để nhận thông tin đăng nhập!',
-        duration: 5000,
-      });
+      toast.success(t.signup.step3.success || 'Đăng ký thành công!');
 
-      reset();
-      setCurrentStep(1);
-      setMathAnswer('');
+      sessionStorage.setItem('signup_shop', JSON.stringify({ name: data.shopName, address: data.address }));
+      setSignupEmail(data.email);
+      setCurrentStep(4);
     } catch (error) {
       toast.error(t.signup.errors.unknownError || 'Có lỗi xảy ra. Vui lòng thử lại.');
       console.error('Onboard error:', error);
+    }
+  };
+
+  const updateOtp = (index: number, value: string) => {
+  const next = [...otp];
+  next[index] = value;
+  setOtp(next);
+};
+
+const handleChange = (
+  index: number,
+  e: React.ChangeEvent<HTMLInputElement>
+) => {
+  const value = e.target.value.replace(/\D/g, '');
+
+  if (!value) {
+    updateOtp(index, '');
+    return;
+  }
+
+  updateOtp(index, value.slice(-1));
+
+  if (index < OTP_LENGTH - 1) {
+    inputRefs.current[index + 1]?.focus();
+  }
+};
+
+const handleKeyDown = (
+  index: number,
+  e: React.KeyboardEvent<HTMLInputElement>
+) => {
+  switch (e.key) {
+    case 'Backspace':
+      if (otp[index]) {
+        updateOtp(index, '');
+        return;
+      }
+
+      if (index > 0) {
+        updateOtp(index - 1, '');
+        inputRefs.current[index - 1]?.focus();
+      }
+      break;
+
+    case 'ArrowLeft':
+      if (index > 0) {
+        inputRefs.current[index - 1]?.focus();
+      }
+      break;
+
+    case 'ArrowRight':
+      if (index < OTP_LENGTH - 1) {
+        inputRefs.current[index + 1]?.focus();
+      }
+      break;
+  }
+};
+
+const handlePaste = (
+  e: React.ClipboardEvent<HTMLInputElement>
+) => {
+  e.preventDefault();
+
+  const pasted = e.clipboardData
+    .getData('text')
+    .replace(/\D/g, '')
+    .slice(0, OTP_LENGTH);
+
+  if (!pasted) return;
+
+  const next = Array(OTP_LENGTH).fill('');
+
+  pasted.split('').forEach((char, index) => {
+    next[index] = char;
+  });
+
+  setOtp(next);
+
+  const focusIndex = Math.min(
+    pasted.length,
+    OTP_LENGTH - 1
+  );
+
+  inputRefs.current[focusIndex]?.focus();
+};
+
+const otpCode = otp.join('');
+
+
+  const handleVerifyOtp = async () => {
+    if (otpCode.length !== 6) return;
+    setVerifying(true);
+    try {
+      const res = await fetch('/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ otp_code: otpCode, identifier: signupEmail }),
+      });
+      const data = await res.json();
+      if (res.ok && data.user?.uid) {
+        toast.success('Email đã xác nhận thành công!');
+        login(data);
+        setTimeout(() => window.location.href = '/dashboard', 1000);
+      } else {
+        toast.error(data.message || 'Mã OTP không đúng');
+      }
+    } catch {
+      toast.error('Có lỗi xảy ra. Vui lòng thử lại.');
+    } finally {
+      setVerifying(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (cooldown > 0) return;
+    setOtpSending(true);
+    try {
+      const res = await fetch('/api/user/send-email-verification', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user: { email: signupEmail } }),
+      });
+      if (res.status === 429) {
+        const data = await res.json();
+        setCooldown(data?.retry_after || 60);
+        toast.error(data?.message || 'Vui lòng chờ trước khi gửi lại');
+      } else {
+        toast.success('Đã gửi lại mã OTP');
+      }
+    } catch {
+      toast.error('Gửi thất bại');
+    } finally {
+      setOtpSending(false);
     }
   };
 
@@ -244,7 +399,7 @@ export default function SignupPage() {
 
   const renderStepIndicator = () => (
     <div className="mb-8 flex items-center justify-center">
-      {[1, 2, 3].map((step, index) => {
+      {[1, 2, 3, 4].map((step, index) => {
         const isCompleted = currentStep > step;
         const isActive = currentStep === step;
         return (
@@ -260,7 +415,7 @@ export default function SignupPage() {
             >
               {isCompleted ? <Check className="h-4 w-4" /> : step}
             </div>
-            {index < 2 ? (
+            {index < 3 ? (
               <div className={`mx-3 h-0.5 w-14 ${currentStep > step ? 'bg-blue-600' : 'bg-zinc-200'}`} />
             ) : null}
           </div>
@@ -308,7 +463,7 @@ export default function SignupPage() {
         <div className="space-y-6">
           <div className="text-center">
             <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-700">
-              {t.signup.stepIndicator} 1 {t.signup.of} 3
+              {t.signup.stepIndicator} 1 {t.signup.of} 4
             </span>
             <h3 className="mt-3 text-xl font-bold text-zinc-900">{t.signup.step1.title}</h3>
             <p className="mt-1 text-sm text-zinc-600">{t.signup.step1.description}</p>
@@ -386,7 +541,7 @@ export default function SignupPage() {
         <div className="space-y-6">
           <div className="text-center">
             <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-bold text-blue-700">
-              {t.signup.stepIndicator} 2 {t.signup.of} 3
+              {t.signup.stepIndicator} 2 {t.signup.of} 4
             </span>
             <h3 className="mt-3 text-xl font-bold text-zinc-900">{t.signup.step2.title}</h3>
             <p className="mt-1 text-sm text-zinc-600">{t.signup.step2.description}</p>
@@ -437,11 +592,12 @@ export default function SignupPage() {
       );
     }
 
-    return (
+    if (currentStep === 3) {
+      return (
       <div className="space-y-6">
         <div className="text-center">
           <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
-            {t.signup.stepIndicator} 3 {t.signup.of} 3
+            {t.signup.stepIndicator} 3 {t.signup.of} 4
           </span>
           <h3 className="mt-3 text-xl font-bold text-zinc-900">{t.signup.step3.title}</h3>
           <p className="mt-1 text-sm text-zinc-600">{t.signup.step3.description}</p>
@@ -591,6 +747,85 @@ export default function SignupPage() {
         </div>
       </div>
     );
+    }
+
+    if (currentStep === 4) {
+      return (
+      <div className="space-y-6">
+        <div className="text-center">
+          <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
+            {t.signup.stepIndicator} 4 {t.signup.of} 4
+          </span>
+          <h3 className="mt-3 text-xl font-bold text-zinc-900">{t.signup.step4?.title || 'Xác thực email'}</h3>
+          <p className="mt-1 text-sm text-zinc-600">{t.signup.step4?.description || 'Vui lòng nhập mã OTP đã gửi đến email của bạn'}</p>
+        </div>
+
+        <div className="mx-auto max-w-xs space-y-4">
+          <div>
+            <label className="mb-2 block text-center text-sm font-semibold text-zinc-700">{signupEmail}</label>
+            <div className="flex gap-2 justify-center">
+  {otp.map((digit, index) => (
+    <input
+      key={index}
+      ref={el => {
+        inputRefs.current[index] = el;
+      }}
+      type="text"
+      inputMode="numeric"
+      maxLength={1}
+      autoComplete="one-time-code"
+      autoFocus={index === 0}
+      value={digit}
+      onChange={e => handleChange(index, e)}
+      onKeyDown={e => handleKeyDown(index, e)}
+      onPaste={handlePaste}
+      onFocus={e => e.target.select()}
+      className={`h-12 w-12 rounded-xl border text-center text-lg font-bold text-zinc-900 transition-all
+        focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20
+        ${
+          digit
+            ? 'border-blue-600 bg-blue-50'
+            : 'border-zinc-200'
+        }`}
+    />
+  ))}
+</div>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleVerifyOtp}
+            disabled={otp.length !== 6 || verifying}
+            className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-emerald-700 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {verifying ? 'Đang xác thực...' : (t.signup.step4?.verify || 'Xác thực')}
+          </button>
+
+          {cooldown > 0 ? (
+            <div className="w-full text-center">
+              <button
+                type="button"
+                disabled
+                className="w-full cursor-not-allowed rounded-xl border border-zinc-200 bg-zinc-100 px-4 py-3 text-sm font-bold text-zinc-400"
+              >
+                {t.signup.step4?.resend || 'Gửi lại mã'}
+              </button>
+              <p className="mt-1 text-xs text-orange-500">{`Gửi lại sau ${cooldown}s`}</p>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={handleResendOtp}
+              disabled={otpSending}
+              className="flex w-full items-center justify-center gap-2 rounded-xl border border-zinc-300 px-4 py-3 text-sm font-bold text-zinc-700 transition-all hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {otpSending ? 'Đang gửi...' : (t.signup.step4?.resend || 'Gửi lại mã')}
+            </button>
+          )}
+        </div>
+      </div>
+    );
+    }
   };
 
   return (
