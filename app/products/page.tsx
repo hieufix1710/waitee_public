@@ -5,7 +5,6 @@ import Footer from '@/components/Footer';
 import CTA from '@/components/CTA';
 import Pricing from '@/components/Pricing';
 import { motion } from 'motion/react';
-import Link from 'next/link';
 import { 
   BarChart3, 
   Package, 
@@ -15,10 +14,10 @@ import {
   ShieldCheck, 
   Smartphone, 
   Globe,
-  ArrowRight,
   CheckCircle2
 } from 'lucide-react';
 import Image from 'next/image';
+import { appUrl } from '@/utils/constants';
 
 export default function ProductPage() {
   return (
@@ -41,12 +40,22 @@ export default function ProductPage() {
               WaiteeRetail kết hợp sức mạnh của công nghệ đám mây với giao diện thân thiện, giúp bạn tối ưu hóa quy trình bán hàng và tăng trưởng doanh thu vượt trội.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link href="/signup" className="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 w-full sm:w-auto text-center">
-                Dùng thử miễn phí
-              </Link>
-              <Link href="/login" className="px-8 py-4 bg-zinc-100 text-zinc-900 rounded-2xl font-bold text-lg hover:bg-zinc-200 transition-all w-full sm:w-auto text-center">
+              <a
+                href={appUrl.ios || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold text-lg hover:bg-blue-700 transition-all shadow-xl shadow-blue-200 w-full sm:w-auto text-center inline-block"
+              >
+                Tải ứng dụng
+              </a>
+              <a
+                href={appUrl.ios || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-zinc-100 text-zinc-900 rounded-2xl font-bold text-lg hover:bg-zinc-200 transition-all w-full sm:w-auto text-center inline-block"
+              >
                 Xem bản demo
-              </Link>
+              </a>
             </div>
           </motion.div>
         </div>

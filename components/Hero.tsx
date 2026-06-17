@@ -6,6 +6,7 @@ import { Play, CheckCircle2, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { BarChart, Bar, ResponsiveContainer, XAxis, YAxis, Tooltip, Cell } from 'recharts';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { appUrl } from '@/utils/constants';
 
 const data = [
   { name: 'T2', value: 400 },
@@ -61,15 +62,25 @@ export default function Hero() {
               transition={{ duration: 0.5, delay: 0.3 }}
               className="flex flex-col sm:flex-row items-center gap-6 mb-10"
             >
-              <Link href="/signup" className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-sm text-center">
+              <a
+                href={appUrl.ios || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl font-bold transition-all shadow-sm text-center inline-block"
+              >
                 {t.hero.startFree}
-              </Link>
-              <Link href="/login" className="flex items-center gap-2 text-zinc-900 font-bold hover:text-blue-600 transition-colors">
+              </a>
+              <a
+                href={appUrl.ios || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-zinc-900 font-bold hover:text-blue-600 transition-colors"
+              >
                 <div className="w-10 h-10 rounded-full border border-zinc-200 flex items-center justify-center">
                   <Play className="w-4 h-4 fill-current" />
                 </div>
                 {t.hero.watchDemo}
-              </Link>
+              </a>
             </motion.div>
 
             <motion.p

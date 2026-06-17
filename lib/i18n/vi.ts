@@ -157,18 +157,17 @@ export const vi = {
     subtitle: 'Đã có tài khoản? Đăng nhập ngay',
     backHome: 'Quay lại trang chủ',
     step1: {
-      title: 'Loại hình kinh doanh',
-      description: 'Chọn ngành hàng để cá nhân hoá trải nghiệm sử dụng.',
-      label: 'Ngành hàng cụ thể',
-      placeholder: 'Ví dụ: Phụ kiện điện thoại'
+      title: 'Tên cửa hàng',
+      description: 'Nhập tên cửa hàng của bạn để bắt đầu.',
+      tenantName: 'Tên cửa hàng',
+      tenantNamePlaceholder: 'Ví dụ: Cửa hàng của tôi'
     },
     step2: {
-      title: 'Thông tin cửa hàng',
-      description: 'Điền thông tin cơ bản để khởi tạo cửa hàng của bạn.',
-      storeName: 'Tên cửa hàng',
-      storeNamePlaceholder: 'Nhập tên cửa hàng',
-      address: 'Địa chỉ đầy đủ',
-      addressPlaceholder: 'Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành'
+      title: 'Xác thực email',
+      description: 'Nhập email và xác thực bằng mã OTP.',
+      email: 'Địa chỉ Email',
+      emailPlaceholder: 'name@company.com',
+      sendOtp: 'Gửi mã OTP'
     },
     step3: {
       title: 'Thiết lập tài khoản',
@@ -199,6 +198,8 @@ export const vi = {
       verify: 'Xác thực',
       resend: 'Gửi lại mã'
     },
+    tenantNameNote: 'Chỉ chứa chữ cái, số, khoảng trắng, dấu gạch ngang (-) và dấu nháy đơn (\')',
+    processing: 'Đang xử lý...',
     stepIndicator: 'Step',
     of: 'of',
     continue: 'Tiếp tục',
@@ -287,7 +288,15 @@ export const vi = {
   dashboard: {
     storeInfo: 'Cửa hàng của tôi',
     openPos: 'Mở POS',
-    noStores: 'Chưa có cửa hàng nào'
+    noStores: 'Chưa có cửa hàng nào',
+    createShop: 'Tạo cửa hàng',
+    createShopDescription: 'Điền thông tin cửa hàng để bắt đầu bán hàng.',
+    shopName: 'Tên cửa hàng',
+    shopNamePlaceholder: 'Nhập tên cửa hàng',
+    shopAddress: 'Địa chỉ đầy đủ',
+    shopAddressPlaceholder: 'Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành',
+    selectCategory: 'Loại hình kinh doanh',
+    creating: 'Đang tạo...'
   },
   aboutPage: {
     hero: {

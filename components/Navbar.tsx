@@ -6,6 +6,7 @@ import { Globe, Loader2, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { MouseEvent, useEffect, useState } from 'react';
+import { appUrl } from '@/utils/constants';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -23,7 +24,7 @@ export default function Navbar() {
   }, []);
 
   const handleStartClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (pathname === '/signup' || isStarting) {
+    if (isStarting) {
       event.preventDefault();
       return;
     }
@@ -79,17 +80,18 @@ export default function Navbar() {
               <span className="text-xs font-bold text-zinc-700">{lang.toUpperCase()}</span>
             </div>
             {/* <Link href="/login" className="hidden sm:block text-sm font-bold text-zinc-700 hover:text-blue-600 transition-colors">{t.nav.login}</Link> */}
-            <Link
-              href="/signup"
+            <a
+              href={appUrl.ios || '#'}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={handleStartClick}
-              aria-disabled={isStarting}
               className={`bg-blue-600 text-white px-4 sm:px-6 py-2.5 rounded-2xl text-sm font-bold transition-all shadow-sm whitespace-nowrap inline-flex items-center gap-2 ${
                 isStarting ? 'cursor-not-allowed pointer-events-none' : 'hover:bg-blue-700'
               }`}
             >
               {t.nav.start}
               {isStarting && <Loader2 className="w-4 h-4 animate-spin" />}
-            </Link>
+            </a>
             
             {/* Mobile Menu Toggle */}
             <button 

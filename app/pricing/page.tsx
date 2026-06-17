@@ -4,6 +4,7 @@ import Footer from '@/components/Footer';
 import Navbar from '@/components/Navbar';
 import { usePricingPlans } from '@/hooks/usePricingPlans';
 import { CYCLE_LABEL, buildComparisonRows, type BillingCycle } from '@/lib/pricing/plans';
+import { appUrl } from '@/utils/constants';
 import {
   Check,
   ChevronDown,
@@ -150,7 +151,12 @@ export default function PricingPage() {
                   <p className="mt-2 text-xs text-zinc-500 uppercase tracking-wider">Thanh toán theo {CYCLE_LABEL[plan.billingCycle]}</p>
                 </div>
 
-                <a href='/signup' className={`w-full px-3 py-4 text-center rounded-2xl font-bold text-sm mb-10 transition-all ${plan.popular ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-200' : isFree ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xl shadow-emerald-200' : 'bg-zinc-900 text-white hover:bg-zinc-800'}`}>
+                <a
+                  href={appUrl.ios || '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`block w-full px-3 py-4 text-center rounded-2xl font-bold text-sm mb-10 transition-all ${plan.popular ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-200' : isFree ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xl shadow-emerald-200' : 'bg-zinc-900 text-white hover:bg-zinc-800'}`}
+                >
                   {plan.cta}
                 </a>
 
@@ -212,10 +218,20 @@ export default function PricingPage() {
               Tất cả các gói trả phí đều có 14 ngày dùng thử miễn phí với đầy đủ tính năng. Hoặc bắt đầu với gói Miễn phí — không giới hạn thời gian, nâng cấp khi bạn sẵn sàng.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <a className="px-8 py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-all w-full sm:w-auto" href="/pricing">
+              <a
+                href={appUrl.ios || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-all w-full sm:w-auto inline-block"
+              >
                 Dùng miễn phí ngay
               </a>
-              <a className="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-all w-full sm:w-auto" href="/pricing">
+              <a
+                href={appUrl.ios || '#'}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-blue-600 text-white rounded-2xl font-bold hover:bg-blue-700 transition-all w-full sm:w-auto inline-block"
+              >
                 Dùng thử 14 ngày gói cơ bản
               </a>
             </div>
@@ -267,9 +283,14 @@ export default function PricingPage() {
           </div>
           
           <div className="mt-12 text-center">
-            <button className="px-8 py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-all">
+            <a
+              href={appUrl.ios || '#'}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block px-8 py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-all"
+            >
               Bắt đầu miễn phí — Không cần thẻ
-            </button>
+            </a>
           </div>
         </div>
       </section>

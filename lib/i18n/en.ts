@@ -157,18 +157,17 @@ export const en = {
     subtitle: 'Already have an account? Sign in now',
     backHome: 'Back to home',
     step1: {
-      title: 'Business Type',
-      description: 'Choose your industry to personalize your experience.',
-      label: 'Specific Industry',
-      placeholder: 'E.g.: Phone Accessories'
+      title: 'Tenant Name',
+      description: 'Enter your business name to get started.',
+      tenantName: 'Tenant Name',
+      tenantNamePlaceholder: 'e.g. My Store'
     },
     step2: {
-      title: 'Store Information',
-      description: 'Fill in basic information to initialize your store.',
-      storeName: 'Store Name',
-      storeNamePlaceholder: 'Enter store name',
-      address: 'Full Address',
-      addressPlaceholder: 'Street address, ward/commune, district/city, province/city'
+      title: 'Verify Your Email',
+      description: 'Enter your email and verify with the OTP code.',
+      email: 'Email Address',
+      emailPlaceholder: 'name@company.com',
+      sendOtp: 'Send OTP'
     },
     step3: {
       title: 'Account Setup',
@@ -199,6 +198,8 @@ export const en = {
       verify: 'Verify',
       resend: 'Resend Code'
     },
+    tenantNameNote: 'Only letters, numbers, spaces, hyphens (-) and apostrophes (\') are allowed.',
+    processing: 'Processing...',
     stepIndicator: 'Step',
     of: 'of',
     continue: 'Continue',
@@ -287,7 +288,15 @@ export const en = {
   dashboard: {
     storeInfo: 'My Stores',
     openPos: 'Open POS',
-    noStores: 'No stores yet'
+    noStores: 'No stores yet',
+    createShop: 'Create Shop',
+    createShopDescription: 'Fill in your store information to start selling.',
+    shopName: 'Shop Name',
+    shopNamePlaceholder: 'Enter shop name',
+    shopAddress: 'Full Address',
+    shopAddressPlaceholder: 'Street address, ward, district, city',
+    selectCategory: 'Business Type',
+    creating: 'Creating...'
   },
   aboutPage: {
     hero: {
