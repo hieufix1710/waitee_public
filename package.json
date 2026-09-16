@@ -7,7 +7,14 @@
     "build": "next build",
     "start": "next start -p 3003",
     "lint": "eslint .",
-    "clean": "next clean"
+    "clean": "next clean",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@google/genai": "^1.17.0",
