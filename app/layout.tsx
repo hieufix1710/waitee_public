@@ -4,6 +4,7 @@ import { Inter, Manrope } from 'next/font/google';
 import './globals.css';
 
 import ChatButton from '@/components/ChatButton';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 import { LanguageProvider } from '@/lib/i18n/LanguageContext';
 import { AuthProvider } from '@/lib/auth/AuthContext';
 import Providers from './providers';
@@ -40,9 +41,12 @@ export const viewport: Viewport = {
 };
 
 export default function RootLayout({children}: {children: React.ReactNode}) {
+  const gaId = "G-8VYG2YYS05";
+
   return (
     <html lang="vi" className={`${inter.variable} ${manrope.variable}`}>
       <body suppressHydrationWarning className="font-manrope antialiased text-zinc-900 bg-white">
+        <GoogleAnalytics gaId={gaId} />
         <LanguageProvider>
           <AuthProvider>
           <Providers>
