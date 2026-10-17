@@ -272,6 +272,27 @@ export const vi = {
     confirmCreate: 'Xác nhận tạo',
     back: 'Quay lại',
   },
+  profile: {
+    title: 'Hồ sơ cá nhân',
+    myStores: 'Cửa hàng của tôi',
+    email: 'Email',
+    phone: 'Số điện thoại',
+    verified: 'Đã xác minh',
+    notProvided: 'Chưa cập nhật',
+    dangerZone: 'Vùng nguy hiểm',
+    deleteDescription:
+      'Xoá tài khoản sẽ vô hiệu hoá đăng nhập và bạn sẽ không thể truy cập dữ liệu cửa hàng của mình nữa. Hành động này không thể hoàn tác.',
+    deleteAccount: 'Xoá tài khoản',
+    deleteModalTitle: 'Bạn có chắc muốn xoá tài khoản?',
+    deleteModalMessage:
+      'Tài khoản của bạn sẽ bị vô hiệu hoá ngay lập tức. Hãy chắc chắn bạn đã sao lưu mọi dữ liệu cần thiết.',
+    deleteConfirmLabel: 'Nhập "{{word}}" để xác nhận',
+    confirmWord: 'XÓA',
+    deleting: 'Đang xoá...',
+    deleteSuccess: 'Tài khoản của bạn đã được xoá.',
+    deleteError: 'Không thể xoá tài khoản. Vui lòng thử lại.',
+    sessionExpired: 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.',
+  },
   aboutPage: {
     hero: {
       badge: 'CÂU CHUYỆN CỦA CHÚNG TÔI',

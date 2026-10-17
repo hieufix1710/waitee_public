@@ -270,6 +270,27 @@ export const en = {
     confirmCreate: 'Confirm & create',
     back: 'Back',
   },
+  profile: {
+    title: 'Profile',
+    myStores: 'My Stores',
+    email: 'Email',
+    phone: 'Phone number',
+    verified: 'Verified',
+    notProvided: 'Not provided',
+    dangerZone: 'Danger zone',
+    deleteDescription:
+      'Deleting your account disables sign-in and you will no longer be able to access your store data. This action cannot be undone.',
+    deleteAccount: 'Delete account',
+    deleteModalTitle: 'Are you sure you want to delete your account?',
+    deleteModalMessage:
+      'Your account will be disabled immediately. Make sure you have backed up anything you need first.',
+    deleteConfirmLabel: 'Type "{{word}}" to confirm',
+    confirmWord: 'DELETE',
+    deleting: 'Deleting...',
+    deleteSuccess: 'Your account has been deleted.',
+    deleteError: 'Could not delete your account. Please try again.',
+    sessionExpired: 'Your session has expired. Please sign in again.',
+  },
   aboutPage: {
     hero: {
       badge: 'OUR STORY',

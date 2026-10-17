@@ -3,9 +3,9 @@
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { useAuth } from '@/lib/auth';
 import BrandLogo from '@/components/BrandLogo';
-import { Globe, LogOut, Menu, X } from 'lucide-react';
+import { Globe, Menu, X } from 'lucide-react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { affiliateUrl } from '@/utils/constants';
 
@@ -13,9 +13,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
   const { t, lang, setLang } = useLanguage();
-  const { user, isAuthenticated, logout } = useAuth();
+  const { user, isAuthenticated } = useAuth();
 
   const displayName =
     user?.full_name ||
@@ -23,12 +22,6 @@ export default function Navbar() {
     user?.email ||
     '';
   const initial = displayName.trim().charAt(0).toUpperCase();
-
-  const handleLogout = () => {
-    logout();
-    setMobileMenuOpen(false);
-    router.push('/');
-  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,7 +95,7 @@ export default function Navbar() {
             {isAuthenticated ? (
               <div className="hidden sm:flex items-center gap-3">
                 <Link
-                  href="/dashboard"
+                  href="/profile"
                   className="flex items-center gap-2 rounded-full border border-zinc-200 py-1 pl-1 pr-3 transition-colors hover:bg-zinc-50"
                 >
                   <span className="flex h-8 w-8 items-center justify-center rounded-full bg-blue-600 text-xs font-bold text-white">
@@ -112,15 +105,6 @@ export default function Navbar() {
                     {displayName}
                   </span>
                 </Link>
-                <button
-                  type="button"
-                  onClick={handleLogout}
-                  title={t.common.logout}
-                  aria-label={t.common.logout}
-                  className="p-2 text-zinc-500 transition-colors hover:text-blue-600"
-                >
-                  <LogOut className="h-4 w-4" />
-                </button>
               </div>
             ) : (
               <>
@@ -184,7 +168,7 @@ export default function Navbar() {
           {isAuthenticated ? (
             <>
               <Link
-                href="/dashboard"
+                href="/profile"
                 className="flex items-center gap-3 rounded-xl border border-zinc-200 px-4 py-3"
                 onClick={() => setMobileMenuOpen(false)}
               >
@@ -195,17 +179,9 @@ export default function Navbar() {
                   <span className="block truncate text-base font-bold text-zinc-800">
                     {displayName}
                   </span>
-                  <span className="block text-xs text-zinc-500">{t.dashboard.storeInfo}</span>
+                  <span className="block text-xs text-zinc-500">{t.profile.title}</span>
                 </span>
               </Link>
-              <button
-                type="button"
-                onClick={handleLogout}
-                className="flex w-full items-center justify-center gap-2 rounded-xl border border-zinc-200 px-4 py-3 text-base font-bold text-zinc-700 transition-colors hover:bg-zinc-50"
-              >
-                <LogOut className="h-4 w-4" />
-                {t.common.logout}
-              </button>
             </>
           ) : (
             <>

@@ -385,6 +385,13 @@ export default function DashboardPage() {
             </Link>
             <div className="flex items-center gap-3">
               <Link
+                href="/profile"
+                className="hidden items-center gap-2 rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 sm:flex"
+              >
+                <User className="h-4 w-4" />
+                {t.profile?.title || 'Hồ sơ'}
+              </Link>
+              <Link
                 href="/"
                 className="hidden items-center gap-2 rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 sm:flex"
               >
@@ -398,7 +405,7 @@ export default function DashboardPage() {
                 }}
                 className="flex items-center gap-2 rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50"
               >
-                <LogOut className="h-4 w-4" />
+                <LogOut className="h-4 w-4 text-red-500" />
                 {t.common?.logout || 'Đăng xuất'}
               </button>
             </div>
