@@ -245,6 +245,7 @@ export const vi = {
     backHome: 'Về trang chủ',
     close: 'Đóng',
     loading: 'Đang tải...',
+    skipToContent: 'Bỏ qua điều hướng, đến nội dung chính',
   },
   dashboard: {
     storeInfo: 'Cửa hàng của tôi',

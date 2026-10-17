@@ -243,6 +243,7 @@ export const en = {
     backHome: 'Back to home',
     close: 'Close',
     loading: 'Loading...',
+    skipToContent: 'Skip navigation, go to main content',
   },
   dashboard: {
     storeInfo: 'My Stores',

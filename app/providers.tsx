@@ -1,8 +1,10 @@
 'use client';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { MotionConfig } from 'motion/react';
 import { ReactNode, useState } from 'react';
 import ReferralCapture from '@/components/ReferralCapture';
+import SkipLink from '@/components/SkipLink';
 
 interface ProvidersProps {
   children: ReactNode;
@@ -13,8 +15,11 @@ export default function Providers({ children }: ProvidersProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <ReferralCapture />
-      {children}
+      <MotionConfig reducedMotion="user">
+        <SkipLink />
+        <ReferralCapture />
+        {children}
+      </MotionConfig>
     </QueryClientProvider>
   );
 }

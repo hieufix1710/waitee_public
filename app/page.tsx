@@ -8,14 +8,16 @@ import POSVietnam from '@/components/POSVietnam';
 
 export default function Home() {
   return (
-    <main className="min-h-screen">
+    <>
       <Navbar />
-      <Hero />
-      <Features />
-      <POSVietnam />
-      <FAQ />
-      <CTA />
-      <Footer />
-    </main>
+      <main id="main-content" tabIndex={-1} className="min-h-screen">
+        <Hero />
+        <Features />
+        <POSVietnam />
+        <FAQ />
+        <CTA />
+        <Footer />
+      </main>
+    </>
   );
 }

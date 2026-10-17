@@ -357,6 +357,8 @@ export default function DashboardPage() {
   if (!mounted || !user) {
     return (
       <main
+        id="main-content"
+        tabIndex={-1}
         aria-busy="true"
         aria-live="polite"
         className="flex min-h-screen items-center justify-center bg-zinc-50"
@@ -372,7 +374,7 @@ export default function DashboardPage() {
 
   return (
     <>
-      <main className="min-h-screen bg-zinc-50">
+      <main id="main-content" tabIndex={-1} className="min-h-screen bg-zinc-50">
         <nav className="border-b border-zinc-200 bg-white px-6 py-4">
           <div className="mx-auto flex max-w-5xl items-center justify-between">
             <Link href="/" className="flex items-center gap-3">

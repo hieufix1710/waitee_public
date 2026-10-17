@@ -1,12 +1,13 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useReducedMotion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const shouldReduceMotion = useReducedMotion();
   const { t } = useLanguage();
 
   return (
@@ -52,10 +53,12 @@ export default function FAQ() {
                     id={`faq-answer-${index}`}
                     role="region"
                     aria-labelledby={`faq-question-${index}`}
-                    initial={{ height: 0, opacity: 0 }}
+                    initial={shouldReduceMotion ? false : { height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: 'easeInOut' }}
+                    exit={shouldReduceMotion ? undefined : { height: 0, opacity: 0 }}
+                    transition={
+                      shouldReduceMotion ? { duration: 0 } : { duration: 0.3, ease: 'easeInOut' }
+                    }
                   >
                     <div className="px-8 pb-8 text-zinc-500 text-base leading-relaxed border-t border-zinc-100 pt-6">
                       {faq.a}

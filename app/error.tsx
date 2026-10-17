@@ -17,7 +17,11 @@ export default function Error({
   }, [error]);
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-white">
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="min-h-screen flex items-center justify-center bg-white"
+    >
       <div className="text-center max-w-md px-4">
         <h1 className="text-2xl font-black text-zinc-900 mb-4">{t.errorPage.title}</h1>
         <p className="text-zinc-500 mb-8">{t.errorPage.message}</p>

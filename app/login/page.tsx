@@ -78,7 +78,11 @@ export default function LoginPage() {
         : t.login.oauthError;
 
   return (
-    <main className="flex min-h-dvh items-center justify-center bg-zinc-50 px-4 py-10">
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="flex min-h-dvh items-center justify-center bg-zinc-50 px-4 py-10"
+    >
       <div className="w-full max-w-md">
         <Link
           href="/"
