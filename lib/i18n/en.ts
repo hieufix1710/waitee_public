@@ -207,6 +207,7 @@ export const en = {
       'Leave empty to see all your stores. Enter a tenant name to open that store POS directly.',
     oauthNotConfigured: 'Sign-in is not configured. Please contact your administrator.',
     oauthError: 'Unable to sign in. Please try again.',
+    sessionExpired: 'Your session has expired. Please sign in again.',
   },
   footer: {
     product: 'Product',

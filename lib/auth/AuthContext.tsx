@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
-const AUTH_KEY = 'hiu-auth';
+import { AUTH_KEY } from './authFetch';
 
 interface AuthData {
   access_token: string;

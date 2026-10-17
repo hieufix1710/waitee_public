@@ -1,7 +1,7 @@
 'use client';
 
 import BrandLogo from '@/components/BrandLogo';
-import { useAuth } from '@/lib/auth';
+import { authFetch, getStoredAuth, useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { getStoredRef } from '@/lib/referral';
 import { useQuery } from '@tanstack/react-query';
@@ -108,23 +108,17 @@ export default function DashboardPage() {
 
   const fetchStores = async () => {
     try {
-      const raw = localStorage.getItem('hiu-auth');
-      if (!raw) return;
-      const auth = JSON.parse(raw);
-      const token = `Bearer ${auth.access_token}`;
+      const auth = getStoredAuth();
+      if (!auth) return;
       // When the user logged in with a specific tenant, only show the stores
       // they can access within it.
       const tenant = typeof auth.tenant === 'string' ? auth.tenant.trim() : '';
       setTenantFilter(tenant);
 
       // Sessions can hold either a Doorkeeper access token (OAuth) or a legacy
-      // JWT (onboarding OTP); send both headers so the backend accepts either.
-      const res = await fetch('/api/user/accessible-stores', {
-        headers: {
-          Authorization: token,
-          'X-Waitee-Token': token,
-        },
-      });
+      // JWT (onboarding OTP); authFetch sends both headers so the backend
+      // accepts either, and logs out + redirects on a 401.
+      const res = await authFetch('/api/user/accessible-stores');
       if (res.ok) {
         const body = await res.json();
         const all: StoreItem[] = body?.data || [];
@@ -188,20 +182,18 @@ export default function DashboardPage() {
 
     setCreating(true);
     try {
-      const raw = localStorage.getItem('hiu-auth');
-      if (!raw) {
+      const auth = getStoredAuth();
+      if (!auth) {
         toast.error('Phiên đăng nhập hết hạn');
         return;
       }
-      const auth = JSON.parse(raw);
 
       const ref = getStoredRef();
 
-      const res = await fetch('/api/user/onboard', {
+      const res = await authFetch('/api/user/onboard', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Waitee-Token': `Bearer ${auth.access_token}`,
         },
         body: JSON.stringify({
           user: { email: auth.user.email },
@@ -259,19 +251,16 @@ export default function DashboardPage() {
 
     setCreating(true);
     try {
-      const raw = localStorage.getItem('hiu-auth');
-      if (!raw) {
+      const auth = getStoredAuth();
+      if (!auth) {
         toast.error('Phiên đăng nhập hết hạn');
         return;
       }
-      const auth = JSON.parse(raw);
 
-      const res = await fetch('/api/user/branches', {
+      const res = await authFetch('/api/user/branches', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${auth.access_token}`,
-          'X-Waitee-Token': `Bearer ${auth.access_token}`,
         },
         body: JSON.stringify({
           tenant: targetTenant,

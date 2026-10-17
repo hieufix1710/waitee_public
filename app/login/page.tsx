@@ -71,7 +71,11 @@ export default function LoginPage() {
   };
 
   const errorMessage =
-    errorCode === 'oauth_not_configured' ? t.login.oauthNotConfigured : t.login.oauthError;
+    errorCode === 'oauth_not_configured'
+      ? t.login.oauthNotConfigured
+      : errorCode === 'session_expired'
+        ? t.login.sessionExpired
+        : t.login.oauthError;
 
   return (
     <main className="flex min-h-dvh items-center justify-center bg-zinc-50 px-4 py-10">

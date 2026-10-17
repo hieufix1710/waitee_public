@@ -209,6 +209,7 @@ export const vi = {
       'Để trống để xem tất cả cửa hàng. Nhập tên tenant để vào thẳng POS của cửa hàng đó.',
     oauthNotConfigured: 'Đăng nhập chưa được cấu hình. Vui lòng liên hệ quản trị viên.',
     oauthError: 'Không thể đăng nhập. Vui lòng thử lại.',
+    sessionExpired: 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.',
   },
   footer: {
     product: 'Sản phẩm',
