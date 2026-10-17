@@ -27,6 +27,7 @@ export default function LoginPage() {
 
   const [mounted, setMounted] = useState(false);
   const [tenant, setTenant] = useState('');
+  const [tenantError, setTenantError] = useState(false);
   const [errorCode, setErrorCode] = useState('');
   const processedHash = useRef(false);
 
@@ -64,9 +65,13 @@ export default function LoginPage() {
   }, [mounted, login, router, t]);
 
   const handleLogin = () => {
-    const params = new URLSearchParams({ returnTo: '/dashboard' });
     const trimmed = tenant.trim();
-    if (trimmed) params.set('tenant', trimmed);
+    if (!trimmed) {
+      setTenantError(true);
+      return;
+    }
+    setTenantError(false);
+    const params = new URLSearchParams({ returnTo: '/dashboard', tenant: trimmed });
     window.location.href = `${OAUTH_START_URL}?${params.toString()}`;
   };
 
@@ -118,13 +123,32 @@ export default function LoginPage() {
               <input
                 id="tenant"
                 value={tenant}
-                onChange={(e) => setTenant(e.target.value)}
+                onChange={(e) => {
+                  setTenant(e.target.value);
+                  if (tenantError) setTenantError(false);
+                }}
                 placeholder={t.login.tenantPlaceholder}
                 autoComplete="organization"
-                className="w-full rounded-xl border border-zinc-200 px-3 py-3 pl-10 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                required
+                aria-required="true"
+                aria-invalid={tenantError}
+                aria-describedby={tenantError ? 'tenant-error' : 'tenant-hint'}
+                className={`w-full rounded-xl border px-3 py-3 pl-10 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:outline-none focus:ring-2 ${
+                  tenantError
+                    ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20'
+                    : 'border-zinc-200 focus:border-blue-600 focus:ring-blue-600/20'
+                }`}
               />
             </div>
-            <p className="mt-1.5 text-xs text-zinc-500">{t.login.tenantHint}</p>
+            {tenantError ? (
+              <p id="tenant-error" className="mt-1.5 text-xs font-medium text-red-600">
+                {t.login.tenantRequired}
+              </p>
+            ) : (
+              <p id="tenant-hint" className="mt-1.5 text-xs text-zinc-500">
+                {t.login.tenantHint}
+              </p>
+            )}
           </div>
 
           <button

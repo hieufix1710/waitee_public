@@ -207,10 +207,10 @@ export const vi = {
     signUpLink: 'Đăng ký tài khoản mới miễn phí',
     backHome: 'Quay lại trang chủ',
     continueWith: 'Đăng nhập với Waitee',
-    tenant: 'Tên cửa hàng (tenant)',
+    tenant: 'Tên nhà bán (tenant)',
     tenantPlaceholder: 'Ví dụ: retail01',
-    tenantHint:
-      'Để trống để xem tất cả cửa hàng. Nhập tên tenant để vào thẳng POS của cửa hàng đó.',
+    tenantHint: 'Nhập tên nhà bán (tenant) bạn muốn đăng nhập.',
+    tenantRequired: 'Vui lòng nhập tên nhà bán (tenant).',
     oauthNotConfigured: 'Đăng nhập chưa được cấu hình. Vui lòng liên hệ quản trị viên.',
     oauthError: 'Không thể đăng nhập. Vui lòng thử lại.',
     sessionExpired: 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.',

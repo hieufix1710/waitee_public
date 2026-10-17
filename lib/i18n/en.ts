@@ -205,10 +205,10 @@ export const en = {
     signUpLink: 'sign up for a new free account',
     backHome: 'Back to home',
     continueWith: 'Continue with Waitee',
-    tenant: 'Store name (tenant)',
+    tenant: 'Seller name (tenant)',
     tenantPlaceholder: 'e.g. retail01',
-    tenantHint:
-      'Leave empty to see all your stores. Enter a tenant name to open that store POS directly.',
+    tenantHint: 'Enter the seller (tenant) name you want to sign in to.',
+    tenantRequired: 'Please enter the seller name (tenant).',
     oauthNotConfigured: 'Sign-in is not configured. Please contact your administrator.',
     oauthError: 'Unable to sign in. Please try again.',
     sessionExpired: 'Your session has expired. Please sign in again.',
