@@ -5,7 +5,7 @@ import { MessageSquare } from 'lucide-react';
 
 export default function ChatButton() {
   const handleClick = () => {
-    window.open('https://m.me/553491717858025', '_blank');
+    window.open('https://m.me/553491717858025', '_blank', 'noopener,noreferrer');
   };
 
   return (

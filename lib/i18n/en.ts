@@ -14,6 +14,10 @@ export const en = {
     login: 'Log in',
     affiliate: 'Become an affiliate',
     start: 'Get Started',
+    mainMenu: 'Main menu',
+    openMenu: 'Open menu',
+    closeMenu: 'Close menu',
+    switchLanguage: 'Switch language',
   },
   hero: {
     badge: 'RETAIL MANAGEMENT, A REVOLUTION.',
@@ -236,6 +240,9 @@ export const en = {
     other: 'Other',
     cancel: 'Cancel',
     logout: 'Log out',
+    backHome: 'Back to home',
+    close: 'Close',
+    loading: 'Loading...',
   },
   dashboard: {
     storeInfo: 'My Stores',

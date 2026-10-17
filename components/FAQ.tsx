@@ -28,6 +28,10 @@ export default function FAQ() {
               className={`rounded-[24px] border transition-all duration-300 ${openIndex === index ? 'bg-zinc-50 border-zinc-200 shadow-sm' : 'bg-white border-zinc-100 hover:border-zinc-200'}`}
             >
               <button
+                type="button"
+                id={`faq-question-${index}`}
+                aria-expanded={openIndex === index}
+                aria-controls={openIndex === index ? `faq-answer-${index}` : undefined}
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full px-8 py-7 flex items-center justify-between text-left transition-colors"
               >
@@ -45,6 +49,9 @@ export default function FAQ() {
               <AnimatePresence>
                 {openIndex === index && (
                   <motion.div
+                    id={`faq-answer-${index}`}
+                    role="region"
+                    aria-labelledby={`faq-question-${index}`}
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}

@@ -28,6 +28,11 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     setMounted(true);
   }, []);
 
+  // Keep the document language in sync so screen readers use the right voice.
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
+
   const setLang = (newLang: Language) => {
     setLangState(newLang);
     localStorage.setItem('lang', newLang);

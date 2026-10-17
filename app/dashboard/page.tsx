@@ -17,8 +17,9 @@ import {
   X,
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Toaster, toast } from 'sonner';
 
 interface StoreItem {
@@ -49,6 +50,8 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
   const [tenantFilter, setTenantFilter] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const previouslyFocusedRef = useRef<HTMLElement | null>(null);
 
   const [tenantName, setTenantName] = useState('');
   const [shopName, setShopName] = useState('');
@@ -310,29 +313,93 @@ export default function DashboardPage() {
     setShowCreateModal(true);
   };
 
-  if (!mounted || !user) return null;
+  // Modal a11y: close on Escape, lock background scroll, move focus into the
+  // dialog and restore it to the trigger when closed.
+  useEffect(() => {
+    if (!showCreateModal) return;
+    previouslyFocusedRef.current = document.activeElement as HTMLElement | null;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowCreateModal(false);
+        setBranchQuote(null);
+        return;
+      }
+      if (event.key !== 'Tab' || !modalRef.current) return;
+      const focusable = Array.from(
+        modalRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ),
+      );
+      if (focusable.length === 0) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      if (event.shiftKey && (active === first || active === modalRef.current)) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const frame = window.requestAnimationFrame(() => modalRef.current?.focus());
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = originalOverflow;
+      window.cancelAnimationFrame(frame);
+      previouslyFocusedRef.current?.focus();
+    };
+  }, [showCreateModal]);
+
+  if (!mounted || !user) {
+    return (
+      <main
+        aria-busy="true"
+        aria-live="polite"
+        className="flex min-h-screen items-center justify-center bg-zinc-50"
+      >
+        <span className="sr-only">{t.common.loading}</span>
+        <div
+          className="h-8 w-8 animate-spin rounded-full border-2 border-blue-600 border-t-transparent"
+          aria-hidden="true"
+        />
+      </main>
+    );
+  }
 
   return (
     <>
       <main className="min-h-screen bg-zinc-50">
         <nav className="border-b border-zinc-200 bg-white px-6 py-4">
           <div className="mx-auto flex max-w-5xl items-center justify-between">
-            <div className="flex items-center gap-3">
+            <Link href="/" className="flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600">
                 <BrandLogo className="h-8 w-8 object-contain" />
               </div>
               <span className="text-lg font-bold text-zinc-900">WaiteeRetail</span>
+            </Link>
+            <div className="flex items-center gap-3">
+              <Link
+                href="/"
+                className="hidden items-center gap-2 rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50 sm:flex"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                {t.common?.backHome || 'Về trang chủ'}
+              </Link>
+              <button
+                onClick={() => {
+                  logout();
+                  router.push('/');
+                }}
+                className="flex items-center gap-2 rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50"
+              >
+                <LogOut className="h-4 w-4" />
+                {t.common?.logout || 'Đăng xuất'}
+              </button>
             </div>
-            <button
-              onClick={() => {
-                logout();
-                router.push('/');
-              }}
-              className="flex items-center gap-2 rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50"
-            >
-              <LogOut className="h-4 w-4" />
-              {t.common?.logout || 'Đăng xuất'}
-            </button>
           </div>
         </nav>
 
@@ -426,13 +493,19 @@ export default function DashboardPage() {
       {showCreateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <motion.div
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="create-shop-title"
+            tabIndex={-1}
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="relative w-full max-w-lg rounded-2xl border border-zinc-100 bg-white p-6 shadow-xl"
+            className="relative w-full max-w-lg rounded-2xl border border-zinc-100 bg-white p-6 shadow-xl focus:outline-none"
           >
             <button
               type="button"
               onClick={closeCreateModal}
+              aria-label={t.common.close}
               className="absolute right-4 top-4 text-zinc-400 transition-colors hover:text-zinc-600"
             >
               <X className="h-5 w-5" />
@@ -440,7 +513,7 @@ export default function DashboardPage() {
 
             {branchQuote ? (
               <div>
-                <h3 className="mb-1 text-xl font-bold text-zinc-900">
+                <h3 id="create-shop-title" className="mb-1 text-xl font-bold text-zinc-900">
                   {t.dashboard?.extraBranchTitle || 'Chi nhánh vượt gói'}
                 </h3>
                 <p className="mb-4 text-sm text-zinc-600">
@@ -483,7 +556,7 @@ export default function DashboardPage() {
               </div>
             ) : (
               <>
-                <h3 className="mb-1 text-xl font-bold text-zinc-900">
+                <h3 id="create-shop-title" className="mb-1 text-xl font-bold text-zinc-900">
                   {isBranchMode
                     ? t.dashboard?.addBranch || 'Thêm chi nhánh'
                     : t.dashboard?.createShop || 'Tạo cửa hàng'}
@@ -498,10 +571,14 @@ export default function DashboardPage() {
                 <div className="space-y-5">
                   {!tenantFilter && tenantOptions.length > 0 && (
                     <div>
-                      <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                      <label
+                        htmlFor="target-tenant"
+                        className="mb-2 block text-sm font-semibold text-zinc-900"
+                      >
                         {t.dashboard?.selectTenant || 'Chọn cửa hàng (tenant)'}
                       </label>
                       <select
+                        id="target-tenant"
                         value={targetTenant}
                         onChange={(e) => setTargetTenant(e.target.value)}
                         className="block w-full rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-900 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
@@ -519,23 +596,31 @@ export default function DashboardPage() {
                   {!isBranchMode && (
                     <>
                       <div>
-                        <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                        <span
+                          id="category-label"
+                          className="mb-2 block text-sm font-semibold text-zinc-900"
+                        >
                           {t.dashboard?.selectCategory || 'Loại hình kinh doanh'}
-                        </label>
+                        </span>
                         {isCategoriesLoading ? (
-                          <div className="grid grid-cols-2 gap-2">
+                          <div className="grid grid-cols-2 gap-2" aria-hidden="true">
                             {Array.from({ length: 4 }).map((_, i) => (
                               <div key={i} className="h-12 animate-pulse rounded-xl bg-zinc-100" />
                             ))}
                           </div>
                         ) : (
-                          <div className="grid grid-cols-2 gap-2">
+                          <div
+                            role="group"
+                            aria-labelledby="category-label"
+                            className="grid grid-cols-2 gap-2"
+                          >
                             {categoryOptions.map((cat) => {
                               const isSelected = categoryId === String(cat.id);
                               return (
                                 <button
                                   type="button"
                                   key={cat.id}
+                                  aria-pressed={isSelected}
                                   onClick={() => {
                                     setCategoryId(String(cat.id));
                                     setCustomCategory('');
@@ -556,21 +641,28 @@ export default function DashboardPage() {
 
                       {categoryId === otherLabel && (
                         <div>
-                          <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                          <label
+                            htmlFor="custom-category"
+                            className="mb-2 block text-sm font-semibold text-zinc-900"
+                          >
                             {t.common?.other ? 'Ngành hàng cụ thể' : 'Specific Industry'}
                           </label>
                           <input
+                            id="custom-category"
                             type="text"
                             value={customCategory}
                             onChange={(e) => setCustomCategory(e.target.value)}
                             placeholder="Ví dụ: Phụ kiện điện thoại"
-                            className="block w-full rounded-xl border border-zinc-200 px-3 py-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                            className="block w-full rounded-xl border border-zinc-200 px-3 py-3 text-sm text-zinc-900 placeholder-zinc-500 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                           />
                         </div>
                       )}
 
                       <div>
-                        <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                        <label
+                          htmlFor="tenant-name"
+                          className="mb-2 block text-sm font-semibold text-zinc-900"
+                        >
                           {t.signup?.step1?.tenantName || 'Tên cửa hàng (tenant)'}
                         </label>
                         <div className="relative">
@@ -578,13 +670,14 @@ export default function DashboardPage() {
                             <Building2 className="h-4 w-4" />
                           </div>
                           <input
+                            id="tenant-name"
                             type="text"
                             value={tenantName}
                             onChange={(e) => setTenantName(e.target.value)}
                             placeholder={
                               t.signup?.step1?.tenantNamePlaceholder || 'Ví dụ: Cửa hàng của tôi'
                             }
-                            className="block w-full rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                            className="block w-full rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-500 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                           />
                         </div>
                       </div>
@@ -592,7 +685,10 @@ export default function DashboardPage() {
                   )}
 
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                    <label
+                      htmlFor="shop-name"
+                      className="mb-2 block text-sm font-semibold text-zinc-900"
+                    >
                       {t.dashboard?.shopName || 'Tên cửa hàng'}
                     </label>
                     <div className="relative">
@@ -600,17 +696,21 @@ export default function DashboardPage() {
                         <Building2 className="h-4 w-4" />
                       </div>
                       <input
+                        id="shop-name"
                         type="text"
                         value={shopName}
                         onChange={(e) => setShopName(e.target.value)}
                         placeholder={t.dashboard?.shopNamePlaceholder || 'Nhập tên cửa hàng'}
-                        className="block w-full rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                        className="block w-full rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-500 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                    <label
+                      htmlFor="shop-address"
+                      className="mb-2 block text-sm font-semibold text-zinc-900"
+                    >
                       {t.dashboard?.shopAddress || 'Địa chỉ đầy đủ'}
                     </label>
                     <div className="relative">
@@ -618,6 +718,7 @@ export default function DashboardPage() {
                         <MapPin className="h-4 w-4" />
                       </div>
                       <textarea
+                        id="shop-address"
                         value={address}
                         onChange={(e) => setAddress(e.target.value)}
                         placeholder={
@@ -625,7 +726,7 @@ export default function DashboardPage() {
                           'Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành'
                         }
                         rows={3}
-                        className="block w-full resize-none rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                        className="block w-full resize-none rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-500 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                       />
                     </div>
                   </div>

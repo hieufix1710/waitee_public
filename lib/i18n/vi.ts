@@ -14,6 +14,10 @@ export const vi = {
     login: 'Đăng nhập',
     affiliate: 'Affiliate',
     start: 'Bắt đầu ngay',
+    mainMenu: 'Menu chính',
+    openMenu: 'Mở menu',
+    closeMenu: 'Đóng menu',
+    switchLanguage: 'Đổi ngôn ngữ',
   },
   hero: {
     badge: 'QUẢN LÝ BÁN LẺ, MỘT SỰ ĐỔI MỚI.',
@@ -238,6 +242,9 @@ export const vi = {
     other: 'Khác',
     cancel: 'Hủy',
     logout: 'Đăng xuất',
+    backHome: 'Về trang chủ',
+    close: 'Đóng',
+    loading: 'Đang tải...',
   },
   dashboard: {
     storeInfo: 'Cửa hàng của tôi',

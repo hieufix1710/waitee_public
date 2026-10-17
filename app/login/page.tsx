@@ -104,7 +104,7 @@ export default function LoginPage() {
           )}
 
           <div className="mb-5">
-            <label className="mb-2 block text-sm font-semibold text-zinc-900">
+            <label htmlFor="tenant" className="mb-2 block text-sm font-semibold text-zinc-900">
               {t.login.tenant}
             </label>
             <div className="relative">
@@ -112,6 +112,7 @@ export default function LoginPage() {
                 <Store className="h-4 w-4" />
               </span>
               <input
+                id="tenant"
                 value={tenant}
                 onChange={(e) => setTenant(e.target.value)}
                 placeholder={t.login.tenantPlaceholder}
@@ -119,7 +120,7 @@ export default function LoginPage() {
                 className="w-full rounded-xl border border-zinc-200 px-3 py-3 pl-10 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
               />
             </div>
-            <p className="mt-1.5 text-xs text-zinc-400">{t.login.tenantHint}</p>
+            <p className="mt-1.5 text-xs text-zinc-500">{t.login.tenantHint}</p>
           </div>
 
           <button
