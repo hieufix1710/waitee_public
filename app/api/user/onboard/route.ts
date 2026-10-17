@@ -1,37 +1,59 @@
-import { NextResponse } from "next/server";
+import { randomBytes } from 'node:crypto';
+import { NextResponse } from 'next/server';
 import { z } from 'zod';
 
-const signupApiSchema = z.object({
-  user: z.object({
-    email: z.string().email(),
-    password: z.string().min(6).optional(),
-    firstName: z.string().optional(),
-    lastName: z.string().optional(),
-    phone: z.string().optional(),
-  }),
-  shop: z.object({
-    name: z.string().min(1),
-    address: z.string().min(1),
-    categoryId: z.string().min(1),
-    customCategory: z.string().optional(),
-  }).optional(),
-  tenantName: z.string().min(2).optional(),
-  planId: z.any().optional(),
-}).refine((data) => {
-  if (data.shop && data.shop.categoryId === '-1') {
-    return !!data.shop.customCategory?.trim();
-  }
-  return true;
-}, {
-  message: 'Custom category is required when "Other" is selected',
-  path: ['shop', 'customCategory'],
-});
+const signupApiSchema = z
+  .object({
+    user: z.object({
+      email: z.string().email(),
+      password: z.string().min(6).optional(),
+      firstName: z.string().optional(),
+      lastName: z.string().optional(),
+      phone: z.string().optional(),
+    }),
+    shop: z
+      .object({
+        name: z.string().min(1),
+        address: z.string().min(1),
+        categoryId: z.string().min(1),
+        customCategory: z.string().optional(),
+      })
+      .optional(),
+    tenantName: z.string().min(2).optional(),
+    planId: z.union([z.number(), z.string()]).optional(),
+    ref: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.shop && data.shop.categoryId === '-1') {
+        return !!data.shop.customCategory?.trim();
+      }
+      return true;
+    },
+    {
+      message: 'Custom category is required when "Other" is selected',
+      path: ['shop', 'customCategory'],
+    },
+  );
+
+function generatePassword(): string {
+  return randomBytes(12).toString('base64url');
+}
 
 export async function POST(request: Request) {
-  const body = await request.json();
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ message: 'Dữ liệu không hợp lệ' }, { status: 400 });
+  }
+
   const parseResult = signupApiSchema.safeParse(body);
   if (!parseResult.success) {
-    return new NextResponse(JSON.stringify({ message: 'Dữ liệu không hợp lệ', errors: parseResult.error.flatten() }), { status: 400 });
+    return NextResponse.json(
+      { message: 'Dữ liệu không hợp lệ', errors: parseResult.error.flatten() },
+      { status: 400 },
+    );
   }
 
   const origin = new URL(request.url).origin;
@@ -41,7 +63,7 @@ export async function POST(request: Request) {
 
   const userPayload: Record<string, unknown> = {
     email: parseResult.data.user.email,
-    password: parseResult.data.user.password || Math.random().toString(36).slice(-12),
+    password: parseResult.data.user.password || generatePassword(),
   };
   if (parseResult.data.user.firstName) userPayload.first_name = parseResult.data.user.firstName;
   if (parseResult.data.user.lastName) userPayload.last_name = parseResult.data.user.lastName;
@@ -55,7 +77,7 @@ export async function POST(request: Request) {
       category_id: parseResult.data.shop.categoryId,
     };
     if (parseResult.data.shop.customCategory) {
-      (shopPayload as Record<string, unknown>).customCategory = parseResult.data.shop.customCategory;
+      shopPayload.customCategory = parseResult.data.shop.customCategory;
     }
     payload.shop = shopPayload;
   }
@@ -68,12 +90,24 @@ export async function POST(request: Request) {
     payload.plan_id = parseResult.data.planId;
   }
 
+  if (parseResult.data.ref) {
+    payload.ref = parseResult.data.ref;
+  }
+
+  // Forward the caller's auth (if any) so an already-signed-in merchant can
+  // reuse their account to add a shop instead of creating a duplicate. Public
+  // (unauthenticated) sign-ups are unaffected.
+  const forwardedHeaders: Record<string, string> = { 'Content-Type': 'application/json' };
+  const waitToken = request.headers.get('x-waitee-token');
+  if (waitToken) forwardedHeaders['X-Waitee-Token'] = waitToken;
+  const authorization = request.headers.get('authorization');
+  if (authorization) forwardedHeaders['Authorization'] = authorization;
+
   const response = await fetch(proxyUrl, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: forwardedHeaders,
     body: JSON.stringify(payload),
   });
   const data = await response.json();
-  if (!response.ok) return new NextResponse(JSON.stringify(data), { status: response.status });
-  return new NextResponse(JSON.stringify(data), { status: response.status });
+  return NextResponse.json(data, { status: response.status });
 }

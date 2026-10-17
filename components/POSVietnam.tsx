@@ -1,12 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { 
-  CheckCircle2, 
-  Smartphone, 
-  Zap,
-  ShieldCheck
-} from 'lucide-react';
+import { CheckCircle2, Smartphone, Zap, ShieldCheck } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 
 export default function POSVietnam() {
@@ -37,9 +32,7 @@ export default function POSVietnam() {
           <h2 className="font-manrope text-[32px] md:text-[44px] font-black text-[#1a1a1a] mb-8 tracking-tighter leading-tight">
             {t.pos.heading}
           </h2>
-          <p className="text-zinc-500 text-lg leading-relaxed">
-            {t.pos.description}
-          </p>
+          <p className="text-zinc-500 text-lg leading-relaxed">{t.pos.description}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -56,9 +49,7 @@ export default function POSVietnam() {
                 <item.icon className="w-10 h-10 text-blue-600" />
               </div>
               <h3 className="text-2xl font-bold text-[#1a1a1a] mb-4">{item.title}</h3>
-              <p className="text-zinc-500 text-base leading-relaxed">
-                {item.description}
-              </p>
+              <p className="text-zinc-500 text-base leading-relaxed">{item.description}</p>
             </motion.div>
           ))}
         </div>

@@ -13,7 +13,7 @@ export default function PrivacyPage() {
     {
       icon: Shield,
       title: t.privacyPage.introduction.title,
-      content: t.privacyPage.introduction.content
+      content: t.privacyPage.introduction.content,
     },
     {
       icon: Eye,
@@ -21,33 +21,33 @@ export default function PrivacyPage() {
       subsections: [
         {
           title: t.privacyPage.informationWeCollect.personal.title,
-          content: t.privacyPage.informationWeCollect.personal.content
+          content: t.privacyPage.informationWeCollect.personal.content,
         },
         {
           title: t.privacyPage.informationWeCollect.usage.title,
-          content: t.privacyPage.informationWeCollect.usage.content
+          content: t.privacyPage.informationWeCollect.usage.content,
         },
         {
           title: t.privacyPage.informationWeCollect.device.title,
-          content: t.privacyPage.informationWeCollect.device.content
-        }
-      ]
+          content: t.privacyPage.informationWeCollect.device.content,
+        },
+      ],
     },
     {
       icon: FileText,
       title: t.privacyPage.howWeUse.title,
-      content: t.privacyPage.howWeUse.content
+      content: t.privacyPage.howWeUse.content,
     },
     {
       icon: Lock,
       title: t.privacyPage.dataSecurity.title,
-      content: t.privacyPage.dataSecurity.content
+      content: t.privacyPage.dataSecurity.content,
     },
     {
       icon: Cookie,
       title: t.privacyPage.cookies.title,
-      content: t.privacyPage.cookies.content
-    }
+      content: t.privacyPage.cookies.content,
+    },
   ];
 
   return (
@@ -94,14 +94,10 @@ export default function PrivacyPage() {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                        {section.title}
-                      </h2>
+                      <h2 className="text-2xl font-semibold text-gray-900 mb-4">{section.title}</h2>
 
                       {section.content && (
-                        <p className="text-gray-700 leading-relaxed mb-6">
-                          {section.content}
-                        </p>
+                        <p className="text-gray-700 leading-relaxed mb-6">{section.content}</p>
                       )}
 
                       {section.subsections && (
@@ -111,9 +107,7 @@ export default function PrivacyPage() {
                               <h3 className="text-lg font-medium text-gray-900 mb-2">
                                 {subsection.title}
                               </h3>
-                              <p className="text-gray-700 leading-relaxed">
-                                {subsection.content}
-                              </p>
+                              <p className="text-gray-700 leading-relaxed">{subsection.content}</p>
                             </div>
                           ))}
                         </div>
@@ -166,9 +160,7 @@ export default function PrivacyPage() {
                   <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                     {t.privacyPage.changes.title}
                   </h2>
-                  <p className="text-gray-700 leading-relaxed">
-                    {t.privacyPage.changes.content}
-                  </p>
+                  <p className="text-gray-700 leading-relaxed">{t.privacyPage.changes.content}</p>
                 </div>
               </div>
             </motion.div>
@@ -184,9 +176,7 @@ export default function PrivacyPage() {
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                 {t.privacyPage.contact.title}
               </h2>
-              <p className="text-gray-700 leading-relaxed">
-                {t.privacyPage.contact.content}
-              </p>
+              <p className="text-gray-700 leading-relaxed">{t.privacyPage.contact.content}</p>
             </motion.div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import Script from 'next/script';
 
-export default function GoogleAnalytics({gaId}: {gaId?: string}) {
+export default function GoogleAnalytics({ gaId }: { gaId?: string }) {
   if (!gaId) return null;
 
   return (

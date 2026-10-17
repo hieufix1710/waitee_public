@@ -1,12 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { 
-  RefreshCw, 
-  LayoutGrid, 
-  BarChart3,
-  ArrowRight
-} from 'lucide-react';
+import { RefreshCw, LayoutGrid, BarChart3, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 
@@ -47,11 +42,12 @@ export default function Features() {
             <h2 className="font-manrope text-[32px] md:text-[44px] font-black text-[#1a1a1a] mb-6 tracking-tighter leading-tight">
               {t.features.heading}
             </h2>
-            <p className="text-zinc-500 leading-relaxed text-lg">
-              {t.features.description}
-            </p>
+            <p className="text-zinc-500 leading-relaxed text-lg">{t.features.description}</p>
           </div>
-          <Link href="/products" className="flex items-center gap-2 text-blue-600 font-bold text-sm hover:gap-3 transition-all whitespace-nowrap">
+          <Link
+            href="/products"
+            className="flex items-center gap-2 text-blue-600 font-bold text-sm hover:gap-3 transition-all whitespace-nowrap"
+          >
             {t.features.viewMore} <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
@@ -66,13 +62,13 @@ export default function Features() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className="bg-white p-10 rounded-[32px] border border-zinc-100 shadow-[0_4px_20px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.04)] transition-all duration-300"
             >
-              <div className={`w-12 h-12 ${feature.bg} rounded-xl flex items-center justify-center mb-8`}>
+              <div
+                className={`w-12 h-12 ${feature.bg} rounded-xl flex items-center justify-center mb-8`}
+              >
                 <feature.icon className={`w-5 h-5 ${feature.color}`} />
               </div>
               <h3 className="text-lg font-bold text-[#1a1a1a] mb-4">{feature.title}</h3>
-              <p className="text-zinc-500 text-sm leading-relaxed">
-                {feature.description}
-              </p>
+              <p className="text-zinc-500 text-sm leading-relaxed">{feature.description}</p>
             </motion.div>
           ))}
         </div>

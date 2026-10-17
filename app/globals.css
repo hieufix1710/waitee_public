@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @theme {
   --font-manrope: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
@@ -9,7 +9,7 @@
   html {
     scroll-behavior: smooth;
   }
-  
+
   body {
     @apply selection:bg-blue-100 selection:text-blue-900;
   }
@@ -22,7 +22,8 @@
 }
 
 @keyframes bounce-slow {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(-5%);
     animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
   }

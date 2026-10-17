@@ -18,6 +18,10 @@ interface AuthData {
     verified_email: boolean;
   };
   provider: string;
+  /** Marks an OAuth session so the POS refreshes through the provider. */
+  auth_provider?: string;
+  /** Store (tenant) name to open, e.g. after logging in with a tenant. */
+  tenant?: string;
 }
 
 interface AuthContextType {
@@ -41,7 +45,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // eslint-disable-next-line react-hooks/set-state-in-effect
         if (data?.user?.uid) setUser(data.user);
       }
-    } catch { /* empty */ }
+    } catch {
+      /* empty */
+    }
     setMounted(true);
   }, []);
 

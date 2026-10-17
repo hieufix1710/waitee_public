@@ -1,7 +1,12 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { type BillingCycle, type LandingPlan, mapRemotePlansToLanding } from '@/lib/pricing/plans';
+import {
+  type BillingCycle,
+  type LandingPlan,
+  type RemotePlanResponse,
+  mapRemotePlansToLanding,
+} from '@/lib/pricing/plans';
 
 export function usePricingPlans() {
   const [plans, setPlans] = useState<LandingPlan[]>([]);
@@ -25,10 +30,10 @@ export function usePricingPlans() {
           throw new Error(`Failed to fetch plans: ${response.status}`);
         }
 
-        const payload = (await response.json()) as any[];
+        const payload: unknown = await response.json();
         if (!isMounted || !Array.isArray(payload) || payload.length === 0) return;
 
-        setPlans(mapRemotePlansToLanding(payload));
+        setPlans(mapRemotePlansToLanding(payload as RemotePlanResponse[]));
       } catch (err) {
         if (isMounted) {
           setError(err instanceof Error ? err.message : 'Failed to load plans');
@@ -51,7 +56,7 @@ export function usePricingPlans() {
         accumulator[plan.billingCycle].push(plan);
         return accumulator;
       },
-      { monthly: [], yearly: [] }
+      { monthly: [], yearly: [] },
     );
   }, [plans]);
 

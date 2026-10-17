@@ -23,7 +23,7 @@ export default function FAQ() {
 
         <div className="grid gap-4">
           {t.faq.items.map((faq, index) => (
-            <div 
+            <div
               key={index}
               className={`rounded-[24px] border transition-all duration-300 ${openIndex === index ? 'bg-zinc-50 border-zinc-200 shadow-sm' : 'bg-white border-zinc-100 hover:border-zinc-200'}`}
             >
@@ -31,8 +31,14 @@ export default function FAQ() {
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
                 className="w-full px-8 py-7 flex items-center justify-between text-left transition-colors"
               >
-                <span className={`text-lg font-bold transition-colors ${openIndex === index ? 'text-blue-600' : 'text-[#1a1a1a]'}`}>{faq.q}</span>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${openIndex === index ? 'bg-blue-600 text-white rotate-180' : 'bg-zinc-100 text-zinc-400'}`}>
+                <span
+                  className={`text-lg font-bold transition-colors ${openIndex === index ? 'text-blue-600' : 'text-[#1a1a1a]'}`}
+                >
+                  {faq.q}
+                </span>
+                <div
+                  className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${openIndex === index ? 'bg-blue-600 text-white rotate-180' : 'bg-zinc-100 text-zinc-400'}`}
+                >
                   <ChevronDown className="w-4 h-4" />
                 </div>
               </button>
@@ -42,7 +48,7 @@ export default function FAQ() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: 'auto', opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    transition={{ duration: 0.3, ease: 'easeInOut' }}
                   >
                     <div className="px-8 pb-8 text-zinc-500 text-base leading-relaxed border-t border-zinc-100 pt-6">
                       {faq.a}

@@ -1,10 +1,11 @@
-import type {MetadataRoute} from 'next';
+import type { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'WaiteeRetail',
     short_name: 'Waitee',
-    description: 'WaiteeRetail là nền tảng quản lý bán hàng và kho bãi hiện đại cho các doanh nghiệp bán lẻ.',
+    description:
+      'WaiteeRetail là nền tảng quản lý bán hàng và kho bãi hiện đại cho các doanh nghiệp bán lẻ.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

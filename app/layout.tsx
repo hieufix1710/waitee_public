@@ -1,6 +1,5 @@
-import type {Metadata, Viewport} from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Manrope } from 'next/font/google';
-// @ts-ignore - noinspection ES6UnusedImports
 import './globals.css';
 
 import ChatButton from '@/components/ChatButton';
@@ -21,12 +20,13 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: 'WaiteeRetail - Modern POS & Inventory Management',
-  description: 'WaiteeRetail là nền tảng quản lý bán hàng và kho bãi hiện đại cho các doanh nghiệp bán lẻ.',
+  description:
+    'WaiteeRetail là nền tảng quản lý bán hàng và kho bãi hiện đại cho các doanh nghiệp bán lẻ.',
   manifest: '/manifest.webmanifest',
   icons: {
-    icon: [{url: '/favicon.ico'}],
-    apple: [{url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png'}],
-    shortcut: [{url: '/favicon.ico'}],
+    icon: [{ url: '/favicon.ico' }],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],
+    shortcut: [{ url: '/favicon.ico' }],
   },
   appleWebApp: {
     capable: true,
@@ -40,8 +40,8 @@ export const viewport: Viewport = {
   themeColor: '#ffffff',
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
-  const gaId = "G-8VYG2YYS05";
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
   return (
     <html lang="vi" className={`${inter.variable} ${manrope.variable}`}>
@@ -49,10 +49,10 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
         <GoogleAnalytics gaId={gaId} />
         <LanguageProvider>
           <AuthProvider>
-          <Providers>
-            {children}
-            <ChatButton />
-          </Providers>
+            <Providers>
+              {children}
+              <ChatButton />
+            </Providers>
           </AuthProvider>
         </LanguageProvider>
       </body>

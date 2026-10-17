@@ -4,7 +4,16 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { motion } from 'motion/react';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
-import { FileText, CheckCircle, CreditCard, Shield, Database, AlertTriangle, Scale, Mail } from 'lucide-react';
+import {
+  FileText,
+  CheckCircle,
+  CreditCard,
+  Shield,
+  Database,
+  AlertTriangle,
+  Scale,
+  Mail,
+} from 'lucide-react';
 
 export default function TermsPage() {
   const { t } = useLanguage();
@@ -13,17 +22,17 @@ export default function TermsPage() {
     {
       icon: FileText,
       title: t.termsPage.introduction.title,
-      content: t.termsPage.introduction.content
+      content: t.termsPage.introduction.content,
     },
     {
       icon: CheckCircle,
       title: t.termsPage.acceptance.title,
-      content: t.termsPage.acceptance.content
+      content: t.termsPage.acceptance.content,
     },
     {
       icon: FileText,
       title: t.termsPage.services.title,
-      content: t.termsPage.services.content
+      content: t.termsPage.services.content,
     },
     {
       icon: Shield,
@@ -31,33 +40,33 @@ export default function TermsPage() {
       subsections: [
         {
           title: t.termsPage.userResponsibilities.accuracy.title,
-          content: t.termsPage.userResponsibilities.accuracy.content
+          content: t.termsPage.userResponsibilities.accuracy.content,
         },
         {
           title: t.termsPage.userResponsibilities.security.title,
-          content: t.termsPage.userResponsibilities.security.content
+          content: t.termsPage.userResponsibilities.security.content,
         },
         {
           title: t.termsPage.userResponsibilities.compliance.title,
-          content: t.termsPage.userResponsibilities.compliance.content
-        }
-      ]
+          content: t.termsPage.userResponsibilities.compliance.content,
+        },
+      ],
     },
     {
       icon: CreditCard,
       title: t.termsPage.payment.title,
-      content: t.termsPage.payment.content
+      content: t.termsPage.payment.content,
     },
     {
       icon: Shield,
       title: t.termsPage.intellectualProperty.title,
-      content: t.termsPage.intellectualProperty.content
+      content: t.termsPage.intellectualProperty.content,
     },
     {
       icon: Database,
       title: t.termsPage.dataOwnership.title,
-      content: t.termsPage.dataOwnership.content
-    }
+      content: t.termsPage.dataOwnership.content,
+    },
   ];
 
   return (
@@ -104,14 +113,10 @@ export default function TermsPage() {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                        {section.title}
-                      </h2>
+                      <h2 className="text-2xl font-semibold text-gray-900 mb-4">{section.title}</h2>
 
                       {section.content && (
-                        <p className="text-gray-700 leading-relaxed mb-6">
-                          {section.content}
-                        </p>
+                        <p className="text-gray-700 leading-relaxed mb-6">{section.content}</p>
                       )}
 
                       {section.subsections && (
@@ -121,9 +126,7 @@ export default function TermsPage() {
                               <h3 className="text-lg font-medium text-gray-900 mb-2">
                                 {subsection.title}
                               </h3>
-                              <p className="text-gray-700 leading-relaxed">
-                                {subsection.content}
-                              </p>
+                              <p className="text-gray-700 leading-relaxed">{subsection.content}</p>
                             </div>
                           ))}
                         </div>
@@ -152,9 +155,7 @@ export default function TermsPage() {
                   <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                     {t.termsPage.termination.title}
                   </h2>
-                  <p className="text-gray-700 leading-relaxed">
-                    {t.termsPage.termination.content}
-                  </p>
+                  <p className="text-gray-700 leading-relaxed">{t.termsPage.termination.content}</p>
                 </div>
               </div>
             </motion.div>
@@ -176,9 +177,7 @@ export default function TermsPage() {
                   <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                     {t.termsPage.disclaimer.title}
                   </h2>
-                  <p className="text-gray-700 leading-relaxed">
-                    {t.termsPage.disclaimer.content}
-                  </p>
+                  <p className="text-gray-700 leading-relaxed">{t.termsPage.disclaimer.content}</p>
                 </div>
               </div>
             </motion.div>
@@ -200,9 +199,7 @@ export default function TermsPage() {
                   <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                     {t.termsPage.limitation.title}
                   </h2>
-                  <p className="text-gray-700 leading-relaxed">
-                    {t.termsPage.limitation.content}
-                  </p>
+                  <p className="text-gray-700 leading-relaxed">{t.termsPage.limitation.content}</p>
                 </div>
               </div>
             </motion.div>
@@ -248,9 +245,7 @@ export default function TermsPage() {
                   <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                     {t.termsPage.changes.title}
                   </h2>
-                  <p className="text-gray-700 leading-relaxed">
-                    {t.termsPage.changes.content}
-                  </p>
+                  <p className="text-gray-700 leading-relaxed">{t.termsPage.changes.content}</p>
                 </div>
               </div>
             </motion.div>
@@ -266,9 +261,7 @@ export default function TermsPage() {
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                 {t.termsPage.contact.title}
               </h2>
-              <p className="text-gray-700 leading-relaxed">
-                {t.termsPage.contact.content}
-              </p>
+              <p className="text-gray-700 leading-relaxed">{t.termsPage.contact.content}</p>
             </motion.div>
           </div>
         </div>

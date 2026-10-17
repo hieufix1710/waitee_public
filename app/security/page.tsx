@@ -84,12 +84,8 @@ export default function SecurityPage() {
                       </div>
                     </div>
                     <div className="flex-1">
-                      <h2 className="text-2xl font-semibold text-gray-900 mb-4">
-                        {section.title}
-                      </h2>
-                      <p className="text-gray-700 leading-relaxed">
-                        {section.content}
-                      </p>
+                      <h2 className="text-2xl font-semibold text-gray-900 mb-4">{section.title}</h2>
+                      <p className="text-gray-700 leading-relaxed">{section.content}</p>
                     </div>
                   </div>
                 </motion.div>
@@ -107,9 +103,7 @@ export default function SecurityPage() {
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">
                 {t.securityPage.contact.title}
               </h2>
-              <p className="text-gray-700 leading-relaxed">
-                {t.securityPage.contact.content}
-              </p>
+              <p className="text-gray-700 leading-relaxed">{t.securityPage.contact.content}</p>
             </motion.div>
           </div>
         </div>

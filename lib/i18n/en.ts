@@ -1,4 +1,9 @@
 export const en = {
+  errorPage: {
+    title: 'Something went wrong',
+    message: 'An unexpected error occurred. Please try again.',
+    retry: 'Try again',
+  },
   nav: {
     product: 'Products',
     solutions: 'Solutions',
@@ -7,15 +12,17 @@ export const en = {
     about: 'About Us',
     features: 'Features',
     login: 'Log in',
-    start: 'Get Started'
+    affiliate: 'Become an affiliate',
+    start: 'Get Started',
   },
   hero: {
     badge: 'RETAIL MANAGEMENT, A REVOLUTION.',
     title1: 'Synchronize your retail operations ',
     titleHighlight: 'effortlessly.',
     desc: 'The versatile platform designed for retail store owners who value time over complexity. Manage inventory, sales, and customers across all channels in one single place.',
-    startFree: 'Start free trial',
-    watchDemo: 'Watch Demo',
+    becomeSeller: 'Become a seller',
+    appStore: 'App Store',
+    googlePlay: 'Google Play',
     trust: 'Joined by over 2,000 retail leaders worldwide.',
     stats: {
       revenue: 'Revenue',
@@ -25,153 +32,158 @@ export const en = {
       inventory: 'Inventory',
       synced: 'Synced',
       processing: 'Processing',
-      speed: '0.2s / order'
-    }
+      speed: '0.2s / order',
+    },
   },
   cta: {
-    title: 'Start your free trial today',
+    title: 'Start for free today',
     desc: 'Join over 10,000+ store owners who trust WaiteeRetail to optimize their business. No credit card required.',
     start: 'Get Started',
-    pricing: 'View Pricing'
+    affiliate: 'Become an affiliate',
+    pricing: 'View Pricing',
   },
   features: {
     heading: 'Optimize every aspect of your business operations.',
-    description: 'Advanced technology simplified for modern business owners. Stop juggling multiple platforms and start growing revenue.',
+    description:
+      'Advanced technology simplified for modern business owners. Stop juggling multiple platforms and start growing revenue.',
     viewMore: 'View More Solutions',
     inventory: {
       title: 'Inventory Synchronization',
-      desc: 'Automatically update inventory quantities across all stores and online sales channels. Never oversell.'
+      desc: 'Automatically update inventory quantities across all stores and online sales channels. Never oversell.',
     },
     multichannel: {
       title: 'Multi-channel Sales',
-      desc: 'Sell anywhere your customers are — from physical stores to e-commerce platforms and social media.'
+      desc: 'Sell anywhere your customers are — from physical stores to e-commerce platforms and social media.',
     },
     analytics: {
       title: 'Real-time Analytics',
-      desc: 'Make data-driven decisions with clear, easy-to-read reports on business performance and daily profit margins.'
-    }
+      desc: 'Make data-driven decisions with clear, easy-to-read reports on business performance and daily profit margins.',
+    },
   },
   pos: {
     heading: 'Retail POS Software for Store Owners in Vietnam',
-    description: 'WaiteeRetail is built on the real needs of store owners in Vietnam, helping you manage your business efficiently and easily.',
+    description:
+      'WaiteeRetail is built on the real needs of store owners in Vietnam, helping you manage your business efficiently and easily.',
     easyUse: {
       title: 'Easy to Use',
-      desc: 'Vietnamese interface, intuitive, get started in just 15 minutes.'
+      desc: 'Vietnamese interface, intuitive, get started in just 15 minutes.',
     },
     cost: {
       title: 'Reasonable Costs',
-      desc: 'Flexible service packages suitable for all store sizes.'
+      desc: 'Flexible service packages suitable for all store sizes.',
     },
     support: {
       title: 'Dedicated Support',
-      desc: 'Technical team supports you directly at your store or remotely.'
-    }
+      desc: 'Technical team supports you directly at your store or remotely.',
+    },
   },
   faq: {
     title: 'Frequently Asked Questions',
-    subtitle: 'Everything you need to know about WaiteeRetail. We\'re here to support you 24/7.',
+    subtitle: "Everything you need to know about WaiteeRetail. We're here to support you 24/7.",
     items: [
       {
         q: 'Does WaiteeRetail support offline sales?',
-        a: 'Yes, WaiteeRetail supports offline selling mode. All transactions are temporarily stored on your device and automatically synced to the system once internet connection is restored.'
+        a: 'Yes, WaiteeRetail supports offline selling mode. All transactions are temporarily stored on your device and automatically synced to the system once internet connection is restored.',
       },
       {
         q: 'Can I manage multiple stores at once?',
-        a: 'Absolutely. WaiteeRetail is designed to manage store chains. You can track revenue, inventory, and staff from each branch or your entire system from a single admin account.'
+        a: 'Absolutely. WaiteeRetail is designed to manage store chains. You can track revenue, inventory, and staff from each branch or your entire system from a single admin account.',
       },
       {
         q: 'Is my data secure?',
-        a: 'We use bank-grade SSL encryption and store data on highly secure cloud infrastructure. Your data is backed up daily for absolute security.'
+        a: 'We use bank-grade SSL encryption and store data on highly secure cloud infrastructure. Your data is backed up daily for absolute security.',
       },
       {
         q: 'Does WaiteeRetail integrate with shipping providers?',
-        a: 'Yes, we have built-in integrations with major Vietnamese shipping providers including Giao Hàng Nhanh, Giao Hàng Tiết Kiệm, and Viettel Post for easy order dispatch and tracking.'
-      }
-    ]
+        a: 'Yes, we have built-in integrations with major Vietnamese shipping providers including Giao Hàng Nhanh, Giao Hàng Tiết Kiệm, and Viettel Post for easy order dispatch and tracking.',
+      },
+    ],
   },
   pricing: {
     badge: 'TRANSPARENT PRICING',
     heading: 'The right solution for every store size',
-    subheading: 'Start free and scale as you grow. No hidden fees, no credit card required, 24/7 dedicated support.',
-    chooseGuide: 'Choose the POS package that suits your store\'s development stage',
-    chooseDesc: 'WaiteeRetail currently offers two main options: Free to start operations and Basic Package for expansion needs. You can choose monthly or yearly payment cycles.',
+    subheading:
+      'Start free and scale as you grow. No hidden fees, no credit card required, 24/7 dedicated support.',
+    teaserBadge: 'Pricing',
+    teaserHeading: 'Transparent costs, no hidden fees',
+    teaserDesc: 'Start with the free plan and upgrade as you grow. See',
+    viewDetails: 'detailed pricing',
+    teaserDescSuffix: 'for more information.',
+    popular: 'Most popular',
+    chooseGuide: "Choose the POS package that suits your store's development stage",
+    chooseDesc:
+      'WaiteeRetail currently offers two main options: Free to start operations and Basic Package for expansion needs. You can choose monthly or yearly payment cycles.',
     billing: 'Billing Cycle',
     monthly: 'Monthly',
     yearly: 'Yearly',
+    month: 'month',
+    year: 'year',
     includes: 'Features Included',
     tryFree: 'Try Free',
-    trial14: 'Try 14 Days',
     startFree: 'Start Free — No Card Required',
+    selectHint: 'Choose the package that fits your business. Start free and upgrade anytime.',
+    empty: 'No service packages available.',
+    payBy: 'Billed {{cycle}}',
+    freeCallout: {
+      title: 'Not sure yet? Start free, forever!',
+      desc: 'The Free plan has no time limit and needs no credit card. Upgrade to a paid plan anytime as your store grows.',
+      cta: 'Start for free',
+    },
     compare: 'Compare all service packages',
     compareDesc: 'See detailed feature comparison for each service package.',
     features: 'Features',
     security: {
       title: 'Bulletproof Security',
-      desc: 'Your data is encrypted and stored on the safest servers.'
+      desc: 'Your data is encrypted and stored on the safest servers.',
     },
-    refund: {
-      title: '100% Money Back',
-      desc: 'Refund within 30 days if you\'re not satisfied with our service.'
+    cancel: {
+      title: 'Flexible cancellation',
+      desc: 'Cancel a paid plan anytime; keep using it until the paid period ends. Unused time is not refunded.',
     },
     support: {
       title: 'Dedicated Support',
-      desc: 'Our technical team is available 24/7 via chat, email, and phone.'
+      desc: 'Our technical team is available 24/7 via chat, email, and phone.',
     },
     guide: [
       'Free plan suits new stores needing to validate their model and run basic daily sales operations.',
       'Basic plan suits established stores that need detailed reports and advanced operational support.',
-      'When you need new features or expanded plans, the WaiteeRetail team will update directly in the app and support channels.'
+      'When you need new features or expanded plans, the WaiteeRetail team will update directly in the app and support channels.',
     ],
     faq: {
       title: 'Frequently Asked Questions',
-      subtitle: 'Everything you need to know about WaiteeRetail\'s pricing and payment policies.',
+      subtitle: "Everything you need to know about WaiteeRetail's pricing and payment policies.",
       items: [
         {
           q: 'Can I use WaiteeRetail for free?',
-          a: 'Yes, we offer a lifetime Free plan for small stores with less than 100 products and 1 employee. You can start immediately without a credit card.'
+          a: 'Yes, we offer a lifetime Free plan for small stores with less than 100 products and 1 employee. You can start immediately without a credit card.',
         },
         {
           q: 'Can I migrate data from my current POS system?',
-          a: 'Absolutely. WaiteeRetail supports data import from Excel files. Our technical team is also ready to help you migrate data from other popular software.'
+          a: 'Absolutely. WaiteeRetail supports data import from Excel files. Our technical team is also ready to help you migrate data from other popular software.',
         },
         {
           q: 'Are there specific hardware requirements?',
-          a: 'WaiteeRetail runs on cloud infrastructure, so you only need a device with internet connection (Computer, Tablet, Phone). We\'re compatible with most common receipt printers and barcode scanners.'
+          a: "WaiteeRetail runs on cloud infrastructure, so you only need a device with internet connection (Computer, Tablet, Phone). We're compatible with most common receipt printers and barcode scanners.",
         },
         {
           q: 'What happens when I reach my package limit?',
-          a: 'The system will notify you when approaching the limit. You can upgrade anytime to continue using without interruption. Your data will always be kept safe.'
+          a: 'The system will notify you when approaching the limit. You can upgrade anytime to continue using without interruption. Your data will always be kept safe.',
         },
         {
           q: 'What is your cancellation policy?',
-          a: 'You can cancel your paid plan anytime. After cancellation, you can still use premium features until the end of your paid period. We don\'t refund unused time.'
-        }
+          a: "You can cancel your paid plan anytime. After cancellation, you can still use premium features until the end of your paid period. We don't refund unused time.",
+        },
       ],
       contact: 'Still have questions?',
-      contactUs: 'Contact our support team'
+      contactUs: 'Contact our support team',
     },
-    trial: 'All paid plans include 14 days free trial with full features. Or start with the Free plan — no time limit, upgrade when ready.'
   },
   signup: {
-    title: 'Start your free trial',
-    subtitle: 'Already have an account? Sign in now',
-    backHome: 'Back to home',
     step1: {
-      title: 'Tenant Name',
-      description: 'Enter your business name to get started.',
       tenantName: 'Tenant Name',
-      tenantNamePlaceholder: 'e.g. My Store'
-    },
-    step2: {
-      title: 'Verify Your Email',
-      description: 'Enter your email and verify with the OTP code.',
-      email: 'Email Address',
-      emailPlaceholder: 'name@company.com',
-      sendOtp: 'Send OTP'
+      tenantNamePlaceholder: 'e.g. My Store',
     },
     step3: {
-      title: 'Account Setup',
-      description: 'Create an admin account to start your free trial.',
       firstName: 'First Name',
       firstNamePlaceholder: 'Enter first name',
       lastName: 'Last Name',
@@ -179,70 +191,22 @@ export const en = {
       email: 'Email',
       emailPlaceholder: 'name@company.com',
       phone: 'Phone Number',
-      phonePlaceholder: '09xxxxxxxx',
       password: 'Password',
       confirmPassword: 'Confirm Password',
-      terms: 'I agree to the Terms of Service and Privacy Policy',
-      termsLink1: 'Terms of Service',
-      termsLink2: 'Privacy Policy',
-      captcha: 'Verify you\'re not a robot',
-      submit: 'Complete Sign Up',
-      submitting: 'Verifying captcha...',
-      processing: 'Processing...',
-      success: 'Sign up successful! The WaiteeRetail team will contact you soon.',
-      usingTestKey: 'Using Turnstile test key for local development.'
     },
-    step4: {
-      title: 'Verify Email',
-      description: 'Enter the 6-digit OTP code sent to your email',
-      verify: 'Verify',
-      resend: 'Resend Code'
-    },
-    tenantNameNote: 'Only letters, numbers, spaces, hyphens (-) and apostrophes (\') are allowed.',
-    processing: 'Processing...',
-    stepIndicator: 'Step',
-    of: 'of',
-    continue: 'Continue',
-    back: 'Back',
-    errors: {
-      category: 'Please select a business type.',
-      customCategory: 'Please enter a specific industry.',
-      shopName: 'Please enter a store name.',
-      address: 'Please enter a store address.',
-      firstName: 'Please enter a first name.',
-      lastName: 'Please enter a last name.',
-      email: 'Please enter an email.',
-      emailInvalid: 'Email is not valid.',
-      phone: 'Please enter a phone number.',
-      password: 'Please enter a password.',
-      passwordLength: 'Password must be at least 6 characters.',
-      confirmPassword: 'Please confirm your password.',
-      passwordMismatch: 'Passwords do not match.',
-      terms: 'You must agree to the terms before signing up.',
-      captchaNotConfigured: 'Captcha is not configured.',
-      captchaFailed: 'Captcha verification failed. Please try again.',
-      captchaExpired: 'Captcha has expired, please verify again.',
-      captchaError: 'Captcha encountered an error, please try again.',
-      captchaNotVerified: 'Please verify the captcha before signing up.',
-      unknownError: 'Unable to verify captcha at this time. Please try again later.',
-      captchaConfigMissing: 'Captcha not configured. Please add NEXT_PUBLIC_TURNSTILE_SITE_KEY.'
-    }
   },
   login: {
     title: 'Welcome Back',
     subtitle: 'Or create a new free account',
-    email: 'Email Address',
-    emailPlaceholder: 'name@company.com',
-    password: 'Password',
-    passwordPlaceholder: '••••••••',
-    rememberMe: 'Remember me',
-    forgotPassword: 'Forgot password?',
-    signIn: 'Sign In',
-    orContinueWith: 'Or continue with',
     signUpLink: 'sign up for a new free account',
     backHome: 'Back to home',
-    google: 'Sign in with Google',
-    facebook: 'Sign in with Facebook'
+    continueWith: 'Continue with Waitee',
+    tenant: 'Store name (tenant)',
+    tenantPlaceholder: 'e.g. retail01',
+    tenantHint:
+      'Leave empty to see all your stores. Enter a tenant name to open that store POS directly.',
+    oauthNotConfigured: 'Sign-in is not configured. Please contact your administrator.',
+    oauthError: 'Unable to sign in. Please try again.',
   },
   footer: {
     product: 'Product',
@@ -264,26 +228,13 @@ export const en = {
     copyright: 'WaiteeRetail Vietnam. All rights reserved.',
     security: 'Security',
     copyright_full: '© {{year}} WaiteeRetail Vietnam. All rights reserved.',
-    description: 'Providing modern tools to help retail businesses grow and optimize business efficiency. Accompanying the future of commerce in Vietnam.'
+    description:
+      'Providing modern tools to help retail businesses grow and optimize business efficiency. Accompanying the future of commerce in Vietnam.',
   },
   common: {
-    or: 'Or',
-    and: 'and',
-    required: 'Required',
-    optional: 'Optional',
-    email: 'Email',
-    password: 'Password',
-    phone: 'Phone',
-    back: 'Back',
-    next: 'Next',
-    submit: 'Submit',
-    cancel: 'Cancel',
-    loading: 'Loading...',
-    error: 'An error occurred',
-    success: 'Success',
-    close: 'Close',
     other: 'Other',
-    logout: 'Logout'
+    cancel: 'Cancel',
+    logout: 'Log out',
   },
   dashboard: {
     storeInfo: 'My Stores',
@@ -291,203 +242,287 @@ export const en = {
     noStores: 'No stores yet',
     createShop: 'Create Shop',
     createShopDescription: 'Fill in your store information to start selling.',
+    addBranch: 'Add Branch',
+    addBranchDescription: 'Add a branch to one of your existing stores.',
+    selectTenant: 'Select store (tenant)',
+    newTenantOption: 'Create new tenant',
     shopName: 'Shop Name',
     shopNamePlaceholder: 'Enter shop name',
     shopAddress: 'Full Address',
     shopAddressPlaceholder: 'Street address, ward, district, city',
     selectCategory: 'Business Type',
-    creating: 'Creating...'
+    creating: 'Creating...',
+    extraBranchTitle: 'Extra branch',
+    extraBranchMessage:
+      'Your store already has its {{included}} included branches. This branch adds {{amount}}/{{cycle}}.',
+    extraBranchNote: 'This fee is added to your invoice at renewal.',
+    monthlyCycleShort: 'month',
+    yearlyCycleShort: 'year',
+    confirmCreate: 'Confirm & create',
+    back: 'Back',
   },
   aboutPage: {
     hero: {
       badge: 'OUR STORY',
       title: 'Empowering Retail Businesses Across Vietnam',
-      desc: 'We\'re on a mission to revolutionize how retail businesses operate. Since our founding, we\'ve been dedicated to building the most intuitive and powerful POS system for Vietnamese store owners.'
+      desc: "We're on a mission to revolutionize how retail businesses operate. Since our founding, we've been dedicated to building the most intuitive and powerful POS system for Vietnamese store owners.",
     },
     stats: {
       customers: 'Happy Customers',
       transactions: 'Transactions Processed',
       uptime: 'Uptime Guarantee',
-      support: 'Support Available'
+      support: 'Support Available',
     },
     mission: {
       title: 'Our Mission',
-      desc: 'To empower retail store owners with simple, powerful tools that help them sell more, manage better, and grow faster. We believe in the power of technology to solve real business problems.'
+      desc: 'To empower retail store owners with simple, powerful tools that help them sell more, manage better, and grow faster. We believe in the power of technology to solve real business problems.',
     },
     vision: {
       title: 'Our Vision',
-      desc: 'To become Vietnam\'s most trusted POS solution, enabling retail businesses of all sizes to compete with larger chains by providing enterprise-level features at an affordable price.'
+      desc: "To become Vietnam's most trusted POS solution, enabling retail businesses of all sizes to compete with larger chains by providing enterprise-level features at an affordable price.",
     },
     values: {
       title: 'Our Core Values',
       items: [
         {
           title: 'Innovation',
-          desc: 'We constantly innovate to meet the evolving needs of retail businesses and stay ahead of the curve.'
+          desc: 'We constantly innovate to meet the evolving needs of retail businesses and stay ahead of the curve.',
         },
         {
           title: 'Customer First',
-          desc: 'Every decision we make is guided by the needs and feedback of our customers.'
+          desc: 'Every decision we make is guided by the needs and feedback of our customers.',
         },
         {
           title: 'Reliability',
-          desc: 'We build systems that businesses can trust to run smoothly, day in and day out.'
+          desc: 'We build systems that businesses can trust to run smoothly, day in and day out.',
         },
         {
           title: 'Security',
-          desc: 'Your data security is our top priority. We implement industry-leading security measures.'
-        }
-      ]
-    }
+          desc: 'Your data security is our top priority. We implement industry-leading security measures.',
+        },
+      ],
+    },
   },
   privacyPage: {
     title: 'Privacy Policy',
     lastUpdated: 'Last updated: {{date}}',
     introduction: {
       title: 'Introduction',
-      content: 'At WaiteeRetail, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our POS system and related services.'
+      content:
+        'At WaiteeRetail, we are committed to protecting your privacy and ensuring the security of your personal information. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our POS system and related services.',
     },
     informationWeCollect: {
       title: 'Information We Collect',
       personal: {
         title: 'Personal Information',
-        content: 'We may collect personal information such as your name, email address, phone number, business information, and payment details when you register for our services or contact us.'
+        content:
+          'We may collect personal information such as your name, email address, phone number, business information, and payment details when you register for our services or contact us.',
       },
       usage: {
         title: 'Usage Information',
-        content: 'We collect information about how you use our platform, including transaction data, inventory information, customer data you enter, and usage patterns.'
+        content:
+          'We collect information about how you use our platform, including transaction data, inventory information, customer data you enter, and usage patterns.',
       },
       device: {
         title: 'Device Information',
-        content: 'We may collect information about the devices you use to access our services, including IP address, browser type, operating system, and device identifiers.'
-      }
+        content:
+          'We may collect information about the devices you use to access our services, including IP address, browser type, operating system, and device identifiers.',
+      },
     },
     howWeUse: {
       title: 'How We Use Your Information',
-      content: 'We use the information we collect to: provide and maintain our services, process transactions, improve our platform, communicate with you, ensure security, and comply with legal obligations.'
+      content:
+        'We use the information we collect to: provide and maintain our services, process transactions, improve our platform, communicate with you, ensure security, and comply with legal obligations.',
     },
     informationSharing: {
       title: 'Information Sharing and Disclosure',
-      content: 'We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy or required by law.'
+      content:
+        'We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy or required by law.',
     },
     dataSecurity: {
       title: 'Data Security',
-      content: 'We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.'
+      content:
+        'We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.',
     },
     yourRights: {
       title: 'Your Rights',
-      content: 'You have the right to access, update, or delete your personal information. You may also request data portability or object to certain processing activities.'
+      content:
+        'You have the right to access, update, or delete your personal information. You may also request data portability or object to certain processing activities.',
     },
     cookies: {
       title: 'Cookies and Tracking Technologies',
-      content: 'We use cookies and similar technologies to enhance your experience, analyze usage, and provide personalized content.'
+      content:
+        'We use cookies and similar technologies to enhance your experience, analyze usage, and provide personalized content.',
     },
     changes: {
       title: 'Changes to This Privacy Policy',
-      content: 'We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date.'
+      content:
+        'We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new policy on this page and updating the "Last updated" date.',
     },
     contact: {
       title: 'Contact Us',
-      content: 'If you have any questions about this Privacy Policy, please contact us at privacy@waiteeretail.com or through our support channels.'
-    }
+      content:
+        'If you have any questions about this Privacy Policy, please contact us at privacy@waiteeretail.com or through our support channels.',
+    },
   },
   termsPage: {
     title: 'Terms of Service',
     lastUpdated: 'Last updated: {{date}}',
     introduction: {
       title: 'Introduction',
-      content: 'Welcome to WaiteeRetail. These Terms of Service ("Terms") govern your use of our POS system, website, and related services. By accessing or using our services, you agree to be bound by these Terms.'
+      content:
+        'Welcome to WaiteeRetail. These Terms of Service ("Terms") govern your use of our POS system, website, and related services. By accessing or using our services, you agree to be bound by these Terms.',
     },
     acceptance: {
       title: 'Acceptance of Terms',
-      content: 'By creating an account or using our services, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy.'
+      content:
+        'By creating an account or using our services, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy.',
     },
     services: {
       title: 'Description of Services',
-      content: 'WaiteeRetail provides a comprehensive point-of-sale system designed for retail businesses, including inventory management, sales processing, customer management, and analytics tools.'
+      content:
+        'WaiteeRetail provides a comprehensive point-of-sale system designed for retail businesses, including inventory management, sales processing, customer management, and analytics tools.',
     },
     userResponsibilities: {
       title: 'User Responsibilities',
       accuracy: {
         title: 'Accuracy of Information',
-        content: 'You are responsible for providing accurate and complete information when registering for our services and maintaining the accuracy of such information.'
+        content:
+          'You are responsible for providing accurate and complete information when registering for our services and maintaining the accuracy of such information.',
       },
       security: {
         title: 'Account Security',
-        content: 'You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.'
+        content:
+          'You are responsible for maintaining the confidentiality of your account credentials and for all activities that occur under your account.',
       },
       compliance: {
         title: 'Legal Compliance',
-        content: 'You agree to use our services in compliance with all applicable laws and regulations, and not to use our services for any illegal or unauthorized purpose.'
-      }
+        content:
+          'You agree to use our services in compliance with all applicable laws and regulations, and not to use our services for any illegal or unauthorized purpose.',
+      },
     },
     payment: {
       title: 'Payment Terms',
-      content: 'Payment terms for our services are outlined in your service agreement. All fees are non-refundable unless otherwise specified. We reserve the right to change pricing with advance notice.'
+      content:
+        'Payment terms for our services are outlined in your service agreement. All fees are non-refundable unless otherwise specified. We reserve the right to change pricing with advance notice.',
     },
     intellectualProperty: {
       title: 'Intellectual Property',
-      content: 'All content, features, and functionality of our services are owned by WaiteeRetail and are protected by copyright, trademark, and other intellectual property laws.'
+      content:
+        'All content, features, and functionality of our services are owned by WaiteeRetail and are protected by copyright, trademark, and other intellectual property laws.',
     },
     dataOwnership: {
       title: 'Data Ownership and Rights',
-      content: 'You retain ownership of your business data. You grant us a limited license to use your data solely for providing our services and as described in our Privacy Policy.'
+      content:
+        'You retain ownership of your business data. You grant us a limited license to use your data solely for providing our services and as described in our Privacy Policy.',
     },
     termination: {
       title: 'Termination',
-      content: 'Either party may terminate this agreement at any time. Upon termination, your right to use our services will cease immediately, and we may delete your data after a reasonable period.'
+      content:
+        'Either party may terminate this agreement at any time. Upon termination, your right to use our services will cease immediately, and we may delete your data after a reasonable period.',
     },
     disclaimer: {
       title: 'Disclaimer of Warranties',
-      content: 'Our services are provided "as is" without warranties of any kind. We do not guarantee that our services will be uninterrupted or error-free.'
+      content:
+        'Our services are provided "as is" without warranties of any kind. We do not guarantee that our services will be uninterrupted or error-free.',
     },
     limitation: {
       title: 'Limitation of Liability',
-      content: 'WaiteeRetail\'s liability for any claims arising from your use of our services is limited to the amount you paid us in the 12 months preceding the claim.'
+      content:
+        "WaiteeRetail's liability for any claims arising from your use of our services is limited to the amount you paid us in the 12 months preceding the claim.",
     },
     governingLaw: {
       title: 'Governing Law',
-      content: 'These Terms are governed by the laws of Vietnam. Any disputes will be resolved in the courts of Vietnam.'
+      content:
+        'These Terms are governed by the laws of Vietnam. Any disputes will be resolved in the courts of Vietnam.',
     },
     changes: {
       title: 'Changes to Terms',
-      content: 'We reserve the right to modify these Terms at any time. We will notify users of material changes via email or through our platform.'
+      content:
+        'We reserve the right to modify these Terms at any time. We will notify users of material changes via email or through our platform.',
     },
     contact: {
       title: 'Contact Information',
-      content: 'If you have questions about these Terms, please contact us at syn9.vbs@gmail.com or through our support channels.'
-    }
+      content:
+        'If you have questions about these Terms, please contact us at syn9.vbs@gmail.com or through our support channels.',
+    },
   },
   securityPage: {
     title: 'Security',
     lastUpdated: 'Last updated: {{date}}',
     introduction: {
       title: 'Our Commitment to Security',
-      content: 'At WaiteeRetail, security is foundational to everything we build. We employ industry-leading practices to protect your data, ensure service availability, and maintain your trust.'
+      content:
+        'At WaiteeRetail, security is foundational to everything we build. We employ industry-leading practices to protect your data, ensure service availability, and maintain your trust.',
     },
     dataEncryption: {
       title: 'Data Encryption',
-      content: 'All data transmitted between your devices and our servers is encrypted using TLS 1.3 protocol. Data at rest is encrypted using AES-256 encryption standards. We also encrypt sensitive customer information and payment data to ensure complete protection.'
+      content:
+        'All data transmitted between your devices and our servers is encrypted using TLS 1.3 protocol. Data at rest is encrypted using AES-256 encryption standards. We also encrypt sensitive customer information and payment data to ensure complete protection.',
     },
     infrastructure: {
       title: 'Infrastructure Security',
-      content: 'Our infrastructure is hosted on trusted cloud providers with SOC 2 compliance. We implement network firewalls, intrusion detection systems, and regular vulnerability assessments. All servers are regularly patched and monitored 24/7.'
+      content:
+        'Our infrastructure is hosted on trusted cloud providers with SOC 2 compliance. We implement network firewalls, intrusion detection systems, and regular vulnerability assessments. All servers are regularly patched and monitored 24/7.',
     },
     accessControl: {
       title: 'Access Control',
-      content: 'Access to systems and customer data is restricted based on the principle of least privilege. Multi-factor authentication is required for all administrative access. We conduct regular access reviews and maintain detailed audit logs of all system activities.'
+      content:
+        'Access to systems and customer data is restricted based on the principle of least privilege. Multi-factor authentication is required for all administrative access. We conduct regular access reviews and maintain detailed audit logs of all system activities.',
     },
     compliance: {
       title: 'Compliance & Certifications',
-      content: 'WaiteeRetail complies with applicable data protection regulations including GDPR and Vietnam\'s cybersecurity laws. We undergo regular third-party security audits and maintain compliance with industry standards for payment data security.'
+      content:
+        "WaiteeRetail complies with applicable data protection regulations including GDPR and Vietnam's cybersecurity laws. We undergo regular third-party security audits and maintain compliance with industry standards for payment data security.",
     },
     incidentResponse: {
       title: 'Incident Response',
-      content: 'We maintain a dedicated security incident response team ready to address any potential threats. Our incident response plan includes immediate containment, thorough investigation, timely notification, and preventive measures to avoid recurrence.'
+      content:
+        'We maintain a dedicated security incident response team ready to address any potential threats. Our incident response plan includes immediate containment, thorough investigation, timely notification, and preventive measures to avoid recurrence.',
     },
     contact: {
       title: 'Report a Security Issue',
-      content: 'If you discover a security vulnerability or have concerns about the security of our platform, please contact our security team immediately at syn9.vbs@gmail.com. We take all reports seriously and will respond promptly.'
-    }
-  }
+      content:
+        'If you discover a security vulnerability or have concerns about the security of our platform, please contact our security team immediately at syn9.vbs@gmail.com. We take all reports seriously and will respond promptly.',
+    },
+  },
+  onboard: {
+    subtitle: 'Set up your store and admin account in a few quick steps.',
+    backHome: 'Back to home',
+    continue: 'Continue',
+    back: 'Back',
+    step1Title: 'Store details',
+    step1Description: 'Pick your business type and enter your store information.',
+    step2Title: 'Admin account',
+    step2Description: 'Create the account used to sign in and manage your store.',
+    step3Title: 'Verify email',
+    step3Description: 'Enter the 6-digit OTP code sent to your email.',
+    verify: 'Verify',
+    verifying: 'Verifying...',
+    resend: 'Resend code',
+    resendIn: 'Resend in {{seconds}}s',
+    resending: 'Sending...',
+    emailFailed: 'We could not send the verification email. Please tap "Resend code".',
+    invalidOtp: 'Incorrect OTP code. Please try again.',
+    submitting: 'Creating your store...',
+    success: 'Registration successful!',
+    genericError: 'Something went wrong, please try again.',
+    errors: {
+      category: 'Please choose a business type.',
+      customCategory: 'Please enter your specific industry.',
+      shopName: 'Please enter a store name.',
+      address: 'Please enter a store address.',
+      firstName: 'Please enter your first name.',
+      lastName: 'Please enter your last name.',
+      email: 'Please enter your email.',
+      emailInvalid: 'Invalid email address.',
+      phone: 'Please enter your phone number.',
+      password: 'Please enter a password.',
+      passwordLength: 'Password must be at least 6 characters.',
+      confirmPassword: 'Please confirm your password.',
+      passwordMismatch: 'Passwords do not match.',
+      phoneInvalid: 'Phone number is invalid for the selected country.',
+      otp: 'Please enter the 6-digit OTP code.',
+    },
+  },
 };

@@ -2,16 +2,15 @@
 
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import BrandLogo from '@/components/BrandLogo';
-import { Globe, Loader2, Menu, X } from 'lucide-react';
+import { Globe, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { MouseEvent, useEffect, useState } from 'react';
-import { appUrl } from '@/utils/constants';
+import { useEffect, useState } from 'react';
+import { affiliateUrl } from '@/utils/constants';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isStarting, setIsStarting] = useState(false);
   const pathname = usePathname();
   const { t, lang, setLang } = useLanguage();
 
@@ -23,14 +22,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleStartClick = (event: MouseEvent<HTMLAnchorElement>) => {
-    if (isStarting) {
-      event.preventDefault();
-      return;
-    }
-    setIsStarting(true);
-  };
-
   const navLinks = [
     { name: t.nav.product, href: '/products' },
     { name: t.nav.pricing, href: '/pricing' },
@@ -40,7 +31,9 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white/90 backdrop-blur-md border-b border-zinc-100 py-3' : 'bg-transparent py-5'
+        scrolled
+          ? 'bg-white/90 backdrop-blur-md border-b border-zinc-100 py-3'
+          : 'bg-transparent py-5'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -57,46 +50,52 @@ export default function Navbar() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => (
-              <Link 
+              <Link
                 key={link.name}
-                href={link.href} 
+                href={link.href}
                 className={`text-sm font-medium transition-colors ${
-                  pathname === link.href 
-                    ? 'text-blue-600' 
-                    : 'text-zinc-600 hover:text-blue-600'
+                  pathname === link.href ? 'text-blue-600' : 'text-zinc-600 hover:text-blue-600'
                 }`}
               >
                 {link.name}
               </Link>
             ))}
+            <a
+              href={affiliateUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-zinc-600 transition-colors hover:text-blue-600"
+            >
+              {t.nav.affiliate}
+            </a>
           </div>
 
           <div className="flex items-center gap-4 sm:gap-6">
-            <div 
+            <div
               onClick={() => setLang(lang === 'vi' ? 'en' : 'vi')}
               className="hidden sm:flex items-center gap-2 px-3 py-1.5 border border-zinc-200 rounded-full cursor-pointer hover:bg-zinc-50 transition-colors"
             >
               <Globe className="w-4 h-4 text-zinc-500" />
               <span className="text-xs font-bold text-zinc-700">{lang.toUpperCase()}</span>
             </div>
-            {/* <Link href="/login" className="hidden sm:block text-sm font-bold text-zinc-700 hover:text-blue-600 transition-colors">{t.nav.login}</Link> */}
-            <a
-              href={appUrl.ios || '#'}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleStartClick}
-              className={`bg-blue-600 text-white px-4 sm:px-6 py-2.5 rounded-2xl text-sm font-bold transition-all shadow-sm whitespace-nowrap inline-flex items-center gap-2 ${
-                isStarting ? 'cursor-not-allowed pointer-events-none' : 'hover:bg-blue-700'
-              }`}
+            <Link
+              href="/login"
+              className="hidden sm:block text-sm font-bold text-zinc-700 transition-colors hover:text-blue-600"
+            >
+              {t.nav.login}
+            </Link>
+            <Link
+              href="/onboard"
+              className="bg-blue-600 text-white px-4 sm:px-6 py-2.5 rounded-2xl text-sm font-bold transition-colors shadow-sm whitespace-nowrap inline-flex items-center gap-2 hover:bg-blue-700"
             >
               {t.nav.start}
-              {isStarting && <Loader2 className="w-4 h-4 animate-spin" />}
-            </a>
-            
+            </Link>
+
             {/* Mobile Menu Toggle */}
-            <button 
+            <button
               className="md:hidden p-2 text-zinc-600 hover:text-blue-600 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label="Mở menu"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -108,21 +107,42 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="md:hidden bg-white border-b border-zinc-100 py-6 px-4 space-y-4 animate-in slide-in-from-top duration-300">
           {navLinks.map((link) => (
-            <Link 
+            <Link
               key={link.name}
-              href={link.href} 
+              href={link.href}
               className={`block text-base font-medium transition-colors ${
-                pathname === link.href 
-                  ? 'text-blue-600' 
-                  : 'text-zinc-600 hover:text-blue-600'
+                pathname === link.href ? 'text-blue-600' : 'text-zinc-600 hover:text-blue-600'
               }`}
               onClick={() => setMobileMenuOpen(false)}
             >
               {link.name}
             </Link>
           ))}
+          <a
+            href={affiliateUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block text-base font-medium text-zinc-600 transition-colors hover:text-blue-600"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {t.nav.affiliate}
+          </a>
+          <Link
+            href="/login"
+            className="block text-base font-medium text-zinc-600 transition-colors hover:text-blue-600"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {t.nav.login}
+          </Link>
+          <Link
+            href="/onboard"
+            className="block rounded-xl bg-blue-600 px-4 py-3 text-center text-base font-bold text-white transition-colors hover:bg-blue-700"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {t.nav.start}
+          </Link>
           <div className="pt-4 border-t border-zinc-100 flex flex-col gap-4">
-            <div 
+            <div
               onClick={() => {
                 setLang(lang === 'vi' ? 'en' : 'vi');
                 setMobileMenuOpen(false);
@@ -132,7 +152,6 @@ export default function Navbar() {
               <Globe className="w-5 h-5 text-zinc-500" />
               <span>{lang === 'vi' ? 'English' : 'Tiếng Việt'}</span>
             </div>
-            {/* <Link href="/login" className="text-base font-bold text-zinc-700 hover:text-blue-600 transition-colors" onClick={() => setMobileMenuOpen(false)}>{t.nav.login}</Link> */}
           </div>
         </div>
       )}

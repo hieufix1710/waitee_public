@@ -3,6 +3,7 @@
 import BrandLogo from '@/components/BrandLogo';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
+import { getStoredRef } from '@/lib/referral';
 import { useQuery } from '@tanstack/react-query';
 import {
   ArrowLeft,
@@ -13,11 +14,11 @@ import {
   ShoppingCart,
   Store,
   User,
-  X
+  X,
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Toaster, toast } from 'sonner';
 
 interface StoreItem {
@@ -25,7 +26,8 @@ interface StoreItem {
   store_name: string;
   store_address: string;
   tenant_name: string;
-  tenant_id: number;
+  role?: string;
+  logo_url?: string | null;
 }
 
 interface ShopCategory {
@@ -45,6 +47,7 @@ export default function DashboardPage() {
   const [mounted, setMounted] = useState(false);
   const [stores, setStores] = useState<StoreItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [tenantFilter, setTenantFilter] = useState('');
   const [showCreateModal, setShowCreateModal] = useState(false);
 
   const [tenantName, setTenantName] = useState('');
@@ -53,8 +56,20 @@ export default function DashboardPage() {
   const [categoryId, setCategoryId] = useState('');
   const [customCategory, setCustomCategory] = useState('');
   const [creating, setCreating] = useState(false);
+  // Which existing tenant the new shop belongs to. Empty string means "create a
+  // brand-new tenant" (onboarding); a name means "add a branch to that tenant".
+  const [targetTenant, setTargetTenant] = useState('');
+  // Set when the branch would exceed the plan's included branches: holds the
+  // extra fee Rails quoted so we can confirm it before actually creating.
+  const [branchQuote, setBranchQuote] = useState<{
+    amount: number;
+    billingCycle: string;
+    includedBranches: number;
+  } | null>(null);
 
-  useEffect(() => { setMounted(true); }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const { data: categoryOptions = [], isLoading: isCategoriesLoading } = useQuery({
     queryKey: ['shop-categories'],
@@ -72,18 +87,48 @@ export default function DashboardPage() {
 
   const otherLabel: string = t.common.other ?? 'Other';
 
+  // Distinct tenants the merchant can manage (owner/manager), so we only offer
+  // "add a branch" where the backend will actually authorize it.
+  const tenantOptions = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          stores
+            .filter((store) => !store.role || store.role === 'owner' || store.role === 'manager')
+            .map((store) => store.tenant_name)
+            .filter(Boolean),
+        ),
+      ),
+    [stores],
+  );
+
+  // A chosen existing tenant means we add a branch to it; an empty selection
+  // means onboarding a brand-new tenant from scratch.
+  const isBranchMode = targetTenant !== '';
+
   const fetchStores = async () => {
     try {
       const raw = localStorage.getItem('hiu-auth');
       if (!raw) return;
       const auth = JSON.parse(raw);
       const token = `Bearer ${auth.access_token}`;
-      const res = await fetch('/api/user/my-stores', {
-        headers: { 'X-Waitee-Token': token },
+      // When the user logged in with a specific tenant, only show the stores
+      // they can access within it.
+      const tenant = typeof auth.tenant === 'string' ? auth.tenant.trim() : '';
+      setTenantFilter(tenant);
+
+      // Sessions can hold either a Doorkeeper access token (OAuth) or a legacy
+      // JWT (onboarding OTP); send both headers so the backend accepts either.
+      const res = await fetch('/api/user/accessible-stores', {
+        headers: {
+          Authorization: token,
+          'X-Waitee-Token': token,
+        },
       });
       if (res.ok) {
         const body = await res.json();
-        setStores(body?.data || []);
+        const all: StoreItem[] = body?.data || [];
+        setStores(tenant ? all.filter((store) => store.tenant_name === tenant) : all);
       }
     } catch {
       // empty
@@ -94,7 +139,10 @@ export default function DashboardPage() {
 
   useEffect(() => {
     if (!mounted) return;
-    if (!isAuthenticated) { router.replace('/login'); return; }
+    if (!isAuthenticated) {
+      router.replace('/login');
+      return;
+    }
     fetchStores();
   }, [mounted, isAuthenticated, router]);
 
@@ -117,10 +165,22 @@ export default function DashboardPage() {
   };
 
   const handleCreateShop = async () => {
-    if (!tenantName.trim()) { toast.error('Vui lòng nhập tên cửa hàng (tenant)'); return; }
-    if (!shopName.trim()) { toast.error('Vui lòng nhập tên cửa hàng'); return; }
-    if (!address.trim()) { toast.error('Vui lòng nhập địa chỉ'); return; }
-    if (!categoryId) { toast.error('Vui lòng chọn loại hình kinh doanh'); return; }
+    if (!tenantName.trim()) {
+      toast.error('Vui lòng nhập tên cửa hàng (tenant)');
+      return;
+    }
+    if (!shopName.trim()) {
+      toast.error('Vui lòng nhập tên cửa hàng');
+      return;
+    }
+    if (!address.trim()) {
+      toast.error('Vui lòng nhập địa chỉ');
+      return;
+    }
+    if (!categoryId) {
+      toast.error('Vui lòng chọn loại hình kinh doanh');
+      return;
+    }
     if (categoryId === otherLabel && !customCategory.trim()) {
       toast.error('Vui lòng nhập ngành hàng cụ thể');
       return;
@@ -129,15 +189,24 @@ export default function DashboardPage() {
     setCreating(true);
     try {
       const raw = localStorage.getItem('hiu-auth');
-      if (!raw) { toast.error('Phiên đăng nhập hết hạn'); return; }
+      if (!raw) {
+        toast.error('Phiên đăng nhập hết hạn');
+        return;
+      }
       const auth = JSON.parse(raw);
+
+      const ref = getStoredRef();
 
       const res = await fetch('/api/user/onboard', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Waitee-Token': `Bearer ${auth.access_token}`,
+        },
         body: JSON.stringify({
           user: { email: auth.user.email },
           tenantName: tenantName.trim(),
+          ...(ref ? { ref } : {}),
           shop: {
             name: shopName.trim(),
             address: address.trim(),
@@ -173,8 +242,82 @@ export default function DashboardPage() {
     setCustomCategory('');
   };
 
+  const closeCreateModal = () => {
+    setShowCreateModal(false);
+    setBranchQuote(null);
+  };
+
+  const handleCreateBranch = async (confirmed = false) => {
+    if (!shopName.trim()) {
+      toast.error('Vui lòng nhập tên chi nhánh');
+      return;
+    }
+    if (!address.trim()) {
+      toast.error('Vui lòng nhập địa chỉ');
+      return;
+    }
+
+    setCreating(true);
+    try {
+      const raw = localStorage.getItem('hiu-auth');
+      if (!raw) {
+        toast.error('Phiên đăng nhập hết hạn');
+        return;
+      }
+      const auth = JSON.parse(raw);
+
+      const res = await fetch('/api/user/branches', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${auth.access_token}`,
+          'X-Waitee-Token': `Bearer ${auth.access_token}`,
+        },
+        body: JSON.stringify({
+          tenant: targetTenant,
+          shop: { name: shopName.trim(), address: address.trim() },
+          confirmed,
+        }),
+      });
+
+      const data = await res.json().catch(() => ({}));
+
+      // Branch exceeds the plan's included branches: Rails returns a quote
+      // instead of creating. Show the extra fee and wait for confirmation.
+      if (res.ok && data?.confirmation_required) {
+        setBranchQuote({
+          amount: Number(data.extra_branch_amount) || 0,
+          billingCycle: String(data.billing_cycle || 'monthly'),
+          includedBranches: Number(data.included_branches) || 0,
+        });
+        return;
+      }
+
+      if (!res.ok) {
+        toast.error(data.message || 'Tạo chi nhánh thất bại');
+        return;
+      }
+
+      toast.success('Tạo chi nhánh thành công!');
+      closeCreateModal();
+      resetShopForm();
+      setLoading(true);
+      await fetchStores();
+    } catch {
+      toast.error('Có lỗi xảy ra. Vui lòng thử lại.');
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  const handleSubmit = () => (isBranchMode ? handleCreateBranch() : handleCreateShop());
+
   const openCreateModal = () => {
     resetShopForm();
+    setBranchQuote(null);
+    setTargetTenant(
+      tenantFilter && tenantOptions.includes(tenantFilter) ? tenantFilter : tenantOptions[0] || '',
+    );
     setShowCreateModal(true);
   };
 
@@ -192,7 +335,10 @@ export default function DashboardPage() {
               <span className="text-lg font-bold text-zinc-900">WaiteeRetail</span>
             </div>
             <button
-              onClick={() => { logout(); router.push('/'); }}
+              onClick={() => {
+                logout();
+                router.push('/');
+              }}
               className="flex items-center gap-2 rounded-lg border border-zinc-200 px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-50"
             >
               <LogOut className="h-4 w-4" />
@@ -208,22 +354,35 @@ export default function DashboardPage() {
                 <User className="h-6 w-6 text-blue-600" />
               </div>
               <div>
-                <h2 className="text-xl font-bold text-zinc-900">{user.full_name || `${user.first_name} ${user.last_name}`}</h2>
+                <h2 className="text-xl font-bold text-zinc-900">
+                  {user.full_name || `${user.first_name} ${user.last_name}`}
+                </h2>
                 <p className="text-sm text-zinc-500">{user.email}</p>
               </div>
             </div>
           </div>
 
-          <div className="mb-4 flex items-center justify-between">
+          <div className="mb-4 flex items-center justify-between gap-3">
             <h3 className="flex items-center gap-2 text-lg font-bold text-zinc-900">
               <Store className="h-5 w-5 text-blue-600" />
-              {t.dashboard?.storeInfo || 'Cửa hàng của tôi'}
+              {tenantFilter
+                ? `Cửa hàng trong ${tenantFilter}`
+                : t.dashboard?.storeInfo || 'Cửa hàng của tôi'}
             </h3>
+            {!loading && stores.length > 0 && tenantOptions.length > 0 && (
+              <button
+                onClick={openCreateModal}
+                className="flex shrink-0 items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-bold text-white transition-all hover:bg-blue-700"
+              >
+                <Plus className="h-4 w-4" />
+                {t.dashboard?.addBranch || 'Thêm chi nhánh'}
+              </button>
+            )}
           </div>
 
           {loading ? (
             <div className="space-y-3">
-              {[1, 2].map(i => (
+              {[1, 2].map((i) => (
                 <div key={i} className="h-24 animate-pulse rounded-2xl bg-zinc-100" />
               ))}
             </div>
@@ -231,7 +390,9 @@ export default function DashboardPage() {
             <div className="rounded-2xl border border-zinc-100 bg-white p-8 text-center shadow-sm">
               <Store className="mx-auto mb-3 h-8 w-8 text-zinc-300" />
               <p className="mb-4 text-sm text-zinc-500">
-                {t.dashboard?.noStores || 'Chưa có cửa hàng nào'}
+                {tenantFilter
+                  ? `Bạn không có cửa hàng nào trong ${tenantFilter}.`
+                  : t.dashboard?.noStores || 'Chưa có cửa hàng nào'}
               </p>
               <button
                 onClick={openCreateModal}
@@ -243,8 +404,11 @@ export default function DashboardPage() {
             </div>
           ) : (
             <div className="space-y-4">
-              {stores.map(store => (
-                <div key={store.store_uid} className="rounded-2xl border border-zinc-100 bg-white p-5 shadow-sm">
+              {stores.map((store) => (
+                <div
+                  key={store.store_uid}
+                  className="rounded-2xl border border-zinc-100 bg-white p-5 shadow-sm"
+                >
                   <div className="mb-4 flex items-start gap-3">
                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-50">
                       <Building2 className="h-5 w-5 text-blue-600" />
@@ -279,145 +443,228 @@ export default function DashboardPage() {
           >
             <button
               type="button"
-              onClick={() => setShowCreateModal(false)}
+              onClick={closeCreateModal}
               className="absolute right-4 top-4 text-zinc-400 transition-colors hover:text-zinc-600"
             >
               <X className="h-5 w-5" />
             </button>
 
-            <h3 className="mb-1 text-xl font-bold text-zinc-900">
-              {t.dashboard?.createShop || 'Tạo cửa hàng'}
-            </h3>
-            <p className="mb-6 text-sm text-zinc-500">
-              {t.dashboard?.createShopDescription || 'Điền thông tin cửa hàng để bắt đầu bán hàng.'}
-            </p>
-
-            <div className="space-y-5">
+            {branchQuote ? (
               <div>
-                <label className="mb-2 block text-sm font-semibold text-zinc-900">
-                  {t.dashboard?.selectCategory || 'Loại hình kinh doanh'}
-                </label>
-                {isCategoriesLoading ? (
-                  <div className="grid grid-cols-2 gap-2">
-                    {Array.from({ length: 4 }).map((_, i) => (
-                      <div key={i} className="h-12 animate-pulse rounded-xl bg-zinc-100" />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-2 gap-2">
-                    {categoryOptions.map(cat => {
-                      const isSelected = categoryId === String(cat.id);
-                      return (
-                        <button
-                          type="button"
-                          key={cat.id}
-                          onClick={() => {
-                            setCategoryId(String(cat.id));
-                            setCustomCategory('');
-                          }}
-                          className={`rounded-xl border px-3 py-3 text-sm font-medium transition-all ${
-                            isSelected
-                              ? 'border-blue-600 bg-blue-50 text-blue-700'
-                              : 'border-zinc-200 bg-white text-zinc-700 hover:border-blue-300'
-                          }`}
-                        >
-                          {cat.name}
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-
-              {categoryId === otherLabel && (
-                <div>
-                  <label className="mb-2 block text-sm font-semibold text-zinc-900">
-                    {t.common?.other ? 'Ngành hàng cụ thể' : 'Specific Industry'}
-                  </label>
-                  <input
-                    type="text"
-                    value={customCategory}
-                    onChange={e => setCustomCategory(e.target.value)}
-                    placeholder="Ví dụ: Phụ kiện điện thoại"
-                    className="block w-full rounded-xl border border-zinc-200 px-3 py-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
-                  />
-                </div>
-              )}
-
-              <div>
-                <label className="mb-2 block text-sm font-semibold text-zinc-900">
-                  {t.signup?.step1?.tenantName || 'Tên cửa hàng (tenant)'}
-                </label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-400">
-                    <Building2 className="h-4 w-4" />
-                  </div>
-                  <input
-                    type="text"
-                    value={tenantName}
-                    onChange={e => setTenantName(e.target.value)}
-                    placeholder={t.signup?.step1?.tenantNamePlaceholder || 'Ví dụ: Cửa hàng của tôi'}
-                    className="block w-full rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
-                  />
+                <h3 className="mb-1 text-xl font-bold text-zinc-900">
+                  {t.dashboard?.extraBranchTitle || 'Chi nhánh vượt gói'}
+                </h3>
+                <p className="mb-4 text-sm text-zinc-600">
+                  {(
+                    t.dashboard?.extraBranchMessage ||
+                    'Cửa hàng của bạn đã đủ {{included}} chi nhánh trong gói. Thêm chi nhánh này sẽ tính thêm {{amount}}/{{cycle}}.'
+                  )
+                    .replace('{{included}}', String(branchQuote.includedBranches))
+                    .replace('{{amount}}', `${branchQuote.amount.toLocaleString('vi-VN')}đ`)
+                    .replace(
+                      '{{cycle}}',
+                      branchQuote.billingCycle === 'yearly'
+                        ? t.dashboard?.yearlyCycleShort || 'năm'
+                        : t.dashboard?.monthlyCycleShort || 'tháng',
+                    )}
+                </p>
+                <p className="mb-6 rounded-xl bg-amber-50 px-4 py-3 text-xs text-amber-700">
+                  {t.dashboard?.extraBranchNote ||
+                    'Khoản phí này sẽ được cộng vào hoá đơn khi gia hạn gói.'}
+                </p>
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setBranchQuote(null)}
+                    className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-zinc-300 px-4 py-3 text-sm font-bold text-zinc-700 transition-all hover:bg-zinc-50"
+                  >
+                    {t.dashboard?.back || 'Quay lại'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleCreateBranch(true)}
+                    disabled={creating}
+                    className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {creating
+                      ? t.dashboard?.creating || 'Đang tạo...'
+                      : t.dashboard?.confirmCreate || 'Xác nhận tạo'}
+                  </button>
                 </div>
               </div>
+            ) : (
+              <>
+                <h3 className="mb-1 text-xl font-bold text-zinc-900">
+                  {isBranchMode
+                    ? t.dashboard?.addBranch || 'Thêm chi nhánh'
+                    : t.dashboard?.createShop || 'Tạo cửa hàng'}
+                </h3>
+                <p className="mb-6 text-sm text-zinc-500">
+                  {isBranchMode
+                    ? t.dashboard?.addBranchDescription || 'Thêm chi nhánh cho cửa hàng đang có.'
+                    : t.dashboard?.createShopDescription ||
+                      'Điền thông tin cửa hàng để bắt đầu bán hàng.'}
+                </p>
 
-              <div>
-                <label className="mb-2 block text-sm font-semibold text-zinc-900">
-                  {t.dashboard?.shopName || 'Tên cửa hàng'}
-                </label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-400">
-                    <Building2 className="h-4 w-4" />
+                <div className="space-y-5">
+                  {!tenantFilter && tenantOptions.length > 0 && (
+                    <div>
+                      <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                        {t.dashboard?.selectTenant || 'Chọn cửa hàng (tenant)'}
+                      </label>
+                      <select
+                        value={targetTenant}
+                        onChange={(e) => setTargetTenant(e.target.value)}
+                        className="block w-full rounded-xl border border-zinc-200 bg-white px-3 py-3 text-sm text-zinc-900 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                      >
+                        {tenantOptions.map((name) => (
+                          <option key={name} value={name}>
+                            {name}
+                          </option>
+                        ))}
+                        <option value="">{t.dashboard?.newTenantOption || 'Tạo tenant mới'}</option>
+                      </select>
+                    </div>
+                  )}
+
+                  {!isBranchMode && (
+                    <>
+                      <div>
+                        <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                          {t.dashboard?.selectCategory || 'Loại hình kinh doanh'}
+                        </label>
+                        {isCategoriesLoading ? (
+                          <div className="grid grid-cols-2 gap-2">
+                            {Array.from({ length: 4 }).map((_, i) => (
+                              <div key={i} className="h-12 animate-pulse rounded-xl bg-zinc-100" />
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="grid grid-cols-2 gap-2">
+                            {categoryOptions.map((cat) => {
+                              const isSelected = categoryId === String(cat.id);
+                              return (
+                                <button
+                                  type="button"
+                                  key={cat.id}
+                                  onClick={() => {
+                                    setCategoryId(String(cat.id));
+                                    setCustomCategory('');
+                                  }}
+                                  className={`rounded-xl border px-3 py-3 text-sm font-medium transition-all ${
+                                    isSelected
+                                      ? 'border-blue-600 bg-blue-50 text-blue-700'
+                                      : 'border-zinc-200 bg-white text-zinc-700 hover:border-blue-300'
+                                  }`}
+                                >
+                                  {cat.name}
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+
+                      {categoryId === otherLabel && (
+                        <div>
+                          <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                            {t.common?.other ? 'Ngành hàng cụ thể' : 'Specific Industry'}
+                          </label>
+                          <input
+                            type="text"
+                            value={customCategory}
+                            onChange={(e) => setCustomCategory(e.target.value)}
+                            placeholder="Ví dụ: Phụ kiện điện thoại"
+                            className="block w-full rounded-xl border border-zinc-200 px-3 py-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                          />
+                        </div>
+                      )}
+
+                      <div>
+                        <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                          {t.signup?.step1?.tenantName || 'Tên cửa hàng (tenant)'}
+                        </label>
+                        <div className="relative">
+                          <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-400">
+                            <Building2 className="h-4 w-4" />
+                          </div>
+                          <input
+                            type="text"
+                            value={tenantName}
+                            onChange={(e) => setTenantName(e.target.value)}
+                            placeholder={
+                              t.signup?.step1?.tenantNamePlaceholder || 'Ví dụ: Cửa hàng của tôi'
+                            }
+                            className="block w-full rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                          />
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                      {t.dashboard?.shopName || 'Tên cửa hàng'}
+                    </label>
+                    <div className="relative">
+                      <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-zinc-400">
+                        <Building2 className="h-4 w-4" />
+                      </div>
+                      <input
+                        type="text"
+                        value={shopName}
+                        onChange={(e) => setShopName(e.target.value)}
+                        placeholder={t.dashboard?.shopNamePlaceholder || 'Nhập tên cửa hàng'}
+                        className="block w-full rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                      />
+                    </div>
                   </div>
-                  <input
-                    type="text"
-                    value={shopName}
-                    onChange={e => setShopName(e.target.value)}
-                    placeholder={t.dashboard?.shopNamePlaceholder || 'Nhập tên cửa hàng'}
-                    className="block w-full rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
-                  />
-                </div>
-              </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-semibold text-zinc-900">
-                  {t.dashboard?.shopAddress || 'Địa chỉ đầy đủ'}
-                </label>
-                <div className="relative">
-                  <div className="pointer-events-none absolute left-3 top-3 text-zinc-400">
-                    <MapPin className="h-4 w-4" />
+                  <div>
+                    <label className="mb-2 block text-sm font-semibold text-zinc-900">
+                      {t.dashboard?.shopAddress || 'Địa chỉ đầy đủ'}
+                    </label>
+                    <div className="relative">
+                      <div className="pointer-events-none absolute left-3 top-3 text-zinc-400">
+                        <MapPin className="h-4 w-4" />
+                      </div>
+                      <textarea
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder={
+                          t.dashboard?.shopAddressPlaceholder ||
+                          'Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành'
+                        }
+                        rows={3}
+                        className="block w-full resize-none rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                      />
+                    </div>
                   </div>
-                  <textarea
-                    value={address}
-                    onChange={e => setAddress(e.target.value)}
-                    placeholder={t.dashboard?.shopAddressPlaceholder || 'Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành'}
-                    rows={3}
-                    className="block w-full resize-none rounded-xl border border-zinc-200 py-3 pl-10 pr-3 text-sm text-zinc-900 placeholder-zinc-400 transition-all focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
-                  />
-                </div>
-              </div>
 
-              <div className="flex gap-3">
-                <button
-                  type="button"
-                  onClick={() => setShowCreateModal(false)}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-zinc-300 px-4 py-3 text-sm font-bold text-zinc-700 transition-all hover:bg-zinc-50"
-                >
-                  {t.common?.cancel || 'Hủy'}
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCreateShop}
-                  disabled={creating}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {creating
-                    ? (t.dashboard?.creating || 'Đang tạo...')
-                    : (t.dashboard?.createShop || 'Tạo cửa hàng')}
-                </button>
-              </div>
-            </div>
+                  <div className="flex gap-3">
+                    <button
+                      type="button"
+                      onClick={closeCreateModal}
+                      className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-zinc-300 px-4 py-3 text-sm font-bold text-zinc-700 transition-all hover:bg-zinc-50"
+                    >
+                      {t.common?.cancel || 'Hủy'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSubmit}
+                      disabled={creating}
+                      className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-bold text-white transition-all hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {creating
+                        ? t.dashboard?.creating || 'Đang tạo...'
+                        : isBranchMode
+                          ? t.dashboard?.addBranch || 'Thêm chi nhánh'
+                          : t.dashboard?.createShop || 'Tạo cửa hàng'}
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </motion.div>
         </div>
       )}
