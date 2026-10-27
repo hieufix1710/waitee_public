@@ -51,7 +51,7 @@ export default function AboutPage() {
                 viewport={{ once: true }}
                 className="p-6"
               >
-                <div className="text-4xl font-black text-blue-600 mb-2">10,000+</div>
+                <div className="text-4xl font-black text-blue-600 mb-2">VN</div>
                 <div className="text-sm font-bold text-zinc-500 uppercase tracking-wider">
                   {t.aboutPage.stats.customers}
                 </div>
@@ -63,7 +63,7 @@ export default function AboutPage() {
                 transition={{ delay: 0.1 }}
                 className="p-6"
               >
-                <div className="text-4xl font-black text-blue-600 mb-2">5M+</div>
+                <div className="text-4xl font-black text-blue-600 mb-2">POS</div>
                 <div className="text-sm font-bold text-zinc-500 uppercase tracking-wider">
                   {t.aboutPage.stats.transactions}
                 </div>
@@ -75,7 +75,7 @@ export default function AboutPage() {
                 transition={{ delay: 0.2 }}
                 className="p-6"
               >
-                <div className="text-4xl font-black text-blue-600 mb-2">99.9%</div>
+                <div className="text-4xl font-black text-blue-600 mb-2">Cloud</div>
                 <div className="text-sm font-bold text-zinc-500 uppercase tracking-wider">
                   {t.aboutPage.stats.uptime}
                 </div>
@@ -87,7 +87,7 @@ export default function AboutPage() {
                 transition={{ delay: 0.3 }}
                 className="p-6"
               >
-                <div className="text-4xl font-black text-blue-600 mb-2">24/7</div>
+                <div className="text-4xl font-black text-blue-600 mb-2">Direct</div>
                 <div className="text-sm font-bold text-zinc-500 uppercase tracking-wider">
                   {t.aboutPage.stats.support}
                 </div>

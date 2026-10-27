@@ -84,7 +84,8 @@ export const en = {
   },
   faq: {
     title: 'Frequently Asked Questions',
-    subtitle: "Everything you need to know about WaiteeRetail. We're here to support you 24/7.",
+    subtitle:
+      'Everything you need to know about WaiteeRetail. Contact us through the support channels listed on this website.',
     items: [
       {
         q: 'Does WaiteeRetail support offline sales?',
