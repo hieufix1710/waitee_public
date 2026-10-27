@@ -21,13 +21,14 @@ export const en = {
   },
   hero: {
     badge: 'RETAIL MANAGEMENT, A REVOLUTION.',
-    title1: 'Synchronize your retail operations ',
-    titleHighlight: 'effortlessly.',
-    desc: 'The versatile platform designed for retail store owners who value time over complexity. Manage inventory, sales, and customers across all channels in one single place.',
-    becomeSeller: 'Become a seller',
+    title1: 'Sell more simply. ',
+    titleHighlight: 'Manage your store with ease.',
+    desc: 'Waitee helps you manage sales, inventory, and revenue in one easy-to-use system. Start with your store today.',
+    becomeSeller: 'Start for free',
     appStore: 'App Store',
     googlePlay: 'Google Play',
-    trust: 'Joined by over 2,000 retail leaders worldwide.',
+    trust: 'Built for independent retail teams that want less complexity.',
+    demoLabel: 'Illustrative dashboard preview',
     stats: {
       revenue: 'Revenue',
       orders: 'Orders',
@@ -41,7 +42,7 @@ export const en = {
   },
   cta: {
     title: 'Start for free today',
-    desc: 'Join over 10,000+ store owners who trust WaiteeRetail to optimize their business. No credit card required.',
+    desc: 'Create your store workspace and start managing retail operations with a simple, focused workflow. No credit card required.',
     start: 'Get Started',
     affiliate: 'Become an affiliate',
     pricing: 'View Pricing',

@@ -4,4 +4,4 @@ export const appUrl = {
 };
 
 // Standalone affiliate app (external). Configurable at build time.
-export const affiliateUrl = process.env.NEXT_PUBLIC_AFFILIATE_URL || 'http://localhost:3006';
+export const affiliateUrl = process.env.NEXT_PUBLIC_AFFILIATE_URL || '';

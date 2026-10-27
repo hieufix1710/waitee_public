@@ -23,14 +23,14 @@ export default function Footer() {
       title: t.footer.company,
       links: [
         { name: t.footer.about, href: '/about-us' },
-        { name: t.footer.contact, href: '/contact' },
+        { name: t.footer.contact, href: '/about-us' },
       ],
     },
     {
       title: t.footer.resources,
       links: [
         // { name: t.footer.documentation, href: '/documentation' },
-        { name: t.footer.support, href: '/support' },
+        { name: t.footer.support, href: '/about-us' },
       ],
     },
     {

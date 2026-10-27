@@ -115,6 +115,9 @@ export default function Hero() {
               transition={{ duration: 0.8 }}
               className="bg-white p-6 sm:p-8 rounded-[32px] shadow-[0_32px_64px_-12px_rgba(0,0,0,0.08)] border border-zinc-100 relative z-10"
             >
+              <p className="mb-4 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+                {t.hero.demoLabel}
+              </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-8">
                 <div className="p-4 bg-white border border-zinc-50 rounded-xl shadow-sm">
                   <p className="text-[10px] text-zinc-400 font-bold uppercase mb-1">

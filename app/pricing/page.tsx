@@ -5,7 +5,6 @@ import Navbar from '@/components/Navbar';
 import { usePricingPlans } from '@/hooks/usePricingPlans';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { buildComparisonRows, type BillingCycle } from '@/lib/pricing/plans';
-import { appUrl } from '@/utils/constants';
 import { Check, ChevronDown, Mail, Minus, Shield, Star, Users, Zap } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import Link from 'next/link';
@@ -133,7 +132,7 @@ export default function PricingPage() {
                       </div>
 
                       <a
-                        href={appUrl.ios || '#'}
+                        href="/onboard"
                         target="_blank"
                         rel="noopener noreferrer"
                         className={`block w-full px-3 py-4 text-center rounded-2xl font-bold text-sm mb-10 transition-all ${plan.popular ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-200' : isFree ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xl shadow-emerald-200' : 'bg-zinc-900 text-white hover:bg-zinc-800'}`}
@@ -204,7 +203,7 @@ export default function PricingPage() {
               <p className="text-zinc-600 mb-8 max-w-2xl mx-auto">{t.pricing.freeCallout.desc}</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
-                  href={appUrl.ios || '#'}
+                  href="/onboard"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-8 py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-all w-full sm:w-auto inline-block"
@@ -276,7 +275,7 @@ export default function PricingPage() {
 
             <div className="mt-12 text-center">
               <a
-                href={appUrl.ios || '#'}
+                href="/onboard"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block px-8 py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-all"

@@ -21,13 +21,14 @@ export const vi = {
   },
   hero: {
     badge: 'QUẢN LÝ BÁN LẺ, MỘT SỰ ĐỔI MỚI.',
-    title1: 'Đồng bộ hóa hoạt động bán lẻ của bạn một cách ',
-    titleHighlight: 'dễ dàng.',
-    desc: 'Nền tảng đa năng được thiết kế dành cho các chủ cửa hàng bán lẻ coi trọng thời gian hơn sự phức tạp. Quản lý hàng tồn kho, doanh số bán hàng và khách hàng trên mọi kênh tại một nơi duy nhất.',
-    becomeSeller: 'Trở thành nhà bán',
+    title1: 'Bán hàng dễ hơn. ',
+    titleHighlight: 'Quản lý cửa hàng nhẹ nhàng hơn.',
+    desc: 'Waitee giúp bạn quản lý bán hàng, hàng tồn kho và doanh thu trên một hệ thống dễ sử dụng. Bắt đầu với cửa hàng của bạn ngay hôm nay.',
+    becomeSeller: 'Bắt đầu miễn phí',
     appStore: 'App Store',
     googlePlay: 'Google Play',
-    trust: 'Có sự tham gia của hơn 2.000 nhà lãnh đạo bán lẻ trên toàn thế giới.',
+    trust: 'Được xây dựng cho các đội ngũ bán lẻ muốn vận hành đơn giản hơn.',
+    demoLabel: 'Minh họa giao diện bảng điều khiển',
     stats: {
       revenue: 'Doanh thu',
       orders: 'Đơn hàng',
@@ -41,7 +42,7 @@ export const vi = {
   },
   cta: {
     title: 'Bắt đầu miễn phí ngay hôm nay',
-    desc: 'Tham gia cùng hơn 10.000+ chủ cửa hàng đã tin dùng WaiteeRetail để tối ưu hóa kinh doanh. Không cần thẻ tín dụng.',
+    desc: 'Tạo không gian cửa hàng và bắt đầu quản lý hoạt động bán lẻ với quy trình đơn giản, tập trung. Không cần thẻ tín dụng.',
     start: 'Bắt đầu ngay',
     affiliate: 'Affiliate',
     pricing: 'Xem bảng giá',
