@@ -109,7 +109,7 @@ export const vi = {
     badge: 'BẢNG GIÁ MINH BẠCH',
     heading: 'Giải pháp phù hợp cho mọi quy mô cửa hàng',
     subheading:
-      'Bắt đầu miễn phí và mở rộng quy mô khi bạn phát triển. Không có phí ẩn, không cần thẻ tín dụng, hỗ trợ tận tâm 24/7.',
+      'Bắt đầu với các gói hiện có và chọn phương án phù hợp với cửa hàng khi hoạt động phát triển.',
     teaserBadge: 'Bảng giá dịch vụ',
     teaserHeading: 'Chi phí minh bạch, không phí ẩn',
     teaserDesc: 'Bắt đầu với gói miễn phí và nâng cấp khi bạn phát triển. Xem',
@@ -149,7 +149,7 @@ export const vi = {
     },
     support: {
       title: 'Hỗ trợ tận tâm',
-      desc: 'Đội ngũ kỹ thuật hỗ trợ 24/7 qua chat, email và điện thoại.',
+      desc: 'Liên hệ với đội ngũ WaiteeRetail qua các kênh hỗ trợ được cung cấp.',
     },
     guide: [
       'Gói Free phù hợp cửa hàng mới cần xác thực mô hình và vận hành bán hàng cơ bản hằng ngày.',
@@ -162,7 +162,7 @@ export const vi = {
       items: [
         {
           q: 'Tôi có thể sử dụng WaiteeRetail miễn phí không?',
-          a: 'Có, chúng tôi cung cấp gói Free trọn đời cho các cửa hàng nhỏ với quy mô dưới 100 sản phẩm và 1 nhân viên. Bạn có thể bắt đầu ngay mà không cần thẻ tín dụng.',
+          a: 'Bạn có thể chọn gói Free trong các lựa chọn bảng giá hiện có. Hãy kiểm tra chi tiết gói trước khi bắt đầu.',
         },
         {
           q: 'Tôi có thể chuyển dữ liệu từ hệ thống POS hiện tại sang hệ thống mới được không?',

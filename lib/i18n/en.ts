@@ -108,7 +108,7 @@ export const en = {
     badge: 'TRANSPARENT PRICING',
     heading: 'The right solution for every store size',
     subheading:
-      'Start free and scale as you grow. No hidden fees, no credit card required, 24/7 dedicated support.',
+      'Start with the available plans and choose the option that fits your store as it grows.',
     teaserBadge: 'Pricing',
     teaserHeading: 'Transparent costs, no hidden fees',
     teaserDesc: 'Start with the free plan and upgrade as you grow. See',
@@ -147,7 +147,7 @@ export const en = {
     },
     support: {
       title: 'Dedicated Support',
-      desc: 'Our technical team is available 24/7 via chat, email, and phone.',
+      desc: 'Contact our team through the support channels listed by WaiteeRetail.',
     },
     guide: [
       'Free plan suits new stores needing to validate their model and run basic daily sales operations.',
@@ -160,7 +160,7 @@ export const en = {
       items: [
         {
           q: 'Can I use WaiteeRetail for free?',
-          a: 'Yes, we offer a lifetime Free plan for small stores with less than 100 products and 1 employee. You can start immediately without a credit card.',
+          a: 'The available Free plan can be selected from the pricing options. Check the current plan details before getting started.',
         },
         {
           q: 'Can I migrate data from my current POS system?',
