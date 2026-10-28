@@ -301,14 +301,14 @@ export const vi = {
       desc: 'Chúng tôi có sứ mệnh cách mạng hóa cách thức hoạt động của các doanh nghiệp bán lẻ. Kể từ khi thành lập, chúng tôi đã dấu thân để xây dựng hệ thống POS trực quan và mạnh mẽ nhất cho các chủ cửa hàng Việt Nam.',
     },
     stats: {
-      customers: 'Khách Hàng Hài Lòng',
-      transactions: 'Giao Dịch Được Xử Lý',
-      uptime: 'Đảm Bảo Hoạt Động',
-      support: 'Hỗ Trợ Sẵn Sàng',
+      customers: 'Xây dựng cho Việt Nam',
+      transactions: 'Nền tảng POS bán lẻ',
+      uptime: 'Vận hành trên nền tảng đám mây',
+      support: 'Hỗ trợ trực tiếp từ đội ngũ',
     },
     mission: {
       title: 'Sứ mệnh của chúng tôi',
-      desc: 'Trao quyền cho các chủ cửa hàng bán lẻ bằng các công cụ đơn giản nhưng m��nh mẽ giúp họ bán được nhiều hơn, quản lý tốt hơn và phát triển nhanh hơn. Chúng tôi tin vào sức mạnh của công nghệ trong việc giải quyết các vấn đề kinh doanh thực tế.',
+      desc: 'Trao quyền cho các chủ cửa hàng bán lẻ bằng các công cụ đơn giản nhưng mạnh mẽ giúp họ bán được nhiều hơn, quản lý tốt hơn và phát triển nhanh hơn. Chúng tôi tin vào sức mạnh của công nghệ trong việc giải quyết các vấn đề kinh doanh thực tế.',
     },
     vision: {
       title: 'Tầm nhìn của chúng tôi',
@@ -437,7 +437,7 @@ export const vi = {
     payment: {
       title: 'Điều khoản Thanh toán',
       content:
-        'Điều khoản thanh toán cho dịch vụ của chúng tôi được nêu trong thỏa thuận dịch vụ của bạn. Tất cả các khoản phí đều không được hoàn lại trừ khi đư��c chỉ định khác. Chúng tôi có quyền thay đổi giá cả với thông báo trước.',
+        'Điều khoản thanh toán cho dịch vụ của chúng tôi được nêu trong thỏa thuận dịch vụ của bạn. Tất cả các khoản phí đều không được hoàn lại trừ khi được chỉ định khác. Chúng tôi có quyền thay đổi giá cả với thông báo trước.',
     },
     intellectualProperty: {
       title: 'Quyền Sở hữu Trí tuệ',
@@ -554,7 +554,7 @@ export const vi = {
       passwordLength: 'Mật khẩu cần ít nhất 6 ký tự.',
       confirmPassword: 'Vui lòng xác nhận mật khẩu.',
       passwordMismatch: 'Mật khẩu xác nhận không khớp.',
-      phoneInvalid: 'S��� điện thoại không hợp lệ với quốc gia đã chọn.',
+      phoneInvalid: 'Số điện thoại không hợp lệ với quốc gia đã chọn.',
       otp: 'Vui lòng nhập mã OTP gồm 6 chữ số.',
     },
   },

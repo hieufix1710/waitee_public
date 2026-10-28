@@ -300,10 +300,10 @@ export const en = {
       desc: "We're on a mission to revolutionize how retail businesses operate. Since our founding, we've been dedicated to building the most intuitive and powerful POS system for Vietnamese store owners.",
     },
     stats: {
-      customers: 'Happy Customers',
-      transactions: 'Transactions Processed',
-      uptime: 'Uptime Guarantee',
-      support: 'Support Available',
+      customers: 'Built for Vietnam',
+      transactions: 'Retail POS platform',
+      uptime: 'Cloud-based operations',
+      support: 'Direct team support',
     },
     mission: {
       title: 'Our Mission',

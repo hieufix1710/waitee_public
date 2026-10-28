@@ -23,14 +23,14 @@ export default function Footer() {
       title: t.footer.company,
       links: [
         { name: t.footer.about, href: '/about-us' },
-        { name: t.footer.contact, href: '/about-us' },
+        { name: t.footer.contact, href: 'mailto:contact@waiteeretail.com' },
       ],
     },
     {
       title: t.footer.resources,
       links: [
         // { name: t.footer.documentation, href: '/documentation' },
-        { name: t.footer.support, href: '/about-us' },
+        { name: t.footer.support, href: 'mailto:support@waiteeretail.com' },
       ],
     },
     {
