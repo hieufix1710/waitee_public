@@ -21,13 +21,14 @@ export const vi = {
   },
   hero: {
     badge: 'QUẢN LÝ BÁN LẺ, MỘT SỰ ĐỔI MỚI.',
-    title1: 'Đồng bộ hóa hoạt động bán lẻ của bạn một cách ',
-    titleHighlight: 'dễ dàng.',
-    desc: 'Nền tảng đa năng được thiết kế dành cho các chủ cửa hàng bán lẻ coi trọng thời gian hơn sự phức tạp. Quản lý hàng tồn kho, doanh số bán hàng và khách hàng trên mọi kênh tại một nơi duy nhất.',
-    becomeSeller: 'Trở thành nhà bán',
+    title1: 'Bán hàng dễ hơn. ',
+    titleHighlight: 'Quản lý cửa hàng nhẹ nhàng hơn.',
+    desc: 'Waitee giúp bạn quản lý bán hàng, hàng tồn kho và doanh thu trên một hệ thống dễ sử dụng. Bắt đầu với cửa hàng của bạn ngay hôm nay.',
+    becomeSeller: 'Bắt đầu miễn phí',
     appStore: 'App Store',
     googlePlay: 'Google Play',
-    trust: 'Có sự tham gia của hơn 2.000 nhà lãnh đạo bán lẻ trên toàn thế giới.',
+    trust: 'Được xây dựng cho các đội ngũ bán lẻ muốn vận hành đơn giản hơn.',
+    demoLabel: 'Minh họa giao diện bảng điều khiển',
     stats: {
       revenue: 'Doanh thu',
       orders: 'Đơn hàng',
@@ -41,7 +42,7 @@ export const vi = {
   },
   cta: {
     title: 'Bắt đầu miễn phí ngay hôm nay',
-    desc: 'Tham gia cùng hơn 10.000+ chủ cửa hàng đã tin dùng WaiteeRetail để tối ưu hóa kinh doanh. Không cần thẻ tín dụng.',
+    desc: 'Tạo không gian cửa hàng và bắt đầu quản lý hoạt động bán lẻ với quy trình đơn giản, tập trung. Không cần thẻ tín dụng.',
     start: 'Bắt đầu ngay',
     affiliate: 'Affiliate',
     pricing: 'Xem bảng giá',
@@ -84,7 +85,7 @@ export const vi = {
   faq: {
     title: 'Câu hỏi thường gặp',
     subtitle:
-      'Mọi thứ bạn cần biết về phần mềm quản lý bán lẻ WaiteeRetail. Chúng tôi luôn sẵn sàng hỗ trợ bạn 24/7.',
+      'Mọi thứ bạn cần biết về phần mềm quản lý bán lẻ WaiteeRetail. Bạn có thể liên hệ qua các kênh hỗ trợ được nêu trên website.',
     items: [
       {
         q: 'WaiteeRetail có hỗ trợ bán hàng khi mất mạng không?',
@@ -108,7 +109,7 @@ export const vi = {
     badge: 'BẢNG GIÁ MINH BẠCH',
     heading: 'Giải pháp phù hợp cho mọi quy mô cửa hàng',
     subheading:
-      'Bắt đầu miễn phí và mở rộng quy mô khi bạn phát triển. Không có phí ẩn, không cần thẻ tín dụng, hỗ trợ tận tâm 24/7.',
+      'Bắt đầu với các gói hiện có và chọn phương án phù hợp với cửa hàng khi hoạt động phát triển.',
     teaserBadge: 'Bảng giá dịch vụ',
     teaserHeading: 'Chi phí minh bạch, không phí ẩn',
     teaserDesc: 'Bắt đầu với gói miễn phí và nâng cấp khi bạn phát triển. Xem',
@@ -148,7 +149,7 @@ export const vi = {
     },
     support: {
       title: 'Hỗ trợ tận tâm',
-      desc: 'Đội ngũ kỹ thuật hỗ trợ 24/7 qua chat, email và điện thoại.',
+      desc: 'Liên hệ với đội ngũ WaiteeRetail qua các kênh hỗ trợ được cung cấp.',
     },
     guide: [
       'Gói Free phù hợp cửa hàng mới cần xác thực mô hình và vận hành bán hàng cơ bản hằng ngày.',
@@ -161,7 +162,7 @@ export const vi = {
       items: [
         {
           q: 'Tôi có thể sử dụng WaiteeRetail miễn phí không?',
-          a: 'Có, chúng tôi cung cấp gói Free trọn đời cho các cửa hàng nhỏ với quy mô dưới 100 sản phẩm và 1 nhân viên. Bạn có thể bắt đầu ngay mà không cần thẻ tín dụng.',
+          a: 'Bạn có thể chọn gói Free trong các lựa chọn bảng giá hiện có. Hãy kiểm tra chi tiết gói trước khi bắt đầu.',
         },
         {
           q: 'Tôi có thể chuyển dữ liệu từ hệ thống POS hiện tại sang hệ thống mới được không?',
@@ -300,10 +301,10 @@ export const vi = {
       desc: 'Chúng tôi có sứ mệnh cách mạng hóa cách thức hoạt động của các doanh nghiệp bán lẻ. Kể từ khi thành lập, chúng tôi đã dấu thân để xây dựng hệ thống POS trực quan và mạnh mẽ nhất cho các chủ cửa hàng Việt Nam.',
     },
     stats: {
-      customers: 'Khách Hàng Hài Lòng',
-      transactions: 'Giao Dịch Được Xử Lý',
-      uptime: 'Đảm Bảo Hoạt Động',
-      support: 'Hỗ Trợ Sẵn Sàng',
+      customers: 'Xây dựng cho Việt Nam',
+      transactions: 'Nền tảng POS bán lẻ',
+      uptime: 'Vận hành trên nền tảng đám mây',
+      support: 'Hỗ trợ trực tiếp từ đội ngũ',
     },
     mission: {
       title: 'Sứ mệnh của chúng tôi',

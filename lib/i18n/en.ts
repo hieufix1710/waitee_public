@@ -21,13 +21,14 @@ export const en = {
   },
   hero: {
     badge: 'RETAIL MANAGEMENT, A REVOLUTION.',
-    title1: 'Synchronize your retail operations ',
-    titleHighlight: 'effortlessly.',
-    desc: 'The versatile platform designed for retail store owners who value time over complexity. Manage inventory, sales, and customers across all channels in one single place.',
-    becomeSeller: 'Become a seller',
+    title1: 'Sell more simply. ',
+    titleHighlight: 'Manage your store with ease.',
+    desc: 'Waitee helps you manage sales, inventory, and revenue in one easy-to-use system. Start with your store today.',
+    becomeSeller: 'Start for free',
     appStore: 'App Store',
     googlePlay: 'Google Play',
-    trust: 'Joined by over 2,000 retail leaders worldwide.',
+    trust: 'Built for independent retail teams that want less complexity.',
+    demoLabel: 'Illustrative dashboard preview',
     stats: {
       revenue: 'Revenue',
       orders: 'Orders',
@@ -41,7 +42,7 @@ export const en = {
   },
   cta: {
     title: 'Start for free today',
-    desc: 'Join over 10,000+ store owners who trust WaiteeRetail to optimize their business. No credit card required.',
+    desc: 'Create your store workspace and start managing retail operations with a simple, focused workflow. No credit card required.',
     start: 'Get Started',
     affiliate: 'Become an affiliate',
     pricing: 'View Pricing',
@@ -83,7 +84,8 @@ export const en = {
   },
   faq: {
     title: 'Frequently Asked Questions',
-    subtitle: "Everything you need to know about WaiteeRetail. We're here to support you 24/7.",
+    subtitle:
+      'Everything you need to know about WaiteeRetail. Contact us through the support channels listed on this website.',
     items: [
       {
         q: 'Does WaiteeRetail support offline sales?',
@@ -107,7 +109,7 @@ export const en = {
     badge: 'TRANSPARENT PRICING',
     heading: 'The right solution for every store size',
     subheading:
-      'Start free and scale as you grow. No hidden fees, no credit card required, 24/7 dedicated support.',
+      'Start with the available plans and choose the option that fits your store as it grows.',
     teaserBadge: 'Pricing',
     teaserHeading: 'Transparent costs, no hidden fees',
     teaserDesc: 'Start with the free plan and upgrade as you grow. See',
@@ -146,7 +148,7 @@ export const en = {
     },
     support: {
       title: 'Dedicated Support',
-      desc: 'Our technical team is available 24/7 via chat, email, and phone.',
+      desc: 'Contact our team through the support channels listed by WaiteeRetail.',
     },
     guide: [
       'Free plan suits new stores needing to validate their model and run basic daily sales operations.',
@@ -159,7 +161,7 @@ export const en = {
       items: [
         {
           q: 'Can I use WaiteeRetail for free?',
-          a: 'Yes, we offer a lifetime Free plan for small stores with less than 100 products and 1 employee. You can start immediately without a credit card.',
+          a: 'The available Free plan can be selected from the pricing options. Check the current plan details before getting started.',
         },
         {
           q: 'Can I migrate data from my current POS system?',
@@ -298,10 +300,10 @@ export const en = {
       desc: "We're on a mission to revolutionize how retail businesses operate. Since our founding, we've been dedicated to building the most intuitive and powerful POS system for Vietnamese store owners.",
     },
     stats: {
-      customers: 'Happy Customers',
-      transactions: 'Transactions Processed',
-      uptime: 'Uptime Guarantee',
-      support: 'Support Available',
+      customers: 'Built for Vietnam',
+      transactions: 'Retail POS platform',
+      uptime: 'Cloud-based operations',
+      support: 'Direct team support',
     },
     mission: {
       title: 'Our Mission',

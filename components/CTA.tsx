@@ -33,14 +33,16 @@ export default function CTA() {
               >
                 {t.cta.pricing}
               </Link>
-              <a
-                href={affiliateUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto bg-transparent border border-white/30 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all text-center inline-block"
-              >
-                {t.cta.affiliate}
-              </a>
+              {affiliateUrl && (
+                <a
+                  href={affiliateUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto bg-transparent border border-white/30 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all text-center inline-block"
+                >
+                  {t.cta.affiliate}
+                </a>
+              )}
             </div>
           </div>
         </div>

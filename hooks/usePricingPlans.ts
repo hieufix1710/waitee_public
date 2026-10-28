@@ -21,7 +21,7 @@ export function usePricingPlans() {
         setLoading(true);
         setError(null);
 
-        const response = await fetch('/backend-api/api/man/plans', {
+        const response = await fetch('/api/plans', {
           method: 'GET',
           cache: 'no-store',
         });

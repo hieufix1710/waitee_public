@@ -5,7 +5,6 @@ import Navbar from '@/components/Navbar';
 import { usePricingPlans } from '@/hooks/usePricingPlans';
 import { useLanguage } from '@/lib/i18n/LanguageContext';
 import { buildComparisonRows, type BillingCycle } from '@/lib/pricing/plans';
-import { appUrl } from '@/utils/constants';
 import { Check, ChevronDown, Mail, Minus, Shield, Star, Users, Zap } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import Link from 'next/link';
@@ -132,14 +131,12 @@ export default function PricingPage() {
                         </p>
                       </div>
 
-                      <a
-                        href={appUrl.ios || '#'}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <Link
+                        href="/onboard"
                         className={`block w-full px-3 py-4 text-center rounded-2xl font-bold text-sm mb-10 transition-all ${plan.popular ? 'bg-blue-600 text-white hover:bg-blue-700 shadow-xl shadow-blue-200' : isFree ? 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-xl shadow-emerald-200' : 'bg-zinc-900 text-white hover:bg-zinc-800'}`}
                       >
                         {plan.cta}
-                      </a>
+                      </Link>
 
                       <div className="space-y-5 mt-auto">
                         <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2">
@@ -203,14 +200,12 @@ export default function PricingPage() {
               </h2>
               <p className="text-zinc-600 mb-8 max-w-2xl mx-auto">{t.pricing.freeCallout.desc}</p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a
-                  href={appUrl.ios || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/onboard"
                   className="px-8 py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-all w-full sm:w-auto inline-block"
                 >
                   {t.pricing.freeCallout.cta}
-                </a>
+                </Link>
                 <Link
                   href="#compare"
                   className="px-8 py-4 bg-white border border-zinc-200 text-zinc-900 rounded-2xl font-bold hover:bg-zinc-100 transition-all w-full sm:w-auto inline-block"
@@ -275,14 +270,12 @@ export default function PricingPage() {
             </div>
 
             <div className="mt-12 text-center">
-              <a
-                href={appUrl.ios || '#'}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/onboard"
                 className="inline-block px-8 py-4 bg-emerald-600 text-white rounded-2xl font-bold hover:bg-emerald-700 transition-all"
               >
                 {t.pricing.startFree}
-              </a>
+              </Link>
             </div>
           </div>
         </section>

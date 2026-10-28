@@ -71,14 +71,16 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <a
-              href={affiliateUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm font-medium text-zinc-600 transition-colors hover:text-blue-600"
-            >
-              {t.nav.affiliate}
-            </a>
+            {affiliateUrl && (
+              <a
+                href={affiliateUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-zinc-600 transition-colors hover:text-blue-600"
+              >
+                {t.nav.affiliate}
+              </a>
+            )}
           </div>
 
           <div className="flex items-center gap-4 sm:gap-6">
@@ -156,15 +158,17 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <a
-            href={affiliateUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block text-base font-medium text-zinc-600 transition-colors hover:text-blue-600"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t.nav.affiliate}
-          </a>
+          {affiliateUrl && (
+            <a
+              href={affiliateUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-base font-medium text-zinc-600 transition-colors hover:text-blue-600"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {t.nav.affiliate}
+            </a>
+          )}
           {isAuthenticated ? (
             <>
               <Link
